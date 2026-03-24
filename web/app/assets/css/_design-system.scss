@@ -1,0 +1,38 @@
+.pill {
+  border-radius: 9999px;
+  line-height: var(--line-height-lg);
+  font-size: calc(var(--line-height-lg) * 0.5);
+  border-radius: calc(var(--line-height-lg) * 0.5);
+  padding: 0 1em;
+  background-color: var(--color-blur);
+  backdrop-filter: blur(var(--blur-size));
+  display: inline-block;
+}
+.bubble {
+  border-radius: var(--border-radius);
+  line-height: var(--line-height-md);
+  padding: 0 calc(var(--line-height-md) * 0.1);
+  background-color: var(--background, var(--color-grey));
+  color: var(--color, rgba(254, 254, 254, 1));
+  backdrop-filter: blur(var(--blur-size));
+  display: inline-block;
+  text-transform: uppercase;
+  vertical-align: top;
+  &-dots {
+    font-size: calc(var(--line-height-md) * 0.7);
+  }
+  &--lg {
+    line-height: var(--line-height-lg);
+    padding: 0 calc(var(--line-height-lg) * 0.1);
+    text-transform: unset;
+    max-width: calc(var(--line-height-lg) * 25);
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+  }
+  &--lg-dots {
+    font-size: calc(var(--line-height-lg) * 0);
+  }
+}
+.text-lg .bubble {
+}

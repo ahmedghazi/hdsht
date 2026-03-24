@@ -1,0 +1,49 @@
+@import 'tailwindcss';
+@import '@nuxt/ui';
+
+@source "../../../app/**/*.vue";
+@source "../../../app/**/*.ts";
+
+@theme static {
+  --color-black: rgba(44, 44, 44, 1);
+  --color-white: rgba(254, 254, 254, 1);
+  --color-white-40: rgba(254, 254, 254, 0.4);
+  --color-hdsht-white: rgba(233, 233, 233, 1);
+  --color-grey: rgba(112, 112, 112, 1);
+
+  --blur-color: rgba(112, 112, 112, 0.4);
+  --blur-size: 10px;
+
+  --color-primary: rgba(44, 44, 44, 1);
+  --color-secondary: rgba(254, 254, 254, 1);
+
+  --spacing-xs: 0.375rem;
+  --spacing-sm: 0.625rem;
+  --spacing-md: 1rem;
+  --spacing-lg: 1.875rem;
+  --spacing-xl: 4.063rem;
+  --spacing-gutter: 1rem;
+  --spacing-header-height: 43.5px;
+  --spacing-1e: 1em;
+  --spacing-1re: 1rem;
+
+  --font-sans: 'Public Sans', sans-serif;
+  --font-primary:
+    'PPMori-Medium', 'Helvetica Neue', 'HelveticaNeueRoman',
+    'HelveticaNeue-Roman', 'Helvetica Neue Roman', 'TeXGyreHerosRegular',
+    'Helvetica', 'Arial', sans-serif;
+
+  --text-md: calc(2rem * 0.6);
+  --text-lg: calc(3rem * 0.735);
+
+  --line-height-md: 2rem;
+  --line-height-lg: 3rem;
+
+  --border-radius: 0.2rem;
+
+  --gutter: 1rem;
+
+  --breakpoint-sm: 768px;
+  --breakpoint-md: 1080px;
+  --breakpoint-lg: 1441px;
+}
