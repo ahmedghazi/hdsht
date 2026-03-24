@@ -48,6 +48,8 @@ const { _localizeField } = useSanityLocale()
 
 <style scoped- lang="scss">
 .card {
+  --background: #fff;
+  --color: #000;
   &--rip {
     --background: var(--color-grey) !important;
     --color: var(--color-white-40) !important;

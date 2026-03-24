@@ -17,10 +17,7 @@ const { input } = defineProps<{ input: Client }>()
 
 <style lang="scss">
 .client {
-  // --background: #fff;
-  // --color: #000;
   display: flex;
-  // align-items: center;
   &__disc {
     width: var(--line-height-lg);
     height: var(--line-height-lg);
