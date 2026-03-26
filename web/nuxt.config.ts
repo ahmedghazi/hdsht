@@ -1,9 +1,12 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
-  // devtools: {
-  //   enabled: true,
-  // },
-  modules: ['@nuxt/eslint', '@nuxt/ui', '@nuxtjs/i18n', '@nuxtjs/sanity'],
+  modules: [
+    '@nuxt/fonts',
+    '@nuxt/eslint',
+    '@nuxt/ui',
+    '@nuxtjs/i18n',
+    '@nuxtjs/sanity',
+  ],
   css: ['~/assets/css/main.css', '~/assets/css/index.scss'],
 
   routeRules: {
@@ -11,7 +14,7 @@ export default defineNuxtConfig({
   },
 
   compatibilityDate: '2025-01-15',
-
+  debug: true,
   eslint: {
     config: {
       stylistic: {
@@ -19,6 +22,28 @@ export default defineNuxtConfig({
         braceStyle: '1tbs',
       },
     },
+  },
+  fonts: {
+    families: [
+      {
+        name: 'CooperHewitt-Book',
+        provider: 'local',
+        weights: [400],
+        style: 'normal',
+      },
+      {
+        name: 'CooperHewitt-BookItalic',
+        provider: 'local',
+        weights: [400],
+        style: 'italic',
+      },
+      {
+        name: 'Display Dots',
+        provider: 'local',
+        weights: [400],
+        style: 'normal',
+      },
+    ],
   },
   i18n: {
     defaultLocale: 'en',

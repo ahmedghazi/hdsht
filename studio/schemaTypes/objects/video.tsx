@@ -60,15 +60,20 @@ export default {
       type: 'image',
     }),
     defineField({
-      name: 'url',
-      type: 'url',
-      description: 'for youtube, vimeo. Ex: https://www.youtube.com/watch?v=exTZ9vB6ZeE',
+      title: 'Video file',
+      name: 'video',
+      type: 'mux.video',
     }),
-    defineField({
-      name: 'iframe',
-      type: 'text',
-      description: 'for spotify, apple music, deezer, etc ',
-    }),
+    // defineField({
+    //   name: 'url',
+    //   type: 'url',
+    //   description: 'for youtube, vimeo. Ex: https://www.youtube.com/watch?v=exTZ9vB6ZeE',
+    // }),
+    // defineField({
+    //   name: 'iframe',
+    //   type: 'text',
+    //   description: 'for spotify, apple music, deezer, etc ',
+    // }),
     defineField({
       name: 'aspectRatio',
       type: 'string',

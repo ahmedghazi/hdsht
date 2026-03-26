@@ -1,28 +1,58 @@
 <script setup lang="ts">
-import { PortableText } from "@portabletext/vue";
-import type { ClientsUI } from "~/utils/sanity-api/sanity.types";
+import type { ClientsUI } from '~/utils/sanity-api/sanity.types'
+import { useSanityLocale } from '~/composables/useSanityLocale'
+import Marquee from '@selemondev/vue3-marquee'
+import '@selemondev/vue3-marquee/dist/index.css'
 
-defineProps<{ input: ClientsUI }>();
+const { _localizeField } = useSanityLocale()
+defineProps<{ input: ClientsUI }>()
 
 onMounted(() => {
-  console.log("ModuleListArticlesUI mounted");
+  console.log('ModuleListArticlesUI mounted')
   // console.log()
-});
+})
 </script>
 
 <template>
-  <section class="module module--clients-ui">
+  <section
+    :class="['module', 'module--clients-ui', `col-span-${input.colSize || 1}`]"
+  >
     <div class="inner">
-      <div class="md:grid md:grid-cols-2 gap-md">
-        <div></div>
-        <div class="list">
-          <h2>{{ input.title }}</h2>
-          <ul class="text-lg">
+      <h2 class="bubble">
+        <span>{{ _localizeField(input.title) }}</span>
+      </h2>
+      <div class="list">
+        <Marquee :duration="3">
+          <ul class="flex gap-sm">
             <li v-for="item in input.items" :key="item" class="client--item">
-              {{ item }}
+              <img
+                :src="item.asset?.url || ''"
+                alt=""
+                srcset=""
+                :height="item.asset?.metadata?.dimensions?.height || 20"
+                :width="item.asset?.metadata?.dimensions?.width || 'auto'"
+              />
+            </li>
+            <li v-for="item in input.items" :key="item" class="client--item">
+              <img
+                :src="item.asset?.url || ''"
+                alt=""
+                srcset=""
+                :height="item.asset?.metadata?.dimensions?.height || 20"
+                :width="item.asset?.metadata?.dimensions?.width || 'auto'"
+              />
+            </li>
+            <li v-for="item in input.items" :key="item" class="client--item">
+              <img
+                :src="item.asset?.url || ''"
+                alt=""
+                srcset=""
+                :height="item.asset?.metadata?.dimensions?.height || 20"
+                :width="item.asset?.metadata?.dimensions?.width || 'auto'"
+              />
             </li>
           </ul>
-        </div>
+        </Marquee>
       </div>
     </div>
   </section>
@@ -31,13 +61,17 @@ onMounted(() => {
 <style lang="scss" scoped>
 .module {
   h2 {
-    margin-bottom: 1rem;
   }
-  .text-lg {
-    transform: translateX(-0.2rem);
+  .list {
+    background-color: var(--color-white);
   }
   .client--item {
-    line-height: 1.1;
+    flex-shrink: 0;
+    padding: 0.6rem var(--text-lg);
+  }
+  img {
+    height: 1.7rem;
+    width: auto;
   }
 }
 @media (max-width: 800px) {

@@ -9,7 +9,7 @@ const { input } = defineProps<{ input: Client }>()
     <div class="client__disc"></div>
     <div class="client__name">
       <div class="bubble bubble--lg">
-        {{ input.name }}
+        <span>{{ input.name }}</span>
       </div>
     </div>
   </div>
@@ -21,11 +21,6 @@ const { input } = defineProps<{ input: Client }>()
   &__disc {
     width: var(--line-height-lg);
     height: var(--line-height-lg);
-    // background: radial-gradient(
-    //   circle at center,
-    //   var(--color),
-    //   var(--background)
-    // );
     background: transparent
       radial-gradient(
         closest-side at 50% 50%,

@@ -9,41 +9,46 @@ const { _localizeField } = useSanityLocale()
 </script>
 
 <template>
-  <!-- <NuxtLink :to="_linkResolver(input as any)"> -->
-  <article
-    :class="{ card: true, 'card--project-txt': true, 'card--rip': input.rip }"
-    :style="{
-      '--background': input.client?.backgroundColor?.hex,
-      '--color': input.client?.foregroundColor?.hex,
-    }"
-  >
-    <div class="text-lg">
+  <NuxtLink :to="_linkResolver(input as any)">
+    {{ _linkResolver(input) }}
+    <article
+      :class="{
+        card: true,
+        'card--project-txt': true,
+        'card--rip': input.rip,
+        // 'mb-md': true,
+      }"
+      :style="{
+        '--background': input.client?.backgroundColor?.hex,
+        '--color': input.client?.foregroundColor?.hex,
+      }"
+    >
       <div class="grid md:grid-cols-2">
         <div class="flex">
-          <div class="card__index">
-            <div class="bubble bubble--lg">
-              {{ input.ID }}
+          <div class="card__index dots">
+            <div class="bubble bubble-dot bubble-dot--lg">
+              <span v-if="input.ID">{{ input.ID }}</span>
+              <span v-else>00000</span>
             </div>
           </div>
           <Client v-if="input.client" :input="input.client" />
         </div>
         <div class="flex">
           <h2 class="card__title">
-            <div class="bubble bubble--lg">
-              {{ _localizeField(input.title) }}
+            <div class="bubble bubble--lg ellipsis">
+              <span>{{ _localizeField(input.title) }}</span>
             </div>
           </h2>
 
           <div class="card__year">
             <div class="bubble bubble--lg">
-              {{ input.year }}
+              <span>{{ input.year }}</span>
             </div>
           </div>
         </div>
       </div>
-    </div>
-  </article>
-  <!-- </NuxtLink> -->
+    </article>
+  </NuxtLink>
 </template>
 
 <style scoped- lang="scss">

@@ -26,5 +26,6 @@ export default defineField({
       title: 'Link',
       type: 'string',
     }),
+
   ],
 })

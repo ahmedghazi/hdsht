@@ -11,21 +11,22 @@
     "typecheck": "nuxt typecheck"
   },
   "dependencies": {
-    "@iconify-json/lucide": "^1.2.98",
-    "@iconify-json/simple-icons": "^1.2.74",
     "@nuxt/ui": "^4.5.1",
     "@nuxtjs/i18n": "^10.2.4",
     "@nuxtjs/sanity": "^2.2.0",
     "@portabletext/vue": "^1.0.14",
     "@sanity/client": "^7.20.0",
     "@sanity/image-url": "^2.0.3",
+    "@selemondev/vue3-marquee": "^0.0.11",
     "groq": "^5.17.1",
     "nuxt": "^4.4.2",
     "styled-components": "^6.3.12",
-    "tailwindcss": "^4.2.1"
+    "tailwindcss": "^4.2.1",
+    "vue-marquee-slider": "^1.0.6"
   },
   "devDependencies": {
     "@nuxt/eslint": "^1.15.2",
+    "@nuxt/fonts": "^0.14.0",
     "eslint": "^10.0.3",
     "eslint-config-prettier": "^10.1.8",
     "prettier": "^3.8.1",

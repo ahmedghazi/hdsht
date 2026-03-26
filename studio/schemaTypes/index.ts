@@ -16,6 +16,8 @@ import blockContent from './objects/blockContent'
 import linkExternal from './objects/linkExternal'
 import linkInternal from './objects/linkInternal'
 import linkIcon from './objects/linkIcon'
+import contactLinkItem from './objects/contactLinkItem'
+
 // import seo from './objects/seo'
 // import figure from './objects/figure'
 import cta from './objects/cta'
@@ -25,9 +27,13 @@ import video from './objects/video'
 /** modules */
 import imagesUI from './objects/modules/imagesUI'
 import textUI from './objects/modules/textUI'
-import listProjectsUI from './objects/modules/listProjects'
 import clientsUI from './objects/modules/clientsUI'
 import {seoSchema} from './features/seo'
+import contactsUI from './objects/modules/contactsUI'
+import locationMapUI from './objects/modules/locationMapUI'
+import granularStripeUI from './objects/modules/granularStripeUI'
+import servicesUI from './objects/modules/servicesUI'
+import listProjectsUI from './objects/modules/listProjectsUI'
 
 export const schemaTypes = [
   settings,
@@ -49,6 +55,7 @@ export const schemaTypes = [
   linkExternal,
   linkInternal,
   linkIcon,
+  contactLinkItem,
   // seo,
   video,
   cta,
@@ -58,5 +65,9 @@ export const schemaTypes = [
   imagesUI,
   textUI,
   clientsUI,
+  contactsUI,
+  locationMapUI,
+  granularStripeUI,
+  servicesUI,
 ]
 export default schemaTypes

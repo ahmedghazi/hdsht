@@ -1,0 +1,55 @@
+<script setup lang="ts">
+import { PortableText } from '@portabletext/vue'
+import { portableTextComponents } from '~/utils/sanity-api/portableTextComponents'
+import type { ContactsUI } from '~/utils/sanity-api/sanity.types'
+const { _localizeField } = useSanityLocale()
+
+defineProps<{ input: ContactsUI }>()
+</script>
+
+<template>
+  <section
+    :class="['module', 'module--contacts-ui', `col-span-${input.colSize || 1}`]"
+  >
+    <div class="inner">
+      <h2 v-if="input.title" class="bubble">
+        <span>{{ _localizeField(input.title) }}</span>
+      </h2>
+      <div v-if="input.text && input.text.en" class="contact-text">
+        <PortableText
+          :value="_localizeField(input.text)"
+          :components="portableTextComponents"
+        />
+      </div>
+      <div
+        v-if="input.items && input.items.length"
+        class="contact-links grid grid-cols-2"
+      >
+        <a
+          v-for="item in input.items"
+          :key="item._key"
+          :href="item.link"
+          :class="['pill', 'pill--stretch', `col-span-${item.colSize || 1}`]"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <span>{{ item.label }}</span>
+        </a>
+      </div>
+    </div>
+  </section>
+</template>
+
+<style lang="scss" scoped>
+.module {
+}
+h2 {
+  margin-bottom: var(--spacing-xs);
+}
+@media (max-width: 800px) {
+  .module {
+    .contact-links {
+    }
+  }
+}
+</style>

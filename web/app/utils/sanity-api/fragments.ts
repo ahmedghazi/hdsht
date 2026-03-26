@@ -58,6 +58,7 @@ export const blockContent = `
 
 export const projectCard = `
   _type,
+  slug,
   seo{
     ${seo}
   },
@@ -78,11 +79,6 @@ export const projectCard = `
       name
     }
   },
-  // relatedProject->{
-  //   _type,
-  //   slug,
-  //   title,
-  // }
 `
 
 export const textUI = `
@@ -101,9 +97,54 @@ export const listProjectsUI = `
 		},
 	}
 `
+export const clientsUI = `
+  	_type == 'clientsUI' => {
+		...,
+    items[]{
+      asset->
+    }
+	}
+`
+export const locationMapUI = `
+  	_type == 'locationMapUI' => {
+		...,
+    map{
+      asset->
+    }
+	}
+`
+export const contactsUI = `
+  	_type == 'contactsUI' => {
+		...,
+    items[]{
+      ...
+    }
+	}
+`
+export const granularStripeUI = `
+  	_type == 'granularStripeUI' => {
+		...,
+    image{
+      asset->
+    }
+	}
+`
+export const servicesUI = `
+  _type == 'servicesUI' => {
+    ...,
+    text{
+      ${blockContent}
+    }
+  }
+`
 
 export const modules = `
 	...,
 	${textUI},
 	${listProjectsUI},
+	${clientsUI},
+  ${locationMapUI},
+  ${contactsUI},
+  ${granularStripeUI},
+  ${servicesUI},
 `

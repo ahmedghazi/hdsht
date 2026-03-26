@@ -4,6 +4,7 @@ import {visionTool} from '@sanity/vision'
 import {schemaTypes} from './schemaTypes'
 import {presentationTool} from 'sanity/presentation'
 import {colorInput} from '@sanity/color-input'
+import {muxInput} from 'sanity-plugin-mux-input'
 import {linkResolverPreview} from './src/linkResolverPreview'
 import {structure} from './src/deskStructure'
 
@@ -23,6 +24,7 @@ export default defineConfig({
     structureTool({structure}),
     visionTool(),
     colorInput(),
+    muxInput(),
     presentationTool({
       resolve: linkResolverPreview,
       previewUrl: {

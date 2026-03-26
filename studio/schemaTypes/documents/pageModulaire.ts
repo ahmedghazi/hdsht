@@ -15,10 +15,10 @@ export default defineType({
       name: 'editorial',
       title: 'Editorial',
     },
-    // {
-    //   name: 'seo',
-    //   title: 'SEO',
-    // },
+    {
+      name: 'seo',
+      title: 'SEO',
+    },
   ],
   preview: {
     select: {
@@ -30,30 +30,23 @@ export default defineType({
       const {title, slug, homePage} = selection
       return {
         title: title,
-        subtitle: homePage ? "Page d'accueil" : `/${slug.current}`,
+        subtitle: homePage ? 'Home Page' : `/${slug.current}`,
       }
     },
   },
 
   fields: [
-    // defineField({
-    //   name: 'seo',
-    //   type: 'seo',
-    //   group: 'seo',
-    // }),
-    // seoField,
-
+    seoField,
     defineField({
       name: 'homePage',
       type: 'boolean',
-      title: "Page d'accueil",
+      title: 'Homepage? only one',
       group: 'editorial',
     }),
     defineField({
       name: 'title',
       type: 'localeString',
       title: 'Titre',
-      description: 'Le nom de la page',
       group: 'editorial',
     }),
     defineField({

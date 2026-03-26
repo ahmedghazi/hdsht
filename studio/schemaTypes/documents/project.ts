@@ -1,7 +1,7 @@
 import {defineField, defineType} from 'sanity'
 import {FolderIcon} from '@sanity/icons'
 import {baseLanguage} from '../locale/supportedLanguages'
-import {MdImage} from 'react-icons/md'
+import {MdImage, MdVideoFile} from 'react-icons/md'
 import {seoField} from '../features/seo'
 
 export default defineType({
@@ -130,7 +130,10 @@ export default defineType({
     defineField({
       name: 'media',
       type: 'array',
-      of: [{type: 'image', icon: MdImage}, {type: 'video'}],
+      of: [
+        {type: 'image', icon: MdImage},
+        {type: 'mux.video', icon: MdVideoFile},
+      ],
       group: 'editorial',
     }),
 

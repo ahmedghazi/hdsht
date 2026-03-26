@@ -1,21 +1,24 @@
 <script setup lang="ts">
-import type { ImagesUI } from "~/utils/sanity-api/sanity.types";
+import type { ImagesUI } from '~/utils/sanity-api/sanity.types'
 
-defineProps<{ input: ImagesUI }>();
+defineProps<{ input: ImagesUI }>()
 
 onMounted(() => {
-  console.log("ModuleListArticlesUI mounted");
-});
+  console.log('ModuleListArticlesUI mounted')
+})
 </script>
 
 <template>
-  <section class="module module--images-ui">
+  <section
+    :class="['module', 'module--images-ui', `col-span-${input.colSize || 1}`]"
+  >
     <!-- <pre>{{ input.items }}</pre> -->
     <div :class="`grid md:grid-cols-${input.gridSize} gap-sm`">
       <figure
         v-for="item in input.items"
         :key="item._key"
-        :class="item.colSize ? `col-span-1 md:col-span-${item.colSize}` : ''">
+        :class="item.colSize ? `col-span-1 md:col-span-${item.colSize}` : ''"
+      >
         <img
           v-if="item && item.asset"
           class="visual"
@@ -24,7 +27,8 @@ onMounted(() => {
               .width(2000)
               .url()
           "
-          :alt="''" />
+          :alt="''"
+        />
       </figure>
     </div>
   </section>

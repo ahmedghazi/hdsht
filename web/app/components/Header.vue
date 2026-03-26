@@ -28,7 +28,7 @@ const { scrollDirection, scrollEnd } = useScroll()
 
 <style lang="scss" scoped>
 header {
-  padding: 0.313rem var(--spacing-sm);
+  padding: var(--spacing-md);
   position: fixed;
   top: 0;
   left: 0;

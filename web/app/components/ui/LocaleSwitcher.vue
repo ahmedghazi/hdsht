@@ -9,7 +9,7 @@ const { locale, setLocale } = useI18n()
         :class="{ active: locale === lang, pill: true }"
         @click="setLocale(lang as 'en' | 'zh')"
       >
-        {{ lang }}
+        <span>{{ lang }}</span>
       </button>
     </li>
   </ul>

@@ -51,23 +51,35 @@ const _format = () => {
   <section
     id="projects"
     ref="moduleRef"
-    class="module module--list-projects-ui"
+    :class="[
+      'module',
+      'module--list-projects-ui',
+      `col-span-${input.colSize || 2}`,
+    ]"
   >
     <div class="header grid md:grid-cols-2">
       <div class="flex">
         <div class="header__ID">
-          <div class="bubble">ID</div>
+          <div class="bubble">
+            <span>ID</span>
+          </div>
         </div>
         <div class="header__client">
-          <div class="bubble">Client</div>
+          <div class="bubble">
+            <span>Client</span>
+          </div>
         </div>
       </div>
       <div class="flex">
         <div class="header__project">
-          <div class="bubble">Project</div>
+          <div class="bubble">
+            <span>Project</span>
+          </div>
         </div>
         <div class="header__year">
-          <div class="bubble">Year</div>
+          <div class="bubble">
+            <span>Year</span>
+          </div>
         </div>
       </div>
     </div>

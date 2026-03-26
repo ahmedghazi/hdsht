@@ -5,45 +5,67 @@
 @source "../../../app/**/*.ts";
 
 @theme static {
+  /* Colors */
   --color-black: rgba(44, 44, 44, 1);
   --color-white: rgba(254, 254, 254, 1);
   --color-white-40: rgba(254, 254, 254, 0.4);
   --color-hdsht-white: rgba(233, 233, 233, 1);
   --color-grey: rgba(112, 112, 112, 1);
-
-  --blur-color: rgba(112, 112, 112, 0.4);
+  --color-blur: rgba(112, 112, 112, 0.4);
   --blur-size: 10px;
+  --color-bg: rgba(44, 44, 44, 1);
+  --color-primary: rgba(254, 254, 254, 1);
+  --color-secondary: rgba(44, 44, 44, 1);
 
-  --color-primary: rgba(44, 44, 44, 1);
-  --color-secondary: rgba(254, 254, 254, 1);
+  /* Fonts */
+  /* --font-sans: 'Public Sans', sans-serif; */
+  --font-primary:
+    'CooperHewitt-Book', 'Helvetica Neue', 'HelveticaNeueRoman',
+    'HelveticaNeue-Roman', 'Helvetica Neue Roman', 'TeXGyreHerosRegular',
+    'Helvetica', 'Arial', sans-serif;
+  --font-secondary:
+    'Display Dots', 'Helvetica Neue', 'HelveticaNeueRoman',
+    'HelveticaNeue-Roman', 'Helvetica Neue Roman', 'TeXGyreHerosRegular',
+    'Helvetica', 'Arial', sans-serif;
+  --font-tertiary:
+    'Helvetica Neue', 'HelveticaNeueRoman', 'HelveticaNeue-Roman',
+    'Helvetica Neue Roman', 'TeXGyreHerosRegular', 'Helvetica', 'Arial',
+    sans-serif;
 
-  --spacing-xs: 0.375rem;
-  --spacing-sm: 0.625rem;
-  --spacing-md: 1rem;
-  --spacing-lg: 1.875rem;
-  --spacing-xl: 4.063rem;
-  --spacing-gutter: 1rem;
-  --spacing-header-height: 43.5px;
+  /* Spacing */
+  --spacing-xs: 0.6rem; /* 6px */
+  --spacing-sm: 1rem; /* 10px */
+  --spacing-md: 2rem; /* 20px */
+  --spacing-lg: 1.875rem; /* 30px */
+  --spacing-xl: 4.063rem; /* 65px */
   --spacing-1e: 1em;
   --spacing-1re: 1rem;
 
-  --font-sans: 'Public Sans', sans-serif;
-  --font-primary:
-    'PPMori-Medium', 'Helvetica Neue', 'HelveticaNeueRoman',
-    'HelveticaNeue-Roman', 'Helvetica Neue Roman', 'TeXGyreHerosRegular',
-    'Helvetica', 'Arial', sans-serif;
-
+  /* Typography */
   --text-md: calc(2rem * 0.6);
   --text-lg: calc(3rem * 0.735);
-
   --line-height-md: 2rem;
   --line-height-lg: 3rem;
+  --line-height-xl: 6rem;
 
+  /* Layout */
+  --gutter: 1rem;
+  --header-h: 43.5px;
+
+  /* Borders */
+  --border-width: 1px;
   --border-radius: 0.2rem;
 
-  --gutter: 1rem;
+  /* Animation */
+  --cubic: cubic-bezier(0.775, 0, 0.17, 1.005);
 
+  /* Breakpoints */
   --breakpoint-sm: 768px;
   --breakpoint-md: 1080px;
   --breakpoint-lg: 1441px;
+}
+
+:root {
+  --app-h: 100vh;
+  --border: var(--border-width) solid;
 }

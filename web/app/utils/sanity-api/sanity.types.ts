@@ -15,16 +15,10 @@
 export declare const internalGroqTypeReferenceTo: unique symbol
 
 // Source: schema.json
-export type ClientsUI = {
-  _type: 'clientsUI'
-  title?: string
-  items?: Array<string>
-}
-
-export type TextUI = {
-  _type: 'textUI'
+export type ServicesUI = {
+  _type: 'servicesUI'
   title?: LocaleString
-  look?: 'normal' | 'columns' | 'text-lg'
+  colSize?: number
   text?: LocaleBlockContent
 }
 
@@ -35,9 +29,71 @@ export type SanityImageAssetReference = {
   [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
 }
 
+export type GranularStripeUI = {
+  _type: 'granularStripeUI'
+  title?: LocaleString
+  colSize?: number
+  image?: {
+    asset?: SanityImageAssetReference
+    media?: unknown
+    hotspot?: SanityImageHotspot
+    crop?: SanityImageCrop
+    _type: 'image'
+  }
+}
+
+export type LocationMapUI = {
+  _type: 'locationMapUI'
+  title?: LocaleString
+  colSize?: number
+  map?: {
+    asset?: SanityImageAssetReference
+    media?: unknown
+    hotspot?: SanityImageHotspot
+    crop?: SanityImageCrop
+    _type: 'image'
+  }
+  cta?: LinkExternal
+}
+
+export type ContactsUI = {
+  _type: 'contactsUI'
+  title?: LocaleString
+  colSize?: number
+  text?: LocaleBlockContent
+  items?: Array<
+    {
+      _key: string
+    } & ContactLinkItem
+  >
+}
+
+export type ClientsUI = {
+  _type: 'clientsUI'
+  title?: LocaleString
+  colSize?: number
+  items?: Array<{
+    asset?: SanityImageAssetReference
+    media?: unknown
+    hotspot?: SanityImageHotspot
+    crop?: SanityImageCrop
+    _type: 'image'
+    _key: string
+  }>
+}
+
+export type TextUI = {
+  _type: 'textUI'
+  title?: LocaleString
+  colSize?: number
+  look?: 'normal' | 'columns' | 'text-lg' | 'text-lg text-center'
+  text?: LocaleBlockContent
+}
+
 export type ImagesUI = {
   _type: 'imagesUI'
   title?: string
+  colSize?: number
   gridSize?: number
   items?: Array<{
     asset?: SanityImageAssetReference
@@ -61,6 +117,7 @@ export type ProjectReference = {
 export type ListProjectsUI = {
   _type: 'listProjectsUI'
   title?: string
+  colSize?: number
   items?: Array<
     {
       _key: string
@@ -110,9 +167,49 @@ export type Video = {
     crop?: SanityImageCrop
     _type: 'image'
   }
-  url?: string
-  iframe?: string
+  video?: MuxVideo
   aspectRatio?: string
+}
+
+export type MuxVideoAssetReference = {
+  _ref: string
+  _type: 'reference'
+  _weak?: boolean
+  [internalGroqTypeReferenceTo]?: 'mux.videoAsset'
+}
+
+export type MuxVideo = {
+  _type: 'mux.video'
+  asset?: MuxVideoAssetReference
+}
+
+export type SanityImageCrop = {
+  _type: 'sanity.imageCrop'
+  top?: number
+  bottom?: number
+  left?: number
+  right?: number
+}
+
+export type SanityImageHotspot = {
+  _type: 'sanity.imageHotspot'
+  x?: number
+  y?: number
+  height?: number
+  width?: number
+}
+
+export type LocaleString = {
+  _type: 'localeString'
+  en?: string
+  zh?: string
+}
+
+export type ContactLinkItem = {
+  _type: 'contactLinkItem'
+  label?: string
+  link?: string
+  colSize?: number
 }
 
 export type LinkIcon = {
@@ -185,12 +282,6 @@ export type LocaleBlockContent = {
 
 export type LocaleText = {
   _type: 'localeText'
-  en?: string
-  zh?: string
-}
-
-export type LocaleString = {
-  _type: 'localeString'
   en?: string
   zh?: string
 }
@@ -312,6 +403,7 @@ export type PageModulaire = {
   _createdAt: string
   _updatedAt: string
   _rev: string
+  seo?: Seo
   homePage?: boolean
   title?: LocaleString
   subTitle?: LocaleString
@@ -330,23 +422,19 @@ export type PageModulaire = {
     | ({
         _key: string
       } & ClientsUI)
+    | ({
+        _key: string
+      } & ContactsUI)
+    | ({
+        _key: string
+      } & LocationMapUI)
+    | ({
+        _key: string
+      } & GranularStripeUI)
+    | ({
+        _key: string
+      } & ServicesUI)
   >
-}
-
-export type SanityImageCrop = {
-  _type: 'sanity.imageCrop'
-  top?: number
-  bottom?: number
-  left?: number
-  right?: number
-}
-
-export type SanityImageHotspot = {
-  _type: 'sanity.imageHotspot'
-  x?: number
-  y?: number
-  height?: number
-  width?: number
 }
 
 export type ClientReference = {
@@ -421,7 +509,7 @@ export type Project = {
       }
     | ({
         _key: string
-      } & Video)
+      } & MuxVideo)
   >
 }
 
@@ -444,6 +532,97 @@ export type Color = {
   hsl?: HslaColor
   hsv?: HsvaColor
   rgb?: RgbaColor
+}
+
+export type MuxVideoAsset = {
+  _id: string
+  _type: 'mux.videoAsset'
+  _createdAt: string
+  _updatedAt: string
+  _rev: string
+  status?: string
+  assetId?: string
+  playbackId?: string
+  filename?: string
+  thumbTime?: number
+  data?: MuxAssetData
+}
+
+export type MuxAssetData = {
+  _type: 'mux.assetData'
+  resolution_tier?: string
+  upload_id?: string
+  created_at?: string
+  id?: string
+  status?: string
+  max_stored_resolution?: string
+  passthrough?: string
+  encoding_tier?: string
+  video_quality?: string
+  master_access?: string
+  aspect_ratio?: string
+  duration?: number
+  max_stored_frame_rate?: number
+  mp4_support?: string
+  max_resolution_tier?: string
+  tracks?: Array<
+    {
+      _key: string
+    } & MuxTrack
+  >
+  playback_ids?: Array<
+    {
+      _key: string
+    } & MuxPlaybackId
+  >
+  static_renditions?: MuxStaticRenditions
+}
+
+export type MuxStaticRenditions = {
+  _type: 'mux.staticRenditions'
+  status?: string
+  files?: Array<
+    {
+      _key: string
+    } & MuxStaticRenditionFile
+  >
+}
+
+export type MuxStaticRenditionFile = {
+  _type: 'mux.staticRenditionFile'
+  name?: string
+  ext?: string
+  height?: number
+  width?: number
+  bitrate?: number
+  filesize?: string
+  type?: string
+  status?: string
+  resolution_tier?: string
+  resolution?: string
+  id?: string
+  passthrough?: string
+}
+
+export type MuxPlaybackId = {
+  _type: 'mux.playbackId'
+  id?: string
+  policy?: string
+}
+
+export type MuxTrack = {
+  _type: 'mux.track'
+  id?: string
+  type?: string
+  max_width?: number
+  max_frame_rate?: number
+  duration?: number
+  max_height?: number
+  language_code?: string
+  name?: string
+  status?: string
+  text_source?: string
+  text_type?: string
 }
 
 export type RgbaColor = {
@@ -568,9 +747,13 @@ export type Geopoint = {
 }
 
 export type AllSanitySchemaTypes =
+  | ServicesUI
+  | SanityImageAssetReference
+  | GranularStripeUI
+  | LocationMapUI
+  | ContactsUI
   | ClientsUI
   | TextUI
-  | SanityImageAssetReference
   | ImagesUI
   | ProjectReference
   | ListProjectsUI
@@ -580,12 +763,17 @@ export type AllSanitySchemaTypes =
   | PageModulaireReference
   | LinkInternal
   | Video
+  | MuxVideoAssetReference
+  | MuxVideo
+  | SanityImageCrop
+  | SanityImageHotspot
+  | LocaleString
+  | ContactLinkItem
   | LinkIcon
   | BlockContent
   | Seo
   | LocaleBlockContent
   | LocaleText
-  | LocaleString
   | Location
   | Slug
   | Person
@@ -596,13 +784,17 @@ export type AllSanitySchemaTypes =
   | Infos
   | Settings
   | PageModulaire
-  | SanityImageCrop
-  | SanityImageHotspot
   | ClientReference
   | LocationReference
   | Project
   | Client
   | Color
+  | MuxVideoAsset
+  | MuxAssetData
+  | MuxStaticRenditions
+  | MuxStaticRenditionFile
+  | MuxPlaybackId
+  | MuxTrack
   | RgbaColor
   | HsvaColor
   | HslaColor
@@ -688,13 +880,42 @@ export type SETTINGS_QUERY_RESULT = {
 
 // Source: ../web/app/utils/sanity-api/queries.ts
 // Variable: HOME_QUERY
-// Query: *[_type == "pageModulaire" && homePage == true][0]{  ...,  seo{    	...,	metaImage{		asset->	}  },  modules[]{    	...,	  _type == 'textUI' => {    ...,    text{      	...,	en[]{		...,		markDefs[] {			...,			_type == "linkInternal" => {				...,				reference->,			},		},		_type == 'icon' => {			...,			image{				asset->			},    }	},	fr[]{		...,		markDefs[] {			...,			_type == "linkInternal" => {				...,				reference->,			},		},		_type == 'icon' => {			...,			image{				asset->			},    }	}    }  },		_type == 'listProjectsUI' => {		...,		items[]->{			  _type,  seo{    	...,	metaImage{		asset->	}  },  imageCover{    ...,    asset->  },  ID,  client->,  persons[]->{    ...  },  relatedProject->{    _type,    slug,    title,  }		},	},  }}
+// Query: *[_type == "pageModulaire" && homePage == true][0]{  ...,  seo{    	...,	metaImage{		asset->	}  },  modules[]{    	...,	  _type == 'textUI' => {    ...,    text{      	...,	en[]{		...,		markDefs[] {			...,			_type == "linkInternal" => {				...,				reference->,			},		},		_type == 'icon' => {			...,			image{				asset->			},    }	},	fr[]{		...,		markDefs[] {			...,			_type == "linkInternal" => {				...,				reference->,			},		},		_type == 'icon' => {			...,			image{				asset->			},    }	}    }  },		_type == 'listProjectsUI' => {		...,		items[]->{			  _type,  slug,  seo{    	...,	metaImage{		asset->	}  },  title,  imageCover{    ...,    asset->  },  rip,  year,  ID,  client->,  contributions[]{    service->{      title    },    contributors[]->{      name    }  },		},	},	  	_type == 'clientsUI' => {		...,    items[]{      asset->    }	},    	_type == 'locationMapUI' => {		...,    map{      asset->    }	},    	_type == 'contactsUI' => {		...,    items[]{      ...    }	},    	_type == 'granularStripeUI' => {		...,    image{      asset->    }	},    _type == 'servicesUI' => {    ...,    text{      	...,	en[]{		...,		markDefs[] {			...,			_type == "linkInternal" => {				...,				reference->,			},		},		_type == 'icon' => {			...,			image{				asset->			},    }	},	fr[]{		...,		markDefs[] {			...,			_type == "linkInternal" => {				...,				reference->,			},		},		_type == 'icon' => {			...,			image{				asset->			},    }	}    }  },  }}
 export type HOME_QUERY_RESULT = {
   _id: string
   _type: 'pageModulaire'
   _createdAt: string
   _updatedAt: string
   _rev: string
+  seo: {
+    _type: 'seo'
+    metaTitle?: string
+    metaDescription?: string
+    metaImage: {
+      asset: {
+        _id: string
+        _type: 'sanity.imageAsset'
+        _createdAt: string
+        _updatedAt: string
+        _rev: string
+        originalFilename?: string
+        label?: string
+        title?: string
+        description?: string
+        altText?: string
+        sha1hash?: string
+        extension?: string
+        mimeType?: string
+        size?: number
+        assetId?: string
+        uploadId?: string
+        path?: string
+        url?: string
+        metadata?: SanityImageMetadata
+        source?: SanityAssetSourceData
+      } | null
+    } | null
+  } | null
   homePage: true
   title?: LocaleString
   subTitle?: LocaleString
@@ -704,13 +925,82 @@ export type HOME_QUERY_RESULT = {
     | {
         _key: string
         _type: 'clientsUI'
-        title?: string
-        items?: Array<string>
+        title?: LocaleString
+        colSize?: number
+        items: Array<{
+          asset: {
+            _id: string
+            _type: 'sanity.imageAsset'
+            _createdAt: string
+            _updatedAt: string
+            _rev: string
+            originalFilename?: string
+            label?: string
+            title?: string
+            description?: string
+            altText?: string
+            sha1hash?: string
+            extension?: string
+            mimeType?: string
+            size?: number
+            assetId?: string
+            uploadId?: string
+            path?: string
+            url?: string
+            metadata?: SanityImageMetadata
+            source?: SanityAssetSourceData
+          } | null
+        }> | null
+      }
+    | {
+        _key: string
+        _type: 'contactsUI'
+        title?: LocaleString
+        colSize?: number
+        text?: LocaleBlockContent
+        items: Array<{
+          _key: string
+          _type: 'contactLinkItem'
+          label?: string
+          link?: string
+          colSize?: number
+        }> | null
+      }
+    | {
+        _key: string
+        _type: 'granularStripeUI'
+        title?: LocaleString
+        colSize?: number
+        image: {
+          asset: {
+            _id: string
+            _type: 'sanity.imageAsset'
+            _createdAt: string
+            _updatedAt: string
+            _rev: string
+            originalFilename?: string
+            label?: string
+            title?: string
+            description?: string
+            altText?: string
+            sha1hash?: string
+            extension?: string
+            mimeType?: string
+            size?: number
+            assetId?: string
+            uploadId?: string
+            path?: string
+            url?: string
+            metadata?: SanityImageMetadata
+            source?: SanityAssetSourceData
+          } | null
+        } | null
       }
     | {
         _key: string
         _type: 'imagesUI'
         title?: string
+        colSize?: number
         gridSize?: number
         items?: Array<{
           asset?: SanityImageAssetReference
@@ -727,8 +1017,10 @@ export type HOME_QUERY_RESULT = {
         _key: string
         _type: 'listProjectsUI'
         title?: string
+        colSize?: number
         items: Array<{
           _type: 'project'
+          slug: Slug | null
           seo: {
             _type: 'seo'
             metaTitle?: string
@@ -758,6 +1050,7 @@ export type HOME_QUERY_RESULT = {
               } | null
             } | null
           } | null
+          title: LocaleString | null
           imageCover: {
             asset: {
               _id: string
@@ -786,6 +1079,8 @@ export type HOME_QUERY_RESULT = {
             crop?: SanityImageCrop
             _type: 'image'
           } | null
+          rip: boolean | null
+          year: string | null
           ID: string | null
           client: {
             _id: string
@@ -798,15 +1093,52 @@ export type HOME_QUERY_RESULT = {
             backgroundColor?: Color
             foregroundColor?: Color
           } | null
-          persons: null
-          relatedProject: null
+          contributions: Array<{
+            service: {
+              title: LocaleString | null
+            } | null
+            contributors: Array<{
+              name: string | null
+            }> | null
+          }> | null
         }> | null
       }
     | {
         _key: string
-        _type: 'textUI'
+        _type: 'locationMapUI'
         title?: LocaleString
-        look?: 'columns' | 'normal' | 'text-lg'
+        colSize?: number
+        map: {
+          asset: {
+            _id: string
+            _type: 'sanity.imageAsset'
+            _createdAt: string
+            _updatedAt: string
+            _rev: string
+            originalFilename?: string
+            label?: string
+            title?: string
+            description?: string
+            altText?: string
+            sha1hash?: string
+            extension?: string
+            mimeType?: string
+            size?: number
+            assetId?: string
+            uploadId?: string
+            path?: string
+            url?: string
+            metadata?: SanityImageMetadata
+            source?: SanityAssetSourceData
+          } | null
+        } | null
+        cta?: LinkExternal
+      }
+    | {
+        _key: string
+        _type: 'servicesUI'
+        title?: LocaleString
+        colSize?: number
         text: {
           _type: 'localeBlockContent'
           en: Array<
@@ -833,6 +1165,7 @@ export type HOME_QUERY_RESULT = {
                             _createdAt: string
                             _updatedAt: string
                             _rev: string
+                            seo?: Seo
                             homePage?: boolean
                             title?: LocaleString
                             subTitle?: LocaleString
@@ -844,10 +1177,22 @@ export type HOME_QUERY_RESULT = {
                                 } & ClientsUI)
                               | ({
                                   _key: string
+                                } & ContactsUI)
+                              | ({
+                                  _key: string
+                                } & GranularStripeUI)
+                              | ({
+                                  _key: string
                                 } & ImagesUI)
                               | ({
                                   _key: string
                                 } & ListProjectsUI)
+                              | ({
+                                  _key: string
+                                } & LocationMapUI)
+                              | ({
+                                  _key: string
+                                } & ServicesUI)
                               | ({
                                   _key: string
                                 } & TextUI)
@@ -903,7 +1248,156 @@ export type HOME_QUERY_RESULT = {
                             media?: Array<
                               | ({
                                   _key: string
-                                } & Video)
+                                } & MuxVideo)
+                              | {
+                                  asset?: SanityImageAssetReference
+                                  media?: unknown
+                                  hotspot?: SanityImageHotspot
+                                  crop?: SanityImageCrop
+                                  _type: 'image'
+                                  _key: string
+                                }
+                            >
+                          }
+                        | null
+                      _type: 'linkInternal'
+                      _key: string
+                    }
+                > | null
+                level?: number
+                _type: 'block'
+                _key: string
+              }
+            | {
+                asset?: SanityImageAssetReference
+                media?: unknown
+                hotspot?: SanityImageHotspot
+                crop?: SanityImageCrop
+                _type: 'image'
+                _key: string
+                markDefs: null
+              }
+          > | null
+          zh?: BlockContent
+          fr: null
+        } | null
+      }
+    | {
+        _key: string
+        _type: 'textUI'
+        title?: LocaleString
+        colSize?: number
+        look?: 'columns' | 'normal' | 'text-lg text-center' | 'text-lg'
+        text: {
+          _type: 'localeBlockContent'
+          en: Array<
+            | {
+                children?: Array<{
+                  marks?: Array<string>
+                  text?: string
+                  _type: 'span'
+                  _key: string
+                }>
+                style?: 'normal' | 'text-lg'
+                listItem?: 'bullet'
+                markDefs: Array<
+                  | {
+                      href?: string
+                      _type: 'linkExternal'
+                      _key: string
+                    }
+                  | {
+                      reference:
+                        | {
+                            _id: string
+                            _type: 'pageModulaire'
+                            _createdAt: string
+                            _updatedAt: string
+                            _rev: string
+                            seo?: Seo
+                            homePage?: boolean
+                            title?: LocaleString
+                            subTitle?: LocaleString
+                            slug?: Slug
+                            color?: Color
+                            modules?: Array<
+                              | ({
+                                  _key: string
+                                } & ClientsUI)
+                              | ({
+                                  _key: string
+                                } & ContactsUI)
+                              | ({
+                                  _key: string
+                                } & GranularStripeUI)
+                              | ({
+                                  _key: string
+                                } & ImagesUI)
+                              | ({
+                                  _key: string
+                                } & ListProjectsUI)
+                              | ({
+                                  _key: string
+                                } & LocationMapUI)
+                              | ({
+                                  _key: string
+                                } & ServicesUI)
+                              | ({
+                                  _key: string
+                                } & TextUI)
+                            >
+                          }
+                        | {
+                            _id: string
+                            _type: 'project'
+                            _createdAt: string
+                            _updatedAt: string
+                            _rev: string
+                            seo?: Seo
+                            title?: LocaleString
+                            slug?: Slug
+                            imageCover?: {
+                              asset?: SanityImageAssetReference
+                              media?: unknown
+                              hotspot?: SanityImageHotspot
+                              crop?: SanityImageCrop
+                              _type: 'image'
+                            }
+                            rip?: boolean
+                            ID?: string
+                            client?: ClientReference
+                            year?: string
+                            location?: Array<
+                              {
+                                _key: string
+                              } & LocationReference
+                            >
+                            contributions?: Array<{
+                              service?: ServiceReference
+                              contributors?: Array<
+                                {
+                                  _key: string
+                                } & PersonReference
+                              >
+                              _type: 'contribution'
+                              _key: string
+                            }>
+                            services?: Array<
+                              {
+                                _key: string
+                              } & ServiceReference
+                            >
+                            metas?: Array<
+                              {
+                                _key: string
+                              } & KeyVal
+                            >
+                            description?: LocaleText
+                            text?: LocaleBlockContent
+                            media?: Array<
+                              | ({
+                                  _key: string
+                                } & MuxVideo)
                               | {
                                   asset?: SanityImageAssetReference
                                   media?: unknown
@@ -938,18 +1432,46 @@ export type HOME_QUERY_RESULT = {
         } | null
       }
   > | null
-  seo: null
 } | null
 
 // Source: ../web/app/utils/sanity-api/queries.ts
 // Variable: PAGE_MODULAIRE_QUERY
-// Query: *[_type == "pageModulaire" && slug.current == $slug][0]{  ...,  seo{    	...,	metaImage{		asset->	}  },  modules[]{    	...,	  _type == 'textUI' => {    ...,    text{      	...,	en[]{		...,		markDefs[] {			...,			_type == "linkInternal" => {				...,				reference->,			},		},		_type == 'icon' => {			...,			image{				asset->			},    }	},	fr[]{		...,		markDefs[] {			...,			_type == "linkInternal" => {				...,				reference->,			},		},		_type == 'icon' => {			...,			image{				asset->			},    }	}    }  },		_type == 'listProjectsUI' => {		...,		items[]->{			  _type,  seo{    	...,	metaImage{		asset->	}  },  imageCover{    ...,    asset->  },  ID,  client->,  persons[]->{    ...  },  relatedProject->{    _type,    slug,    title,  }		},	},  }}
+// Query: *[_type == "pageModulaire" && slug.current == $slug][0]{  ...,  seo{    	...,	metaImage{		asset->	}  },  modules[]{    	...,	  _type == 'textUI' => {    ...,    text{      	...,	en[]{		...,		markDefs[] {			...,			_type == "linkInternal" => {				...,				reference->,			},		},		_type == 'icon' => {			...,			image{				asset->			},    }	},	fr[]{		...,		markDefs[] {			...,			_type == "linkInternal" => {				...,				reference->,			},		},		_type == 'icon' => {			...,			image{				asset->			},    }	}    }  },		_type == 'listProjectsUI' => {		...,		items[]->{			  _type,  slug,  seo{    	...,	metaImage{		asset->	}  },  title,  imageCover{    ...,    asset->  },  rip,  year,  ID,  client->,  contributions[]{    service->{      title    },    contributors[]->{      name    }  },		},	},	  	_type == 'clientsUI' => {		...,    items[]{      asset->    }	},    	_type == 'locationMapUI' => {		...,    map{      asset->    }	},    	_type == 'contactsUI' => {		...,    items[]{      ...    }	},    	_type == 'granularStripeUI' => {		...,    image{      asset->    }	},    _type == 'servicesUI' => {    ...,    text{      	...,	en[]{		...,		markDefs[] {			...,			_type == "linkInternal" => {				...,				reference->,			},		},		_type == 'icon' => {			...,			image{				asset->			},    }	},	fr[]{		...,		markDefs[] {			...,			_type == "linkInternal" => {				...,				reference->,			},		},		_type == 'icon' => {			...,			image{				asset->			},    }	}    }  },  }}
 export type PAGE_MODULAIRE_QUERY_RESULT = {
   _id: string
   _type: 'pageModulaire'
   _createdAt: string
   _updatedAt: string
   _rev: string
+  seo: {
+    _type: 'seo'
+    metaTitle?: string
+    metaDescription?: string
+    metaImage: {
+      asset: {
+        _id: string
+        _type: 'sanity.imageAsset'
+        _createdAt: string
+        _updatedAt: string
+        _rev: string
+        originalFilename?: string
+        label?: string
+        title?: string
+        description?: string
+        altText?: string
+        sha1hash?: string
+        extension?: string
+        mimeType?: string
+        size?: number
+        assetId?: string
+        uploadId?: string
+        path?: string
+        url?: string
+        metadata?: SanityImageMetadata
+        source?: SanityAssetSourceData
+      } | null
+    } | null
+  } | null
   homePage?: boolean
   title?: LocaleString
   subTitle?: LocaleString
@@ -959,13 +1481,82 @@ export type PAGE_MODULAIRE_QUERY_RESULT = {
     | {
         _key: string
         _type: 'clientsUI'
-        title?: string
-        items?: Array<string>
+        title?: LocaleString
+        colSize?: number
+        items: Array<{
+          asset: {
+            _id: string
+            _type: 'sanity.imageAsset'
+            _createdAt: string
+            _updatedAt: string
+            _rev: string
+            originalFilename?: string
+            label?: string
+            title?: string
+            description?: string
+            altText?: string
+            sha1hash?: string
+            extension?: string
+            mimeType?: string
+            size?: number
+            assetId?: string
+            uploadId?: string
+            path?: string
+            url?: string
+            metadata?: SanityImageMetadata
+            source?: SanityAssetSourceData
+          } | null
+        }> | null
+      }
+    | {
+        _key: string
+        _type: 'contactsUI'
+        title?: LocaleString
+        colSize?: number
+        text?: LocaleBlockContent
+        items: Array<{
+          _key: string
+          _type: 'contactLinkItem'
+          label?: string
+          link?: string
+          colSize?: number
+        }> | null
+      }
+    | {
+        _key: string
+        _type: 'granularStripeUI'
+        title?: LocaleString
+        colSize?: number
+        image: {
+          asset: {
+            _id: string
+            _type: 'sanity.imageAsset'
+            _createdAt: string
+            _updatedAt: string
+            _rev: string
+            originalFilename?: string
+            label?: string
+            title?: string
+            description?: string
+            altText?: string
+            sha1hash?: string
+            extension?: string
+            mimeType?: string
+            size?: number
+            assetId?: string
+            uploadId?: string
+            path?: string
+            url?: string
+            metadata?: SanityImageMetadata
+            source?: SanityAssetSourceData
+          } | null
+        } | null
       }
     | {
         _key: string
         _type: 'imagesUI'
         title?: string
+        colSize?: number
         gridSize?: number
         items?: Array<{
           asset?: SanityImageAssetReference
@@ -982,8 +1573,10 @@ export type PAGE_MODULAIRE_QUERY_RESULT = {
         _key: string
         _type: 'listProjectsUI'
         title?: string
+        colSize?: number
         items: Array<{
           _type: 'project'
+          slug: Slug | null
           seo: {
             _type: 'seo'
             metaTitle?: string
@@ -1013,6 +1606,7 @@ export type PAGE_MODULAIRE_QUERY_RESULT = {
               } | null
             } | null
           } | null
+          title: LocaleString | null
           imageCover: {
             asset: {
               _id: string
@@ -1041,6 +1635,8 @@ export type PAGE_MODULAIRE_QUERY_RESULT = {
             crop?: SanityImageCrop
             _type: 'image'
           } | null
+          rip: boolean | null
+          year: string | null
           ID: string | null
           client: {
             _id: string
@@ -1053,15 +1649,52 @@ export type PAGE_MODULAIRE_QUERY_RESULT = {
             backgroundColor?: Color
             foregroundColor?: Color
           } | null
-          persons: null
-          relatedProject: null
+          contributions: Array<{
+            service: {
+              title: LocaleString | null
+            } | null
+            contributors: Array<{
+              name: string | null
+            }> | null
+          }> | null
         }> | null
       }
     | {
         _key: string
-        _type: 'textUI'
+        _type: 'locationMapUI'
         title?: LocaleString
-        look?: 'columns' | 'normal' | 'text-lg'
+        colSize?: number
+        map: {
+          asset: {
+            _id: string
+            _type: 'sanity.imageAsset'
+            _createdAt: string
+            _updatedAt: string
+            _rev: string
+            originalFilename?: string
+            label?: string
+            title?: string
+            description?: string
+            altText?: string
+            sha1hash?: string
+            extension?: string
+            mimeType?: string
+            size?: number
+            assetId?: string
+            uploadId?: string
+            path?: string
+            url?: string
+            metadata?: SanityImageMetadata
+            source?: SanityAssetSourceData
+          } | null
+        } | null
+        cta?: LinkExternal
+      }
+    | {
+        _key: string
+        _type: 'servicesUI'
+        title?: LocaleString
+        colSize?: number
         text: {
           _type: 'localeBlockContent'
           en: Array<
@@ -1088,6 +1721,7 @@ export type PAGE_MODULAIRE_QUERY_RESULT = {
                             _createdAt: string
                             _updatedAt: string
                             _rev: string
+                            seo?: Seo
                             homePage?: boolean
                             title?: LocaleString
                             subTitle?: LocaleString
@@ -1099,10 +1733,22 @@ export type PAGE_MODULAIRE_QUERY_RESULT = {
                                 } & ClientsUI)
                               | ({
                                   _key: string
+                                } & ContactsUI)
+                              | ({
+                                  _key: string
+                                } & GranularStripeUI)
+                              | ({
+                                  _key: string
                                 } & ImagesUI)
                               | ({
                                   _key: string
                                 } & ListProjectsUI)
+                              | ({
+                                  _key: string
+                                } & LocationMapUI)
+                              | ({
+                                  _key: string
+                                } & ServicesUI)
                               | ({
                                   _key: string
                                 } & TextUI)
@@ -1158,7 +1804,156 @@ export type PAGE_MODULAIRE_QUERY_RESULT = {
                             media?: Array<
                               | ({
                                   _key: string
-                                } & Video)
+                                } & MuxVideo)
+                              | {
+                                  asset?: SanityImageAssetReference
+                                  media?: unknown
+                                  hotspot?: SanityImageHotspot
+                                  crop?: SanityImageCrop
+                                  _type: 'image'
+                                  _key: string
+                                }
+                            >
+                          }
+                        | null
+                      _type: 'linkInternal'
+                      _key: string
+                    }
+                > | null
+                level?: number
+                _type: 'block'
+                _key: string
+              }
+            | {
+                asset?: SanityImageAssetReference
+                media?: unknown
+                hotspot?: SanityImageHotspot
+                crop?: SanityImageCrop
+                _type: 'image'
+                _key: string
+                markDefs: null
+              }
+          > | null
+          zh?: BlockContent
+          fr: null
+        } | null
+      }
+    | {
+        _key: string
+        _type: 'textUI'
+        title?: LocaleString
+        colSize?: number
+        look?: 'columns' | 'normal' | 'text-lg text-center' | 'text-lg'
+        text: {
+          _type: 'localeBlockContent'
+          en: Array<
+            | {
+                children?: Array<{
+                  marks?: Array<string>
+                  text?: string
+                  _type: 'span'
+                  _key: string
+                }>
+                style?: 'normal' | 'text-lg'
+                listItem?: 'bullet'
+                markDefs: Array<
+                  | {
+                      href?: string
+                      _type: 'linkExternal'
+                      _key: string
+                    }
+                  | {
+                      reference:
+                        | {
+                            _id: string
+                            _type: 'pageModulaire'
+                            _createdAt: string
+                            _updatedAt: string
+                            _rev: string
+                            seo?: Seo
+                            homePage?: boolean
+                            title?: LocaleString
+                            subTitle?: LocaleString
+                            slug?: Slug
+                            color?: Color
+                            modules?: Array<
+                              | ({
+                                  _key: string
+                                } & ClientsUI)
+                              | ({
+                                  _key: string
+                                } & ContactsUI)
+                              | ({
+                                  _key: string
+                                } & GranularStripeUI)
+                              | ({
+                                  _key: string
+                                } & ImagesUI)
+                              | ({
+                                  _key: string
+                                } & ListProjectsUI)
+                              | ({
+                                  _key: string
+                                } & LocationMapUI)
+                              | ({
+                                  _key: string
+                                } & ServicesUI)
+                              | ({
+                                  _key: string
+                                } & TextUI)
+                            >
+                          }
+                        | {
+                            _id: string
+                            _type: 'project'
+                            _createdAt: string
+                            _updatedAt: string
+                            _rev: string
+                            seo?: Seo
+                            title?: LocaleString
+                            slug?: Slug
+                            imageCover?: {
+                              asset?: SanityImageAssetReference
+                              media?: unknown
+                              hotspot?: SanityImageHotspot
+                              crop?: SanityImageCrop
+                              _type: 'image'
+                            }
+                            rip?: boolean
+                            ID?: string
+                            client?: ClientReference
+                            year?: string
+                            location?: Array<
+                              {
+                                _key: string
+                              } & LocationReference
+                            >
+                            contributions?: Array<{
+                              service?: ServiceReference
+                              contributors?: Array<
+                                {
+                                  _key: string
+                                } & PersonReference
+                              >
+                              _type: 'contribution'
+                              _key: string
+                            }>
+                            services?: Array<
+                              {
+                                _key: string
+                              } & ServiceReference
+                            >
+                            metas?: Array<
+                              {
+                                _key: string
+                              } & KeyVal
+                            >
+                            description?: LocaleText
+                            text?: LocaleBlockContent
+                            media?: Array<
+                              | ({
+                                  _key: string
+                                } & MuxVideo)
                               | {
                                   asset?: SanityImageAssetReference
                                   media?: unknown
@@ -1193,7 +1988,6 @@ export type PAGE_MODULAIRE_QUERY_RESULT = {
         } | null
       }
   > | null
-  seo: null
 } | null
 
 // Source: ../web/app/utils/sanity-api/queries.ts
@@ -1308,7 +2102,7 @@ export type PROJECT_QUERY_RESULT = {
   media?: Array<
     | ({
         _key: string
-      } & Video)
+      } & MuxVideo)
     | {
         asset?: SanityImageAssetReference
         media?: unknown
@@ -1327,8 +2121,8 @@ import '@sanity/client'
 declare module '@sanity/client' {
   interface SanityQueries {
     "*[_type == \"settings\"][0]{\n  ...,\n  logo{\n    asset->{\n      url\n    }\n  },\n  navPrimary[]{\n    ...,\n    _type == 'linkInternal' => {\n      ...,\n      link->{\n        _type,\n        slug,\n        homePage\n      },\n    },\n\n  },\n  navSecondary[]{\n    ...,\n    _type == 'linkInternal' => {\n      ...,\n      link->{\n        _type,\n        slug,\n      },\n    },\n  },\n\n}": SETTINGS_QUERY_RESULT
-    "*[_type == \"pageModulaire\" && homePage == true][0]{\n  ...,\n  seo{\n    \n\t...,\n\tmetaImage{\n\t\tasset->\n\t}\n\n  },\n  modules[]{\n    \n\t...,\n\t\n  _type == 'textUI' => {\n    ...,\n    text{\n      \n\t...,\n\ten[]{\n\t\t...,\n\t\tmarkDefs[] {\n\t\t\t...,\n\t\t\t_type == \"linkInternal\" => {\n\t\t\t\t...,\n\t\t\t\treference->,\n\n\t\t\t},\n\t\t},\n\t\t_type == 'icon' => {\n\t\t\t...,\n\t\t\timage{\n\t\t\t\tasset->\n\t\t\t},\n    }\n\t},\n\tfr[]{\n\t\t...,\n\t\tmarkDefs[] {\n\t\t\t...,\n\t\t\t_type == \"linkInternal\" => {\n\t\t\t\t...,\n\t\t\t\treference->,\n\n\t\t\t},\n\n\t\t},\n\t\t_type == 'icon' => {\n\t\t\t...,\n\t\t\timage{\n\t\t\t\tasset->\n\t\t\t},\n    }\n\t}\n\n    }\n  }\n,\n\t\n\t_type == 'listProjectsUI' => {\n\t\t...,\n\t\titems[]->{\n\t\t\t\n  _type,\n  seo{\n    \n\t...,\n\tmetaImage{\n\t\tasset->\n\t}\n\n  },\n  imageCover{\n    ...,\n    asset->\n  },\n  ID,\n  client->,\n  persons[]->{\n    ...\n  },\n  relatedProject->{\n    _type,\n    slug,\n    title,\n  }\n\n\t\t},\n\t}\n,\n\n  }\n}": HOME_QUERY_RESULT
-    "*[_type == \"pageModulaire\" && slug.current == $slug][0]{\n  ...,\n  seo{\n    \n\t...,\n\tmetaImage{\n\t\tasset->\n\t}\n\n  },\n  modules[]{\n    \n\t...,\n\t\n  _type == 'textUI' => {\n    ...,\n    text{\n      \n\t...,\n\ten[]{\n\t\t...,\n\t\tmarkDefs[] {\n\t\t\t...,\n\t\t\t_type == \"linkInternal\" => {\n\t\t\t\t...,\n\t\t\t\treference->,\n\n\t\t\t},\n\t\t},\n\t\t_type == 'icon' => {\n\t\t\t...,\n\t\t\timage{\n\t\t\t\tasset->\n\t\t\t},\n    }\n\t},\n\tfr[]{\n\t\t...,\n\t\tmarkDefs[] {\n\t\t\t...,\n\t\t\t_type == \"linkInternal\" => {\n\t\t\t\t...,\n\t\t\t\treference->,\n\n\t\t\t},\n\n\t\t},\n\t\t_type == 'icon' => {\n\t\t\t...,\n\t\t\timage{\n\t\t\t\tasset->\n\t\t\t},\n    }\n\t}\n\n    }\n  }\n,\n\t\n\t_type == 'listProjectsUI' => {\n\t\t...,\n\t\titems[]->{\n\t\t\t\n  _type,\n  seo{\n    \n\t...,\n\tmetaImage{\n\t\tasset->\n\t}\n\n  },\n  imageCover{\n    ...,\n    asset->\n  },\n  ID,\n  client->,\n  persons[]->{\n    ...\n  },\n  relatedProject->{\n    _type,\n    slug,\n    title,\n  }\n\n\t\t},\n\t}\n,\n\n  }\n}": PAGE_MODULAIRE_QUERY_RESULT
+    "*[_type == \"pageModulaire\" && homePage == true][0]{\n  ...,\n  seo{\n    \n\t...,\n\tmetaImage{\n\t\tasset->\n\t}\n\n  },\n  modules[]{\n    \n\t...,\n\t\n  _type == 'textUI' => {\n    ...,\n    text{\n      \n\t...,\n\ten[]{\n\t\t...,\n\t\tmarkDefs[] {\n\t\t\t...,\n\t\t\t_type == \"linkInternal\" => {\n\t\t\t\t...,\n\t\t\t\treference->,\n\n\t\t\t},\n\t\t},\n\t\t_type == 'icon' => {\n\t\t\t...,\n\t\t\timage{\n\t\t\t\tasset->\n\t\t\t},\n    }\n\t},\n\tfr[]{\n\t\t...,\n\t\tmarkDefs[] {\n\t\t\t...,\n\t\t\t_type == \"linkInternal\" => {\n\t\t\t\t...,\n\t\t\t\treference->,\n\n\t\t\t},\n\n\t\t},\n\t\t_type == 'icon' => {\n\t\t\t...,\n\t\t\timage{\n\t\t\t\tasset->\n\t\t\t},\n    }\n\t}\n\n    }\n  }\n,\n\t\n\t_type == 'listProjectsUI' => {\n\t\t...,\n\t\titems[]->{\n\t\t\t\n  _type,\n  slug,\n  seo{\n    \n\t...,\n\tmetaImage{\n\t\tasset->\n\t}\n\n  },\n  title,\n  imageCover{\n    ...,\n    asset->\n  },\n  rip,\n  year,\n  ID,\n  client->,\n  contributions[]{\n    service->{\n      title\n    },\n    contributors[]->{\n      name\n    }\n  },\n\n\t\t},\n\t}\n,\n\t\n  \t_type == 'clientsUI' => {\n\t\t...,\n    items[]{\n      asset->\n    }\n\t}\n,\n  \n  \t_type == 'locationMapUI' => {\n\t\t...,\n    map{\n      asset->\n    }\n\t}\n,\n  \n  \t_type == 'contactsUI' => {\n\t\t...,\n    items[]{\n      ...\n    }\n\t}\n,\n  \n  \t_type == 'granularStripeUI' => {\n\t\t...,\n    image{\n      asset->\n    }\n\t}\n,\n  \n  _type == 'servicesUI' => {\n    ...,\n    text{\n      \n\t...,\n\ten[]{\n\t\t...,\n\t\tmarkDefs[] {\n\t\t\t...,\n\t\t\t_type == \"linkInternal\" => {\n\t\t\t\t...,\n\t\t\t\treference->,\n\n\t\t\t},\n\t\t},\n\t\t_type == 'icon' => {\n\t\t\t...,\n\t\t\timage{\n\t\t\t\tasset->\n\t\t\t},\n    }\n\t},\n\tfr[]{\n\t\t...,\n\t\tmarkDefs[] {\n\t\t\t...,\n\t\t\t_type == \"linkInternal\" => {\n\t\t\t\t...,\n\t\t\t\treference->,\n\n\t\t\t},\n\n\t\t},\n\t\t_type == 'icon' => {\n\t\t\t...,\n\t\t\timage{\n\t\t\t\tasset->\n\t\t\t},\n    }\n\t}\n\n    }\n  }\n,\n\n  }\n}": HOME_QUERY_RESULT
+    "*[_type == \"pageModulaire\" && slug.current == $slug][0]{\n  ...,\n  seo{\n    \n\t...,\n\tmetaImage{\n\t\tasset->\n\t}\n\n  },\n  modules[]{\n    \n\t...,\n\t\n  _type == 'textUI' => {\n    ...,\n    text{\n      \n\t...,\n\ten[]{\n\t\t...,\n\t\tmarkDefs[] {\n\t\t\t...,\n\t\t\t_type == \"linkInternal\" => {\n\t\t\t\t...,\n\t\t\t\treference->,\n\n\t\t\t},\n\t\t},\n\t\t_type == 'icon' => {\n\t\t\t...,\n\t\t\timage{\n\t\t\t\tasset->\n\t\t\t},\n    }\n\t},\n\tfr[]{\n\t\t...,\n\t\tmarkDefs[] {\n\t\t\t...,\n\t\t\t_type == \"linkInternal\" => {\n\t\t\t\t...,\n\t\t\t\treference->,\n\n\t\t\t},\n\n\t\t},\n\t\t_type == 'icon' => {\n\t\t\t...,\n\t\t\timage{\n\t\t\t\tasset->\n\t\t\t},\n    }\n\t}\n\n    }\n  }\n,\n\t\n\t_type == 'listProjectsUI' => {\n\t\t...,\n\t\titems[]->{\n\t\t\t\n  _type,\n  slug,\n  seo{\n    \n\t...,\n\tmetaImage{\n\t\tasset->\n\t}\n\n  },\n  title,\n  imageCover{\n    ...,\n    asset->\n  },\n  rip,\n  year,\n  ID,\n  client->,\n  contributions[]{\n    service->{\n      title\n    },\n    contributors[]->{\n      name\n    }\n  },\n\n\t\t},\n\t}\n,\n\t\n  \t_type == 'clientsUI' => {\n\t\t...,\n    items[]{\n      asset->\n    }\n\t}\n,\n  \n  \t_type == 'locationMapUI' => {\n\t\t...,\n    map{\n      asset->\n    }\n\t}\n,\n  \n  \t_type == 'contactsUI' => {\n\t\t...,\n    items[]{\n      ...\n    }\n\t}\n,\n  \n  \t_type == 'granularStripeUI' => {\n\t\t...,\n    image{\n      asset->\n    }\n\t}\n,\n  \n  _type == 'servicesUI' => {\n    ...,\n    text{\n      \n\t...,\n\ten[]{\n\t\t...,\n\t\tmarkDefs[] {\n\t\t\t...,\n\t\t\t_type == \"linkInternal\" => {\n\t\t\t\t...,\n\t\t\t\treference->,\n\n\t\t\t},\n\t\t},\n\t\t_type == 'icon' => {\n\t\t\t...,\n\t\t\timage{\n\t\t\t\tasset->\n\t\t\t},\n    }\n\t},\n\tfr[]{\n\t\t...,\n\t\tmarkDefs[] {\n\t\t\t...,\n\t\t\t_type == \"linkInternal\" => {\n\t\t\t\t...,\n\t\t\t\treference->,\n\n\t\t\t},\n\n\t\t},\n\t\t_type == 'icon' => {\n\t\t\t...,\n\t\t\timage{\n\t\t\t\tasset->\n\t\t\t},\n    }\n\t}\n\n    }\n  }\n,\n\n  }\n}": PAGE_MODULAIRE_QUERY_RESULT
     '*[_type == "project" && slug.current == $slug][0]{\n  ...,\n  seo{\n    \n\t...,\n\tmetaImage{\n\t\tasset->\n\t}\n\n  },\n  imageCover{\n    ...,\n    asset->\n  },\n  ID,\n  client->,\n  persons[]->{\n    ...\n  },\n  relatedProject->{\n    _type,\n    slug,\n    title,\n  }\n}': PROJECT_QUERY_RESULT
   }
 }

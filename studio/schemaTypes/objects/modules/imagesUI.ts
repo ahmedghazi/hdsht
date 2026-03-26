@@ -6,10 +6,18 @@ export default defineField({
   title: 'Image(s) UI',
   type: 'object',
   icon: BiImages,
+  initialValue: {
+    colSize: 2,
+  },
   fields: [
     defineField({
       name: 'title',
       type: 'string',
+    }),
+    defineField({
+      name: 'colSize',
+      type: 'number',
+      description: 'Number of columns (1-2) on a 2 columns grid',
     }),
     defineField({
       name: 'gridSize',

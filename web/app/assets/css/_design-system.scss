@@ -1,38 +1,167 @@
-.pill {
-  border-radius: 9999px;
-  line-height: var(--line-height-lg);
-  font-size: calc(var(--line-height-lg) * 0.5);
-  border-radius: calc(var(--line-height-lg) * 0.5);
-  padding: 0 1em;
-  background-color: var(--color-blur);
-  backdrop-filter: blur(var(--blur-size));
-  display: inline-block;
-}
+@use './mixins';
+
+/* ============================================================
+   .bubble
+   ============================================================ */
 .bubble {
-  border-radius: var(--border-radius);
-  line-height: var(--line-height-md);
-  padding: 0 calc(var(--line-height-md) * 0.1);
-  background-color: var(--background, var(--color-grey));
-  color: var(--color, rgba(254, 254, 254, 1));
-  backdrop-filter: blur(var(--blur-size));
+  /* — local tokens — tweak here — */
+  --bubble-lh: var(--line-height-md);
+  --bubble-padding-ratio: 0.25;
+  --bubble-offset-ratio: 0.08;
+  --bubble-max-chars: 25;
+
   display: inline-block;
-  text-transform: uppercase;
   vertical-align: top;
-  &-dots {
-    font-size: calc(var(--line-height-md) * 0.7);
-  }
-  &--lg {
-    line-height: var(--line-height-lg);
-    padding: 0 calc(var(--line-height-lg) * 0.1);
-    text-transform: unset;
-    max-width: calc(var(--line-height-lg) * 25);
-    white-space: nowrap;
-    text-overflow: ellipsis;
-    overflow: hidden;
-  }
-  &--lg-dots {
-    font-size: calc(var(--line-height-lg) * 0);
+  font-family: var(--font-primary);
+  font-size: var(--text-md);
+  line-height: var(--bubble-lh);
+  border-radius: var(--border-radius);
+  padding-inline: calc(var(--bubble-lh) * var(--bubble-padding-ratio));
+  max-width: calc(var(--bubble-lh) * var(--bubble-max-chars));
+  backdrop-filter: blur(var(--blur-size));
+  background-color: var(--background, var(--color-grey));
+  color: var(--color, var(--color-white));
+  span {
+    display: block;
+    transform: translateY(calc(var(--bubble-lh) * var(--bubble-offset-ratio)));
   }
 }
-.text-lg .bubble {
+
+/* Override tokens only — padding-inline, max-width, span transform cascade automatically */
+.bubble--lg {
+  --bubble-lh: var(--line-height-lg);
+  --bubble-padding-ratio: 0.1;
+  --bubble-offset-ratio: 0.11;
+
+  font-size: var(--text-lg);
+  line-height: var(--bubble-lh);
+}
+
+/* ============================================================
+   .bubble-dot
+   ============================================================ */
+.bubble-dot {
+  /* — local tokens — */
+  --bubble-dot-lh: var(--line-height-md);
+  --bubble-dot-size-ratio: 0.7;
+  --bubble-dot-padding-ratio: 0.25;
+
+  font-family: var(--font-secondary);
+  line-height: 1;
+  font-size: calc(var(--bubble-dot-lh) * var(--bubble-dot-size-ratio));
+  border-radius: var(--border-radius);
+  padding-inline: calc(var(--bubble-dot-lh) * var(--bubble-dot-padding-ratio));
+  background: var(--color-blur);
+  backdrop-filter: blur(var(--blur-size));
+  color: var(--color-white);
+}
+
+/* font-size and padding-inline cascade automatically from overridden tokens */
+.bubble-dot--lg {
+  --bubble-dot-lh: var(--line-height-lg);
+  --bubble-dot-size-ratio: 0.8;
+  --bubble-dot-padding-ratio: 0.1;
+  --bubble-dot-offset-ratio: -0.04;
+
+  line-height: var(--bubble-dot-lh); /* overrides the hardcoded `1` above */
+  background-color: black;
+  color: yellow;
+
+  span {
+    transform: translateY(
+      calc(var(--bubble-dot-lh) * var(--bubble-dot-offset-ratio))
+    );
+  }
+}
+
+/* ============================================================
+   .pill
+   ============================================================ */
+.pill {
+  // @include mixins.debugFiletY(50%);
+  /* — local tokens — */
+  --pill-lh: var(--line-height-lg);
+  --pill-size-ratio: 0.4; /* font-size and padding-inline ratio */
+  --pill-gap-ratio: 0.25;
+  --pill-radius-ratio: 0.5; /* full pill */
+  --pill-offset-ratio: 0.03;
+  display: inline-block;
+
+  font-family: var(--font-primary);
+  line-height: var(--pill-lh);
+  font-size: calc(var(--pill-lh) * var(--pill-size-ratio));
+  border-radius: calc(var(--pill-lh) * var(--pill-radius-ratio));
+  padding-inline: calc(
+    var(--pill-lh) * var(--pill-size-ratio)
+  ); /* intentionally = font-size */
+  white-space: nowrap;
+  cursor: pointer;
+  background: var(--background, var(--color-blur));
+  backdrop-filter: blur(var(--blur-size));
+  color: var(--color, var(--color-white));
+  transition: background-color 0.2s var(--cubic);
+  span {
+    display: block;
+    transform: translateY(calc(var(--pill-lh) * var(--pill-offset-ratio)));
+  }
+}
+
+.pill:hover {
+  background: color-mix(in srgb, var(--color-blur) 100%, var(--color-white) 8%);
+}
+
+.pill:disabled,
+.pill[aria-disabled='true'] {
+  color: var(--color-white-40);
+  pointer-events: none;
+}
+
+.pill--stretch {
+  --pill-lh: var(--line-height-xl);
+  display: block;
+  height: var(--pill-lh);
+  line-height: var(--pill-lh);
+  font-size: calc(var(--pill-lh) * 0.2);
+  text-align: center;
+  span {
+    // display: block;
+    // transform: translateY(calc(var(--pill-lh) * var(--pill-offset-ratio)));
+  }
+}
+
+/* ============================================================
+   .pill--icon
+   ============================================================ */
+.pill--icon {
+  /* — local tokens — shares naming with .pill for consistency — */
+  --pill-lh: var(--line-height-lg);
+  --pill-radius-ratio: 0.5;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--pill-lh);
+  height: var(--pill-lh);
+  padding-inline: 0;
+  border-radius: calc(var(--pill-lh) * var(--pill-radius-ratio));
+  cursor: pointer;
+  background: var(--color-blur);
+  backdrop-filter: blur(var(--blur-size));
+  -webkit-backdrop-filter: blur(var(--blur-size));
+  color: var(--color-white);
+  transition: background-color 0.2s var(--cubic);
+}
+
+.pill--icon:hover {
+  background: color-mix(in srgb, var(--color-blur) 100%, var(--color-white) 8%);
+}
+
+.pill--icon > svg,
+.pill--icon > img {
+  height: var(--pill-lh);
+  width: auto;
+}
+
+.col-span-2 {
+  grid-column: span 2 / span 2;
 }
