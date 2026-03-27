@@ -33,9 +33,9 @@ main {
   min-height: var(--app-h, 100vh);
   position: relative;
   z-index: 1;
-  padding-top: calc(var(--header-h) + var(--spacing-xl));
-  padding-left: var(--spacing-sm);
-  padding-right: var(--spacing-sm);
+  padding-top: calc(var(--header-h) + var(--spacing-lg));
+  padding-left: var(--spacing-md);
+  padding-right: var(--spacing-md);
   // padding-bottom: calc(var(--footer-h) * 0.65 + 2rem);
   padding-bottom: calc(var(--footer-h) * 1 + 1.4rem);
 }

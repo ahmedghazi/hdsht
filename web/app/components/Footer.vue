@@ -1,13 +1,18 @@
 <script setup lang="ts">
 import type { SETTINGS_QUERY_RESULT } from '~/utils/sanity-api/sanity.types'
+import { useSanityLocale } from '~/composables/useSanityLocale'
 
 const { settings } = defineProps<{ settings: SETTINGS_QUERY_RESULT }>()
-
+const logos = settings?.logos
+const navSecondary = settings?.navSecondary
 const { scrollDirection, scrollEnd } = useScroll()
+
+const { _localizeField } = useSanityLocale()
 </script>
 
 <template>
   <footer
+    v-if="scrollDirection || scrollEnd"
     id="footer-site"
     :class="[
       scrollDirection && `is-${scrollDirection}`,
@@ -15,25 +20,53 @@ const { scrollDirection, scrollEnd } = useScroll()
     ]"
   >
     footer
+    <ul class="flex flex-wrap gap-md">
+      <template v-if="logos">
+        <li class="logo" v-for="(logo, index) in logos" :key="index">
+          <img
+            :src="$urlFor(logo).url()"
+            alt=""
+            height="79"
+            :width="
+              (logo?.asset?.metadata?.dimensions?.width ?? 0) /
+                (logo?.asset?.metadata?.dimensions?.aspectRatio ?? 1) || 'auto'
+            "
+          />
+        </li>
+      </template>
+      <template v-if="navSecondary">
+        <li v-for="item in navSecondary" :key="item._key">
+          <NuxtLink
+            v-if="item.link"
+            class="pill pill--stretch"
+            :to="
+              item._type === 'linkInternal'
+                ? _linkResolver(item.link as any)
+                : item.link
+            "
+            >{{
+              item._type === 'linkInternal' && item.label
+                ? _localizeField(item.label)
+                : (item as { label?: string }).label
+            }}</NuxtLink
+          >
+        </li>
+      </template>
+    </ul>
   </footer>
 </template>
 
 <style lang="scss" scoped>
 footer {
   padding: var(--spacing-md);
-
-  // position: fixed;
-  // bottom: 0;
-  // left: 0;
-  // width: 100%;
-  // z-index: 51;
-  // transition: transform 0.3s ease-in-out;
-  // &.is-down {
-  //   transform: translateY(100%);
-  // }
-  // &.is-bottom {
-  //   transform: translateY(0);
-  // }
+  li {
+    flex-shrink: 0;
+    img {
+      height: 7.9rem;
+      height: 10rem;
+      width: auto;
+    }
+  }
 
   @media (max-width: 800px) {
   }

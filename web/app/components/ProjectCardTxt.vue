@@ -10,7 +10,6 @@ const { _localizeField } = useSanityLocale()
 
 <template>
   <NuxtLink :to="_linkResolver(input as any)">
-    {{ _linkResolver(input) }}
     <article
       :class="{
         card: true,

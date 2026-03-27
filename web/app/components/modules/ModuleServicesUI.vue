@@ -14,14 +14,19 @@ defineProps<{ input: ServicesUI }>()
     :class="['module', 'module--services-ui', `col-span-${input.colSize || 2}`]"
   >
     <div class="inner">
-      <h2 v-if="input.title" class="bubble">
-        <span>{{ _localizeField(input.title) }}</span>
-      </h2>
-      <div v-if="input.text && input.text.en" class="text">
-        <PortableText
-          :value="_localizeField(input.text)"
-          :components="portableTextComponents"
-        />
+      <div class="header">
+        <h2 v-if="input.title" class="bubble">
+          <span>{{ _localizeField(input.title) }}</span>
+        </h2>
+      </div>
+      <div class="grid md:grid-cols-2 gap-md">
+        <div>visual</div>
+        <div v-if="input.text && input.text.en" class="text">
+          <PortableText
+            :value="_localizeField(input.text)"
+            :components="portableTextComponents"
+          />
+        </div>
       </div>
     </div>
   </section>
@@ -29,8 +34,8 @@ defineProps<{ input: ServicesUI }>()
 
 <style lang="scss" scoped>
 .module {
-  h2 {
-    margin-bottom: 1rem;
+  .header {
+    margin-bottom: var(--spacing-xs);
   }
   .services-text {
     line-height: 1.6;

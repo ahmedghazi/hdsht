@@ -43,6 +43,7 @@ export default defineNuxtConfig({
         weights: [400],
         style: 'normal',
       },
+      { name: 'Instrument Serif', provider: 'google' },
     ],
   },
   i18n: {

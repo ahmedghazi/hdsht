@@ -1,9 +1,7 @@
 <script setup lang="ts">
-import type {
-  Settings,
-  SETTINGS_QUERY_RESULT,
-} from '~/utils/sanity-api/sanity.types'
+import type { SETTINGS_QUERY_RESULT } from '~/utils/sanity-api/sanity.types'
 import Nav from './Nav.vue'
+
 const { settings } = defineProps<{ settings: SETTINGS_QUERY_RESULT }>()
 
 const { scrollDirection, scrollEnd } = useScroll()
@@ -19,7 +17,9 @@ const { scrollDirection, scrollEnd } = useScroll()
   >
     <div class="flex justify-between">
       <div class="site-name">
-        <NuxtLink to="/">{{ settings?.siteName || 'Studio Jimbo' }}</NuxtLink>
+        <NuxtLink to="/" :title="settings?.siteName || 'HDSHT'">
+          <HdShtLogo />
+        </NuxtLink>
       </div>
       <Nav :navPrimary="settings?.navPrimary || []" :settings="settings" />
     </div>

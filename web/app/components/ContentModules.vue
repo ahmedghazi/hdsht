@@ -62,13 +62,13 @@ defineProps({
 
 <style lang="scss" scoped>
 .module {
-  margin-bottom: var(--spacing-lg);
+  // margin-bottom: var(--spacing-md);
 
   &:last-child {
     margin-bottom: 0;
   }
   @media (min-width: 800px) {
-    margin-bottom: var(--spacing-xl);
+    // margin-bottom: var(--spacing-xl);
   }
 }
 </style>

@@ -49,12 +49,7 @@ export default defineType({
       title: 'Titre',
       group: 'editorial',
     }),
-    defineField({
-      name: 'subTitle',
-      type: 'localeString',
-      title: 'Soustitre',
-      group: 'editorial',
-    }),
+
     defineField({
       name: 'slug',
       title: 'Slug (URL de la page)',
@@ -68,16 +63,11 @@ export default defineType({
       validation: (Rule) => Rule.required(),
       group: 'editorial',
     }),
-    defineField({
-      name: 'color',
-      type: 'color',
-      title: 'Couleur',
-      group: 'editorial',
-    }),
+
     defineField({
       name: 'modules',
       title: 'Modules',
-      description: 'Zone de contenu Modulaire (images, textes, embed)',
+      description: 'Modular content zone (images, textes, lists, clients, etc.)',
       type: 'array',
       of: modulesList,
       group: 'editorial',

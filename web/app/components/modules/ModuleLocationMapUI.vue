@@ -1,7 +1,9 @@
 <script setup lang="ts">
-import { PortableText } from '@portabletext/vue'
-import { portableTextComponents } from '~/utils/sanity-api/portableTextComponents'
 import type { LocationMapUI } from '~/utils/sanity-api/sanity.types'
+import { useSanityLocale } from '~/composables/useSanityLocale'
+import Time from '../ui/Time.vue'
+
+const { _localizeField } = useSanityLocale()
 
 defineProps<{ input: LocationMapUI }>()
 </script>
@@ -9,7 +11,13 @@ defineProps<{ input: LocationMapUI }>()
 <template>
   <section class="module module--location-map-ui">
     <div class="inner">
-      <div class="md:grid md:grid-cols-2 gap-md">
+      <div class="header">
+        <h2 v-if="input.title" class="bubble">
+          <span>{{ _localizeField(input.title) }}</span>
+        </h2>
+        <Time />
+      </div>
+      <div class="">
         <div class="map-container">
           <img
             v-if="input.map && input.map.asset"
@@ -22,12 +30,11 @@ defineProps<{ input: LocationMapUI }>()
             :alt="input.title?.en || 'Location map'"
           />
         </div>
-        <div class="content">
-          <h2 v-if="input.title">{{ input.title.en }}</h2>
+        <div class="footer">
           <a
             v-if="input.cta && input.cta.link"
             :href="input.cta.link"
-            class="cta-link"
+            class="pill pill--stretch"
             target="_blank"
             rel="noopener noreferrer"
           >
@@ -41,42 +48,22 @@ defineProps<{ input: LocationMapUI }>()
 
 <style lang="scss" scoped>
 .module {
-  h2 {
-    margin-bottom: 1rem;
+  .header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: var(--spacing-xs);
   }
   .map-container {
+    margin-bottom: var(--spacing-md);
     img {
       width: 100%;
       height: auto;
       border-radius: 0.5rem;
     }
   }
-  .content {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-  }
-  .cta-link {
-    display: inline-block;
-    margin-top: 1rem;
-    padding: 0.75rem 1.5rem;
-    background-color: var(--color-primary);
-    color: white;
-    text-decoration: none;
-    border-radius: 0.25rem;
-    transition: background-color 0.2s ease;
-
-    &:hover {
-      background-color: var(--color-primary-dark);
-    }
-  }
 }
 @media (max-width: 800px) {
   .module {
-    .md\\:grid {
-      grid-template-columns: 1fr;
-      gap: 1rem;
-    }
   }
 }
 </style>

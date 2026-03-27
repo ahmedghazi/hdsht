@@ -58,20 +58,24 @@ h6 {
   margin-bottom: 1rem;
   text-transform: uppercase;
 }
-.text-lg,
-.md\:text-lg {
-  line-height: 1.1;
-}
 
 /* Links */
 a {
   text-decoration: none;
-  &:hover {
-    color: red;
+  &:hover,
+  &[aria-current='page'] {
+    background: color-mix(
+      in srgb,
+      var(--color-blur) 100%,
+      var(--color-white) 8%
+    );
+    // color: var(--color-secondary);
   }
 }
+
 button:hover {
-  color: red;
+  background: color-mix(in srgb, var(--color-blur) 100%, var(--color-white) 8%);
+  // color: red;
 }
 button.is-active {
   color: var(--color-secondary);
@@ -79,7 +83,8 @@ button.is-active {
 /* Text elements */
 p,
 .text p {
-  line-height: 1.3;
+  font-family: var(--font-quaternary);
+  line-height: 1.36;
   margin-bottom: 1em;
   word-break: break-word;
   overflow-wrap: anywhere;

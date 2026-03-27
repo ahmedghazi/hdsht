@@ -28,6 +28,7 @@ defineProps<{ input: TextUI }>()
 
 <style lang="scss" scoped>
 .inner {
+  padding: 0 var(--spacing-md);
 }
 @media (min-width: 800px) {
   .text {

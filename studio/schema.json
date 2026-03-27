@@ -2006,6 +2006,14 @@
         },
         "optional": true
       },
+      "baseline": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "inline",
+          "name": "localeText"
+        },
+        "optional": true
+      },
       "navPrimary": {
         "type": "objectAttribute",
         "value": {
@@ -2112,26 +2120,71 @@
         },
         "optional": true
       },
-      "siteDescription": {
-        "type": "objectAttribute",
-        "value": {
-          "type": "inline",
-          "name": "localeBlockContent"
-        },
-        "optional": true
-      },
-      "baseline": {
-        "type": "objectAttribute",
-        "value": {
-          "type": "inline",
-          "name": "localeBlockContent"
-        },
-        "optional": true
-      },
       "contact": {
         "type": "objectAttribute",
         "value": {
           "type": "string"
+        },
+        "optional": true
+      },
+      "logos": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "array",
+          "of": {
+            "type": "object",
+            "attributes": {
+              "asset": {
+                "type": "objectAttribute",
+                "value": {
+                  "type": "inline",
+                  "name": "sanity.imageAsset.reference"
+                },
+                "optional": true
+              },
+              "media": {
+                "type": "objectAttribute",
+                "value": {
+                  "type": "unknown"
+                },
+                "optional": true
+              },
+              "hotspot": {
+                "type": "objectAttribute",
+                "value": {
+                  "type": "inline",
+                  "name": "sanity.imageHotspot"
+                },
+                "optional": true
+              },
+              "crop": {
+                "type": "objectAttribute",
+                "value": {
+                  "type": "inline",
+                  "name": "sanity.imageCrop"
+                },
+                "optional": true
+              },
+              "_type": {
+                "type": "objectAttribute",
+                "value": {
+                  "type": "string",
+                  "value": "image"
+                }
+              }
+            },
+            "rest": {
+              "type": "object",
+              "attributes": {
+                "_key": {
+                  "type": "objectAttribute",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
         },
         "optional": true
       },
@@ -2210,27 +2263,11 @@
         },
         "optional": true
       },
-      "subTitle": {
-        "type": "objectAttribute",
-        "value": {
-          "type": "inline",
-          "name": "localeString"
-        },
-        "optional": true
-      },
       "slug": {
         "type": "objectAttribute",
         "value": {
           "type": "inline",
           "name": "slug"
-        },
-        "optional": true
-      },
-      "color": {
-        "type": "objectAttribute",
-        "value": {
-          "type": "inline",
-          "name": "color"
         },
         "optional": true
       },

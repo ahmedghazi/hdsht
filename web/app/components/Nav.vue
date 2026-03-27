@@ -62,9 +62,6 @@ watch(
   align-items: center;
 }
 
-a[aria-current='page'] {
-  color: var(--color-secondary);
-}
 @media (max-width: 800px) {
   button {
     z-index: 10;

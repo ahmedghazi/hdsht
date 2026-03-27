@@ -12,10 +12,12 @@ defineProps<{ input: ContactsUI }>()
     :class="['module', 'module--contacts-ui', `col-span-${input.colSize || 1}`]"
   >
     <div class="inner">
-      <h2 v-if="input.title" class="bubble">
-        <span>{{ _localizeField(input.title) }}</span>
-      </h2>
-      <div v-if="input.text && input.text.en" class="contact-text">
+      <div class="header">
+        <h2 v-if="input.title" class="bubble">
+          <span>{{ _localizeField(input.title) }}</span>
+        </h2>
+      </div>
+      <div v-if="input.text && input.text.en" class="text">
         <PortableText
           :value="_localizeField(input.text)"
           :components="portableTextComponents"
@@ -43,8 +45,11 @@ defineProps<{ input: ContactsUI }>()
 <style lang="scss" scoped>
 .module {
 }
-h2 {
+.header {
   margin-bottom: var(--spacing-xs);
+}
+.text {
+  margin-bottom: var(--spacing-md);
 }
 @media (max-width: 800px) {
   .module {

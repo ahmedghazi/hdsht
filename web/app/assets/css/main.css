@@ -31,12 +31,13 @@
     'Helvetica Neue', 'HelveticaNeueRoman', 'HelveticaNeue-Roman',
     'Helvetica Neue Roman', 'TeXGyreHerosRegular', 'Helvetica', 'Arial',
     sans-serif;
+  --font-quaternary: 'Instrument Serif', serif;
 
   /* Spacing */
   --spacing-xs: 0.6rem; /* 6px */
   --spacing-sm: 1rem; /* 10px */
   --spacing-md: 2rem; /* 20px */
-  --spacing-lg: 1.875rem; /* 30px */
+  --spacing-lg: 4rem; /* 40px */
   --spacing-xl: 4.063rem; /* 65px */
   --spacing-1e: 1em;
   --spacing-1re: 1rem;

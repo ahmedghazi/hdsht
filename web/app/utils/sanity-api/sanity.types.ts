@@ -369,6 +369,7 @@ export type Settings = {
   _updatedAt: string
   _rev: string
   siteName?: string
+  baseline?: LocaleText
   navPrimary?: Array<
     | ({
         _key: string
@@ -390,9 +391,15 @@ export type Settings = {
         _key: string
       } & LinkExternal)
   >
-  siteDescription?: LocaleBlockContent
-  baseline?: LocaleBlockContent
   contact?: string
+  logos?: Array<{
+    asset?: SanityImageAssetReference
+    media?: unknown
+    hotspot?: SanityImageHotspot
+    crop?: SanityImageCrop
+    _type: 'image'
+    _key: string
+  }>
   message404?: BlockContent
   customCss?: string
 }
@@ -406,9 +413,7 @@ export type PageModulaire = {
   seo?: Seo
   homePage?: boolean
   title?: LocaleString
-  subTitle?: LocaleString
   slug?: Slug
-  color?: Color
   modules?: Array<
     | ({
         _key: string
@@ -809,7 +814,7 @@ export type AllSanitySchemaTypes =
 
 // Source: ../web/app/utils/sanity-api/queries.ts
 // Variable: SETTINGS_QUERY
-// Query: *[_type == "settings"][0]{  ...,  logo{    asset->{      url    }  },  navPrimary[]{    ...,    _type == 'linkInternal' => {      ...,      link->{        _type,        slug,        homePage      },    },  },  navSecondary[]{    ...,    _type == 'linkInternal' => {      ...,      link->{        _type,        slug,      },    },  },}
+// Query: *[_type == "settings"][0]{  ...,  logo{    asset->{      url    }  },  navPrimary[]{    ...,    _type == 'linkInternal' => {      ...,      link->{        _type,        slug,        homePage      },    },  },  navSecondary[]{    ...,    _type == 'linkInternal' => {      ...,      link->{        _type,        slug,      },    },  },  logos[]{    asset->  }}
 export type SETTINGS_QUERY_RESULT = {
   _id: string
   _type: 'settings'
@@ -817,6 +822,7 @@ export type SETTINGS_QUERY_RESULT = {
   _updatedAt: string
   _rev: string
   siteName?: string
+  baseline?: LocaleText
   navPrimary: Array<
     | {
         _key: string
@@ -870,9 +876,31 @@ export type SETTINGS_QUERY_RESULT = {
           | null
       }
   > | null
-  siteDescription?: LocaleBlockContent
-  baseline?: LocaleBlockContent
   contact?: string
+  logos: Array<{
+    asset: {
+      _id: string
+      _type: 'sanity.imageAsset'
+      _createdAt: string
+      _updatedAt: string
+      _rev: string
+      originalFilename?: string
+      label?: string
+      title?: string
+      description?: string
+      altText?: string
+      sha1hash?: string
+      extension?: string
+      mimeType?: string
+      size?: number
+      assetId?: string
+      uploadId?: string
+      path?: string
+      url?: string
+      metadata?: SanityImageMetadata
+      source?: SanityAssetSourceData
+    } | null
+  }> | null
   message404?: BlockContent
   customCss?: string
   logo: null
@@ -918,9 +946,7 @@ export type HOME_QUERY_RESULT = {
   } | null
   homePage: true
   title?: LocaleString
-  subTitle?: LocaleString
   slug?: Slug
-  color?: Color
   modules: Array<
     | {
         _key: string
@@ -1168,9 +1194,7 @@ export type HOME_QUERY_RESULT = {
                             seo?: Seo
                             homePage?: boolean
                             title?: LocaleString
-                            subTitle?: LocaleString
                             slug?: Slug
-                            color?: Color
                             modules?: Array<
                               | ({
                                   _key: string
@@ -1317,9 +1341,7 @@ export type HOME_QUERY_RESULT = {
                             seo?: Seo
                             homePage?: boolean
                             title?: LocaleString
-                            subTitle?: LocaleString
                             slug?: Slug
-                            color?: Color
                             modules?: Array<
                               | ({
                                   _key: string
@@ -1474,9 +1496,7 @@ export type PAGE_MODULAIRE_QUERY_RESULT = {
   } | null
   homePage?: boolean
   title?: LocaleString
-  subTitle?: LocaleString
   slug?: Slug
-  color?: Color
   modules: Array<
     | {
         _key: string
@@ -1724,9 +1744,7 @@ export type PAGE_MODULAIRE_QUERY_RESULT = {
                             seo?: Seo
                             homePage?: boolean
                             title?: LocaleString
-                            subTitle?: LocaleString
                             slug?: Slug
-                            color?: Color
                             modules?: Array<
                               | ({
                                   _key: string
@@ -1873,9 +1891,7 @@ export type PAGE_MODULAIRE_QUERY_RESULT = {
                             seo?: Seo
                             homePage?: boolean
                             title?: LocaleString
-                            subTitle?: LocaleString
                             slug?: Slug
-                            color?: Color
                             modules?: Array<
                               | ({
                                   _key: string
@@ -2120,7 +2136,7 @@ export type PROJECT_QUERY_RESULT = {
 import '@sanity/client'
 declare module '@sanity/client' {
   interface SanityQueries {
-    "*[_type == \"settings\"][0]{\n  ...,\n  logo{\n    asset->{\n      url\n    }\n  },\n  navPrimary[]{\n    ...,\n    _type == 'linkInternal' => {\n      ...,\n      link->{\n        _type,\n        slug,\n        homePage\n      },\n    },\n\n  },\n  navSecondary[]{\n    ...,\n    _type == 'linkInternal' => {\n      ...,\n      link->{\n        _type,\n        slug,\n      },\n    },\n  },\n\n}": SETTINGS_QUERY_RESULT
+    "*[_type == \"settings\"][0]{\n  ...,\n  logo{\n    asset->{\n      url\n    }\n  },\n  navPrimary[]{\n    ...,\n    _type == 'linkInternal' => {\n      ...,\n      link->{\n        _type,\n        slug,\n        homePage\n      },\n    },\n\n  },\n  navSecondary[]{\n    ...,\n    _type == 'linkInternal' => {\n      ...,\n      link->{\n        _type,\n        slug,\n      },\n    },\n  },\n  logos[]{\n    asset->\n  }\n}": SETTINGS_QUERY_RESULT
     "*[_type == \"pageModulaire\" && homePage == true][0]{\n  ...,\n  seo{\n    \n\t...,\n\tmetaImage{\n\t\tasset->\n\t}\n\n  },\n  modules[]{\n    \n\t...,\n\t\n  _type == 'textUI' => {\n    ...,\n    text{\n      \n\t...,\n\ten[]{\n\t\t...,\n\t\tmarkDefs[] {\n\t\t\t...,\n\t\t\t_type == \"linkInternal\" => {\n\t\t\t\t...,\n\t\t\t\treference->,\n\n\t\t\t},\n\t\t},\n\t\t_type == 'icon' => {\n\t\t\t...,\n\t\t\timage{\n\t\t\t\tasset->\n\t\t\t},\n    }\n\t},\n\tfr[]{\n\t\t...,\n\t\tmarkDefs[] {\n\t\t\t...,\n\t\t\t_type == \"linkInternal\" => {\n\t\t\t\t...,\n\t\t\t\treference->,\n\n\t\t\t},\n\n\t\t},\n\t\t_type == 'icon' => {\n\t\t\t...,\n\t\t\timage{\n\t\t\t\tasset->\n\t\t\t},\n    }\n\t}\n\n    }\n  }\n,\n\t\n\t_type == 'listProjectsUI' => {\n\t\t...,\n\t\titems[]->{\n\t\t\t\n  _type,\n  slug,\n  seo{\n    \n\t...,\n\tmetaImage{\n\t\tasset->\n\t}\n\n  },\n  title,\n  imageCover{\n    ...,\n    asset->\n  },\n  rip,\n  year,\n  ID,\n  client->,\n  contributions[]{\n    service->{\n      title\n    },\n    contributors[]->{\n      name\n    }\n  },\n\n\t\t},\n\t}\n,\n\t\n  \t_type == 'clientsUI' => {\n\t\t...,\n    items[]{\n      asset->\n    }\n\t}\n,\n  \n  \t_type == 'locationMapUI' => {\n\t\t...,\n    map{\n      asset->\n    }\n\t}\n,\n  \n  \t_type == 'contactsUI' => {\n\t\t...,\n    items[]{\n      ...\n    }\n\t}\n,\n  \n  \t_type == 'granularStripeUI' => {\n\t\t...,\n    image{\n      asset->\n    }\n\t}\n,\n  \n  _type == 'servicesUI' => {\n    ...,\n    text{\n      \n\t...,\n\ten[]{\n\t\t...,\n\t\tmarkDefs[] {\n\t\t\t...,\n\t\t\t_type == \"linkInternal\" => {\n\t\t\t\t...,\n\t\t\t\treference->,\n\n\t\t\t},\n\t\t},\n\t\t_type == 'icon' => {\n\t\t\t...,\n\t\t\timage{\n\t\t\t\tasset->\n\t\t\t},\n    }\n\t},\n\tfr[]{\n\t\t...,\n\t\tmarkDefs[] {\n\t\t\t...,\n\t\t\t_type == \"linkInternal\" => {\n\t\t\t\t...,\n\t\t\t\treference->,\n\n\t\t\t},\n\n\t\t},\n\t\t_type == 'icon' => {\n\t\t\t...,\n\t\t\timage{\n\t\t\t\tasset->\n\t\t\t},\n    }\n\t}\n\n    }\n  }\n,\n\n  }\n}": HOME_QUERY_RESULT
     "*[_type == \"pageModulaire\" && slug.current == $slug][0]{\n  ...,\n  seo{\n    \n\t...,\n\tmetaImage{\n\t\tasset->\n\t}\n\n  },\n  modules[]{\n    \n\t...,\n\t\n  _type == 'textUI' => {\n    ...,\n    text{\n      \n\t...,\n\ten[]{\n\t\t...,\n\t\tmarkDefs[] {\n\t\t\t...,\n\t\t\t_type == \"linkInternal\" => {\n\t\t\t\t...,\n\t\t\t\treference->,\n\n\t\t\t},\n\t\t},\n\t\t_type == 'icon' => {\n\t\t\t...,\n\t\t\timage{\n\t\t\t\tasset->\n\t\t\t},\n    }\n\t},\n\tfr[]{\n\t\t...,\n\t\tmarkDefs[] {\n\t\t\t...,\n\t\t\t_type == \"linkInternal\" => {\n\t\t\t\t...,\n\t\t\t\treference->,\n\n\t\t\t},\n\n\t\t},\n\t\t_type == 'icon' => {\n\t\t\t...,\n\t\t\timage{\n\t\t\t\tasset->\n\t\t\t},\n    }\n\t}\n\n    }\n  }\n,\n\t\n\t_type == 'listProjectsUI' => {\n\t\t...,\n\t\titems[]->{\n\t\t\t\n  _type,\n  slug,\n  seo{\n    \n\t...,\n\tmetaImage{\n\t\tasset->\n\t}\n\n  },\n  title,\n  imageCover{\n    ...,\n    asset->\n  },\n  rip,\n  year,\n  ID,\n  client->,\n  contributions[]{\n    service->{\n      title\n    },\n    contributors[]->{\n      name\n    }\n  },\n\n\t\t},\n\t}\n,\n\t\n  \t_type == 'clientsUI' => {\n\t\t...,\n    items[]{\n      asset->\n    }\n\t}\n,\n  \n  \t_type == 'locationMapUI' => {\n\t\t...,\n    map{\n      asset->\n    }\n\t}\n,\n  \n  \t_type == 'contactsUI' => {\n\t\t...,\n    items[]{\n      ...\n    }\n\t}\n,\n  \n  \t_type == 'granularStripeUI' => {\n\t\t...,\n    image{\n      asset->\n    }\n\t}\n,\n  \n  _type == 'servicesUI' => {\n    ...,\n    text{\n      \n\t...,\n\ten[]{\n\t\t...,\n\t\tmarkDefs[] {\n\t\t\t...,\n\t\t\t_type == \"linkInternal\" => {\n\t\t\t\t...,\n\t\t\t\treference->,\n\n\t\t\t},\n\t\t},\n\t\t_type == 'icon' => {\n\t\t\t...,\n\t\t\timage{\n\t\t\t\tasset->\n\t\t\t},\n    }\n\t},\n\tfr[]{\n\t\t...,\n\t\tmarkDefs[] {\n\t\t\t...,\n\t\t\t_type == \"linkInternal\" => {\n\t\t\t\t...,\n\t\t\t\treference->,\n\n\t\t\t},\n\n\t\t},\n\t\t_type == 'icon' => {\n\t\t\t...,\n\t\t\timage{\n\t\t\t\tasset->\n\t\t\t},\n    }\n\t}\n\n    }\n  }\n,\n\n  }\n}": PAGE_MODULAIRE_QUERY_RESULT
     '*[_type == "project" && slug.current == $slug][0]{\n  ...,\n  seo{\n    \n\t...,\n\tmetaImage{\n\t\tasset->\n\t}\n\n  },\n  imageCover{\n    ...,\n    asset->\n  },\n  ID,\n  client->,\n  persons[]->{\n    ...\n  },\n  relatedProject->{\n    _type,\n    slug,\n    title,\n  }\n}': PROJECT_QUERY_RESULT
