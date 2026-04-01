@@ -212,6 +212,7 @@
   color: var(--color, var(--color-white));
   transition: background-color 0.2s var(--cubic);
 
+  max-width: 10em;
   appearance: none;
   -webkit-appearance: none;
 
