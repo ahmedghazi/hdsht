@@ -32,7 +32,7 @@ export const linkResolverPreview: PresentationPluginOptions['resolve'] = {
       resolve: (doc) => ({
         locations: [
           {
-            title: doc?.title.en || 'Untitled',
+            title: doc?.title || 'Untitled',
             href: `/prjct/${doc?.slug}`,
           },
           {

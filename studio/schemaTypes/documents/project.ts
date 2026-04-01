@@ -91,15 +91,22 @@ export default defineType({
       group: 'meta',
     }),
     defineField({
+      name: 'locations',
+      title: 'Location(s)',
+      type: 'array',
+      of: [{type: 'reference', to: [{type: 'location'}]}],
+      group: 'meta',
+    }),
+    defineField({
       name: 'contributions',
-      title: 'Contributions',
+      title: 'Contribution(s)',
       type: 'array',
       of: [{type: 'contribution'}],
       group: 'meta',
     }),
     defineField({
       name: 'services',
-      title: 'Services',
+      title: 'Service(s)',
       type: 'array',
       of: [{type: 'reference', to: [{type: 'service'}]}],
       group: 'meta',
@@ -131,8 +138,46 @@ export default defineType({
       name: 'media',
       type: 'array',
       of: [
-        {type: 'image', icon: MdImage},
-        {type: 'mux.video', icon: MdVideoFile},
+        {
+          type: 'image',
+          icon: MdImage,
+          initialValue: {
+            colSize: 4,
+          },
+          fields: [
+            defineField({
+              name: 'caption',
+              title: 'Caption',
+              type: 'localeString',
+            }),
+            defineField({
+              name: 'colSize',
+              title: 'Colunn size',
+              type: 'number',
+              description: 'in a 6 column grid (ex: 1, 2, 3)',
+            }),
+          ],
+          preview: {
+            select: {
+              title: 'caption.en',
+              subtitle: 'colSize',
+            },
+          },
+        },
+        // {
+        //   type: 'mux.video',
+        //   icon: MdVideoFile,
+        // },
+        {
+          type: 'video',
+          icon: MdVideoFile,
+          preview: {
+            select: {
+              title: 'title.en',
+              subtitle: 'colSize',
+            },
+          },
+        },
       ],
       group: 'editorial',
     }),

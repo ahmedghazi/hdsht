@@ -26,8 +26,8 @@ const { _localizeField } = useSanityLocale()
         <div class="flex">
           <div class="card__index dots">
             <div class="bubble bubble-dot bubble-dot--lg">
-              <span v-if="input.ID">{{ input.ID }}</span>
-              <span v-else>00000</span>
+              <div v-if="input.ID">{{ input.ID }}</div>
+              <div v-else>00000</div>
             </div>
           </div>
           <Client v-if="input.client" :input="input.client" />
@@ -35,13 +35,13 @@ const { _localizeField } = useSanityLocale()
         <div class="flex">
           <h2 class="card__title">
             <div class="bubble bubble--lg ellipsis">
-              <span>{{ _localizeField(input.title) }}</span>
+              <div>{{ _localizeField(input.title) }}</div>
             </div>
           </h2>
 
           <div class="card__year">
             <div class="bubble bubble--lg">
-              <span>{{ input.year }}</span>
+              <div>{{ input.year }}</div>
             </div>
           </div>
         </div>

@@ -30,8 +30,9 @@ html {
 @media all and (min-width: 1080px) {
   html {
     font-size: 10px;
+    // font-size: 12px;
     font-size: 14px;
-    // font-size: 16px;
+    // font-size: 20px;
   }
 }
 @media all and (min-width: 1920px) {
@@ -171,7 +172,6 @@ hr {
 }
 
 pre {
-  background: #cfcfcf;
   line-height: 1.5;
   margin-bottom: 1.5em;
   overflow: auto;
@@ -206,6 +206,11 @@ sup {
 }
 sub {
   top: 0.5ex;
+}
+
+figcaption {
+  max-width: 100%;
+  line-height: 1;
 }
 
 @media all and (max-width: variables.$sm) {

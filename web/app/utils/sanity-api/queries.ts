@@ -77,8 +77,33 @@ export const PROJECT_QUERY = groq`*[_type == "project" && slug.current == $slug]
   },
   ID,
   client->,
-  persons[]->{
-    ...
+  locations[]->{
+    name
+  },
+  contributions[]{
+    _key,
+    service->{
+      title
+    },
+    contributors[]->{
+      first_name,
+      name
+    }
+  },
+  media[]{
+    ...,
+    _type == 'image' => {
+      ...
+      asset->
+    },
+    _type == 'video' => {
+      ...,
+      video{
+        asset->{
+          playbackId
+        }
+      }
+    },
   },
   relatedProject->{
     _type,

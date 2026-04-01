@@ -5,11 +5,17 @@ const { input } = defineProps<{ input: Client }>()
 </script>
 
 <template>
-  <div class="client">
-    <div class="client__disc"></div>
+  <div
+    class="client"
+    :style="{
+      '--background': input?.backgroundColor?.hex,
+      '--color': input?.foregroundColor?.hex,
+    }"
+  >
+    <div v-if="input.backgroundColor" class="client__disc"></div>
     <div class="client__name">
       <div class="bubble bubble--lg">
-        <span>{{ input.name }}</span>
+        <div>{{ input.name }}</div>
       </div>
     </div>
   </div>

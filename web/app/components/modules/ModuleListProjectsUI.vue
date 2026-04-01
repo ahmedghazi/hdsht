@@ -61,24 +61,24 @@ const _format = () => {
       <div class="flex">
         <div class="header__ID">
           <div class="bubble">
-            <span>ID</span>
+            <div>ID</div>
           </div>
         </div>
         <div class="header__client">
           <div class="bubble">
-            <span>Client</span>
+            <div>{{ $localizeText('client') }}</div>
           </div>
         </div>
       </div>
       <div class="flex">
         <div class="header__project">
           <div class="bubble">
-            <span>Project</span>
+            <div>{{ $localizeText('project') }}</div>
           </div>
         </div>
         <div class="header__year">
           <div class="bubble">
-            <span>Year</span>
+            <div>{{ $localizeText('year') }}</div>
           </div>
         </div>
       </div>

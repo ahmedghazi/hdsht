@@ -50,9 +50,9 @@ export default defineField({
             }),
             defineField({
               name: 'colSize',
-              title: 'Taille de colonne',
+              title: 'Colunn size',
               type: 'number',
-              description: 'Nombre de colonnes (ex: 1, 2, 3)',
+              description: 'in a 6 column grid (ex: 1, 2, 3)',
             }),
           ],
         },

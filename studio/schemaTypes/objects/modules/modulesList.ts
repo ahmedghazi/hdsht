@@ -7,4 +7,5 @@ export default [
   {type: 'locationMapUI'},
   {type: 'granularStripeUI'},
   {type: 'servicesUI'},
+  {type: 'mediaUI'},
 ]

@@ -34,6 +34,7 @@ import locationMapUI from './objects/modules/locationMapUI'
 import granularStripeUI from './objects/modules/granularStripeUI'
 import servicesUI from './objects/modules/servicesUI'
 import listProjectsUI from './objects/modules/listProjectsUI'
+import mediaUI from './objects/modules/mediaUI'
 
 export const schemaTypes = [
   settings,
@@ -69,5 +70,6 @@ export const schemaTypes = [
   locationMapUI,
   granularStripeUI,
   servicesUI,
+  mediaUI,
 ]
 export default schemaTypes

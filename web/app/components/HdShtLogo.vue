@@ -28,7 +28,7 @@
   </svg>
 </template>
 
-<style lang="scss">
+<style lang="scss" scoped>
 svg {
   // --svgHeight: 4rem;
   --svgHeight: var(--line-height-lg);

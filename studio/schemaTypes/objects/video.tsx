@@ -49,20 +49,31 @@ export default {
   name: 'video',
   type: 'object',
   icon: GoVideo,
+  initialValue: {
+    colSize: 4,
+  },
   fields: [
     defineField({
-      name: 'title',
+      name: 'caption',
       type: 'localeString',
-      description: 'Description',
+      description: 'Caption',
+    }),
+    defineField({
+      title: 'Video mux',
+      name: 'video',
+      type: 'mux.video',
+    }),
+    defineField({
+      name: 'colSize',
+      title: 'Colunn size',
+      type: 'number',
+      description: 'in a 6 column grid (ex: 1, 2, 3)',
     }),
     defineField({
       name: 'placeholder',
       type: 'image',
-    }),
-    defineField({
-      title: 'Video file',
-      name: 'video',
-      type: 'mux.video',
+      description: 'optionnal',
+      hidden: true,
     }),
     // defineField({
     //   name: 'url',
@@ -78,6 +89,8 @@ export default {
       name: 'aspectRatio',
       type: 'string',
       description: 'Ex: 16/9',
+      hidden: true,
+
       // validation: (Rule) => Rule.required(),
       // options: {
       //   list: [{title: 'Landscape', value: 'lands'}],
@@ -89,7 +102,7 @@ export default {
   },
   preview: {
     select: {
-      title: 'title.fr',
+      title: 'caption.en',
       url: 'url',
       iframe: 'iframe',
       aspectRatio: 'aspectRatio',

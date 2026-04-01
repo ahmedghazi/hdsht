@@ -11,6 +11,7 @@
     "typecheck": "nuxt typecheck"
   },
   "dependencies": {
+    "@mux/mux-player": "^3.11.7",
     "@nuxt/ui": "^4.5.1",
     "@nuxtjs/i18n": "^10.2.4",
     "@nuxtjs/sanity": "^2.2.0",

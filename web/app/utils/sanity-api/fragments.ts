@@ -138,6 +138,15 @@ export const servicesUI = `
   }
 `
 
+export const mediaUI = `
+  _type == 'mediaUI' => {
+    ...,
+    "items": *[_type == 'sanity.imageAsset']{
+      asset->
+    }
+  }
+`
+
 export const modules = `
 	...,
 	${textUI},
@@ -147,4 +156,5 @@ export const modules = `
   ${contactsUI},
   ${granularStripeUI},
   ${servicesUI},
+  ${mediaUI}
 `

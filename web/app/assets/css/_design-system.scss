@@ -7,7 +7,7 @@
   /* — local tokens — tweak here — */
   --bubble-lh: var(--line-height-md);
   --bubble-padding-ratio: 0.25;
-  --bubble-offset-ratio: 0.08;
+  --bubble-offset-ratio: 0.09;
   --bubble-max-chars: 25;
 
   display: inline-block;
@@ -21,9 +21,13 @@
   backdrop-filter: blur(var(--blur-size));
   background-color: var(--background, var(--color-grey));
   color: var(--color, var(--color-white));
-  span {
+  div,
+  h1 {
     display: block;
     transform: translateY(calc(var(--bubble-lh) * var(--bubble-offset-ratio)));
+  }
+  span {
+    // line-height: 1;
   }
 }
 
@@ -45,6 +49,7 @@
   --bubble-dot-lh: var(--line-height-md);
   --bubble-dot-size-ratio: 0.7;
   --bubble-dot-padding-ratio: 0.25;
+  --bubble-dot-offset-ratio: -0;
 
   font-family: var(--font-secondary);
   line-height: 1;
@@ -54,6 +59,12 @@
   background: var(--color-blur);
   backdrop-filter: blur(var(--blur-size));
   color: var(--color-white);
+
+  div {
+    transform: translateY(
+      calc(var(--bubble-dot-lh) * var(--bubble-dot-offset-ratio))
+    );
+  }
 }
 
 /* font-size and padding-inline cascade automatically from overridden tokens */
@@ -64,13 +75,18 @@
   --bubble-dot-offset-ratio: -0.04;
 
   line-height: var(--bubble-dot-lh); /* overrides the hardcoded `1` above */
-  background-color: black;
-  color: yellow;
+}
 
-  span {
-    transform: translateY(
-      calc(var(--bubble-dot-lh) * var(--bubble-dot-offset-ratio))
-    );
+.bubble-dots-n-primary {
+  --bubble-lh: calc(var(--line-height-md) * 0.88888);
+  --bubble-size-ratio: 0.7;
+  .dots {
+    font-size: calc(var(--bubble-lh) * var(--bubble-size-ratio));
+  }
+  .font-primary {
+    --bubble-size-ratio: 0.6;
+
+    font-size: calc(var(--bubble-lh) * var(--bubble-size-ratio));
   }
 }
 
@@ -136,13 +152,16 @@
   /* — local tokens — shares naming with .pill for consistency — */
   --pill-lh: var(--line-height-lg);
   --pill-radius-ratio: 0.5;
+  --pill-size-ratio: 0.4;
 
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: var(--pill-lh);
+  // width: var(--pill-lh);
   height: var(--pill-lh);
-  padding-inline: 0;
+  padding-inline: calc(
+    var(--pill-lh) * var(--pill-size-ratio)
+  ); /* intentionally = font-size */
   border-radius: calc(var(--pill-lh) * var(--pill-radius-ratio));
   cursor: pointer;
   background: var(--color-blur);
@@ -150,6 +169,9 @@
   -webkit-backdrop-filter: blur(var(--blur-size));
   color: var(--color-white);
   transition: background-color 0.2s var(--cubic);
+  div {
+    display: flex;
+  }
 }
 
 .pill--icon:hover {
@@ -162,6 +184,29 @@
   width: auto;
 }
 
-.col-span-2 {
-  grid-column: span 2 / span 2;
+figure {
+  // display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  figcaption {
+    .bubble {
+      overflow: hidden;
+      max-width: 100%;
+      div {
+        display: flex;
+        align-items: baseline;
+      }
+    }
+  }
+  img,
+  mux-player {
+    vertical-align: top;
+  }
+}
+
+@for $i from 1 through 12 {
+  .col-span-#{$i},
+  .md\:col-span-#{$i} {
+    grid-column: span $i / span $i;
+  }
 }
