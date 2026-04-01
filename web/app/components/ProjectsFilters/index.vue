@@ -1,5 +1,9 @@
 <script setup lang="ts">
 import type { ProjectExpanded } from '~/utils/sanity-api/sanity-expanded.types'
+import ProjectsFiltersControls from './Controls.vue'
+import ProjectsFiltersFilterPanel from './FilterPanel.vue'
+import ProjectsFiltersSortPanel from './SortPanel.vue'
+import ProjectsFiltersActivePill from './ActivePill.vue'
 
 const props = defineProps<{ projects: ProjectExpanded[] | null }>()
 const emit = defineEmits(['update:filtered-items'])
@@ -27,7 +31,9 @@ const filterOptions = computed(() => {
     ...new Set(
       props.projects
         .flatMap((item) =>
-          item.contributions?.map((contribution) => contribution.service?.title?.en),
+          item.contributions?.map(
+            (contribution) => contribution.service?.title?.en,
+          ),
         )
         .filter(Boolean),
     ),
@@ -103,12 +109,20 @@ const filteredProjects = computed(() => {
     const matchesSearch =
       !activeFilters.search ||
       item.ID?.toLowerCase().includes(activeFilters.search.toLowerCase()) ||
-      item.client?.name?.toLowerCase().includes(activeFilters.search.toLowerCase()) ||
+      item.client?.name
+        ?.toLowerCase()
+        .includes(activeFilters.search.toLowerCase()) ||
       Object.values(item.title || {}).some((title) =>
         title?.toLowerCase().includes(activeFilters.search.toLowerCase()),
       )
 
-    return matchesClient && matchesYear && matchesService && matchesId && matchesSearch
+    return (
+      matchesClient &&
+      matchesYear &&
+      matchesService &&
+      matchesId &&
+      matchesSearch
+    )
   })
 
   return filtered.sort((a, b) => {
@@ -143,11 +157,9 @@ const filteredProjects = computed(() => {
   })
 })
 
-watch(
-  filteredProjects,
-  (newItems) => emit('update:filtered-items', newItems),
-  { immediate: true },
-)
+watch(filteredProjects, (newItems) => emit('update:filtered-items', newItems), {
+  immediate: true,
+})
 
 function toggleFilterPanel() {
   showFilterPanel.value = !showFilterPanel.value
@@ -157,6 +169,11 @@ function toggleFilterPanel() {
 function toggleSortPanel() {
   showSortPanel.value = !showSortPanel.value
   if (showSortPanel.value) showFilterPanel.value = false
+}
+
+function closeAllPanels() {
+  showSortPanel.value = false
+  showFilterPanel.value = false
 }
 
 function toggleSort(key: string) {
@@ -232,9 +249,13 @@ const sortOptions = [
       />
     </div>
 
-    <div v-if="hasActiveFilters" class="project-filters__count">
-      Showing {{ filteredProjects.length }} of {{ props.projects?.length || 0 }} projects
-    </div>
+    <button
+      v-if="showFilterPanel || showSortPanel"
+      @click="closeAllPanels"
+      class="pill pill--icon"
+    >
+      <UiIcon value="x" />
+    </button>
   </div>
 </template>
 
@@ -243,14 +264,6 @@ const sortOptions = [
   &__active {
     display: flex;
     flex-wrap: wrap;
-    gap: var(--spacing-sm);
-    margin-bottom: var(--spacing-md);
-  }
-
-  &__count {
-    font-size: var(--font-size-sm);
-    color: var(--color-grey);
-    margin-top: var(--spacing-sm);
   }
 }
 </style>

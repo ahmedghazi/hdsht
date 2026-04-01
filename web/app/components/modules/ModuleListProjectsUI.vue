@@ -47,8 +47,8 @@ function onFilteredItemsUpdate(items: ProjectExpanded[]) {
 }
 
 .no-results {
-  text-align: center;
-  padding: var(--spacing-xl);
+  // text-align: center;
+  padding: var(--spacing-md) 0;
   color: var(--color-grey);
   font-size: var(--font-size-lg);
 }

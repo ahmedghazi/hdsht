@@ -7,9 +7,13 @@ defineEmits<{ 'update:modelValue': [value: string] }>()
   <select
     class="select-ui"
     :value="modelValue"
-    @change="$emit('update:modelValue', ($event.target as HTMLSelectElement).value)"
+    @change="
+      $emit('update:modelValue', ($event.target as HTMLSelectElement).value)
+    "
   >
-    <option value="">{{ label }}</option>
-    <option v-for="opt in options" :key="opt" :value="opt">{{ opt }}</option>
+    <option value="">{{ $localizeText(label) }}</option>
+    <option v-for="opt in options" :key="opt" :value="opt">
+      {{ $localizeText(opt) }}
+    </option>
   </select>
 </template>

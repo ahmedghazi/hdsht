@@ -2,5 +2,6 @@
   "client": "客户",
   "project": "项目",
   "year": "年份",
-  "location": "地点"
+  "location": "地点",
+  "service": "服务"
 }

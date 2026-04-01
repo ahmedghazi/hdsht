@@ -52,6 +52,7 @@
   --bubble-dot-offset-ratio: -0;
 
   font-family: var(--font-secondary);
+  font-variant: tabular-nums;
   line-height: 1;
   font-size: calc(var(--bubble-dot-lh) * var(--bubble-dot-size-ratio));
   border-radius: var(--border-radius);
