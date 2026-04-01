@@ -79,6 +79,21 @@ export const projectCard = `
       name
     }
   },
+  media[]{
+    ...,
+    _type == 'image' => {
+      ...,
+      asset->
+    },
+    _type == 'video' => {
+      ...,
+      video{
+        asset->{
+          playbackId
+        }
+      }
+    },
+  },
 `
 
 export const textUI = `
@@ -101,6 +116,7 @@ export const clientsUI = `
   	_type == 'clientsUI' => {
 		...,
     items[]{
+      ...,
       asset->
     }
 	}

@@ -225,6 +225,10 @@ function generateExpandedType(typeName, refFields) {
   const omitKeys = refFields.map((f) => `'${f.fieldName}'`).join(' | ')
   const expandedFields = refFields
     .map((f) => {
+      // Special handling for contributions field in Project type
+      if (typeName === 'Project' && f.fieldName === 'contributions') {
+        return `  ${f.fieldName}?: Array<ContributionExpanded> | null`
+      }
       const resolvedType = f.isArray ? `Array<${f.targetTypeName}>` : f.targetTypeName
       return `  ${f.fieldName}?: ${resolvedType} | null`
     })
@@ -251,6 +255,22 @@ function generateExtendedTypes(content, meta) {
   const documentTypeNames = findDocumentTypeNames(content)
   const expandedTypes = []
   const neededImports = new Set()
+
+  // Always add ContributionExpanded if Contribution type exists and has references
+  const contributionBlock = extractObjectTypeBlock(content, 'Contribution')
+  if (contributionBlock) {
+    const contributionRefFields = findReferenceFields(contributionBlock, referenceTypes)
+    if (contributionRefFields.length > 0) {
+      expandedTypes.push({typeName: 'Contribution', refFields: contributionRefFields})
+      neededImports.add('Contribution')
+      for (const f of contributionRefFields) {
+        neededImports.add(f.targetTypeName)
+      }
+      console.log(
+        `  ✓ ContributionExpanded  [${contributionRefFields.map((f) => (f.isArray ? `${f.fieldName}[]` : f.fieldName)).join(', ')}]`,
+      )
+    }
+  }
 
   for (const typeName of documentTypeNames) {
     const typeBlock = extractObjectTypeBlock(content, typeName)

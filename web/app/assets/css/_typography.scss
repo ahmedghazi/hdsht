@@ -107,9 +107,11 @@ p,
   line-height: 1.1;
 }
 .ellipsis {
+  display: block;
+  min-width: 0;
   overflow: hidden;
-  text-overflow: ellipsis;
   white-space: nowrap;
+  text-overflow: ellipsis;
 }
 .sep-dash {
   padding: 0 0.3em;

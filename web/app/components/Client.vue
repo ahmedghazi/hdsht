@@ -1,21 +1,31 @@
 <script lang="ts" setup>
 import type { Client } from '~/utils/sanity-api/sanity.types'
 
-const { input } = defineProps<{ input: Client }>()
+const {
+  input,
+  discOnly = false,
+  size = 'md',
+} = defineProps<{
+  input: Client
+  discOnly?: boolean
+  size?: 'md' | 'lg' | 'xl'
+}>()
 </script>
 
 <template>
   <div
-    class="client"
+    :class="['client', `client--${size}`]"
     :style="{
       '--background': input?.backgroundColor?.hex,
       '--color': input?.foregroundColor?.hex,
     }"
   >
     <div v-if="input.backgroundColor" class="client__disc"></div>
-    <div class="client__name">
+    <div v-if="!discOnly" class="client__name">
       <div class="bubble bubble--lg">
-        <div>{{ input.name }}</div>
+        <div>
+          <span class="ellipsis">{{ input.name }}</span>
+        </div>
       </div>
     </div>
   </div>
@@ -24,6 +34,15 @@ const { input } = defineProps<{ input: Client }>()
 <style lang="scss">
 .client {
   display: flex;
+  align-items: center;
+  min-width: 0; // ← peut rétrécir dans sa cell
+  &--xl {
+    .client__disc {
+      width: var(--line-height-2xl);
+      height: var(--line-height-2xl);
+      border-radius: var(--line-height-2xl);
+    }
+  }
   &__disc {
     width: var(--line-height-lg);
     height: var(--line-height-lg);
@@ -40,6 +59,18 @@ const { input } = defineProps<{ input: Client }>()
 
   &__name {
     color: var(--color);
+    flex: 1 1 auto; // ← prend l’espace restant à droite du disque
+    min-width: 0; // ← crucial pour l’ellipsis
+
+    .bubble {
+      display: inline-flex; // ← bulle à la largeur du texte
+      max-width: 100%; // ← mais ne dépasse pas la place dispo
+      min-width: 0;
+    }
+
+    .bubble > div {
+      min-width: 0;
+    }
   }
 }
 </style>

@@ -1,49 +1,19 @@
 <script setup lang="ts">
 import type { ListProjectsUI } from '~/utils/sanity-api/sanity.types'
+import type { ProjectExpanded } from '~/utils/sanity-api/sanity-expanded.types'
 
-// import ProjectCardImg from "../ProjectCardImg.vue";
-// import ProjectCardTxt from "../ProjectCardTxt.vue";
+type ListProjectsUIExpanded = Omit<ListProjectsUI, 'items'> & {
+  items?: ProjectExpanded[] | null
+}
 
-const moduleRef = ref<HTMLElement | null>(null)
+const { input } = defineProps<{ input: ListProjectsUIExpanded }>()
 
-defineProps<{ input: ListProjectsUI }>()
-onMounted(() => {
-  _format()
-  window.addEventListener('resize', _format)
-})
+// État local pour les projets filtrés reçus du composant ProjectFilters
+const filteredItems = ref<ProjectExpanded[]>([])
 
-onUnmounted(() => {
-  window.removeEventListener('resize', _format)
-})
-
-const _format = () => {
-  // TODO: implement
-  const cardIndex = document.querySelector('.card__index')
-  if (cardIndex) {
-    const cardIndexBounding = cardIndex.getBoundingClientRect()
-
-    if (moduleRef.value) {
-      moduleRef.value.style.setProperty(
-        '--cardIndex-w',
-        cardIndexBounding.width + 'px',
-      )
-    }
-  }
-  const cardTitle = document.querySelector('.card__title')
-  if (cardTitle) {
-    const cardTitleBounding = cardTitle.getBoundingClientRect()
-
-    if (moduleRef.value) {
-      moduleRef.value.style.setProperty(
-        '--cardTitle-w',
-        cardTitleBounding.width + 'px',
-      )
-    }
-  }
-
-  if (moduleRef.value) {
-    moduleRef.value.style.setProperty('--opacity', '1')
-  }
+// Callback pour recevoir les projets filtrés
+function onFilteredItemsUpdate(items: ProjectExpanded[]) {
+  filteredItems.value = items
 }
 </script>
 
@@ -51,44 +21,22 @@ const _format = () => {
   <section
     id="projects"
     ref="moduleRef"
-    :class="[
-      'module',
-      'module--list-projects-ui',
-      `col-span-${input.colSize || 2}`,
-    ]"
+    :class="['module', 'module--list-projects-ui', 'col-span-2']"
   >
-    <div class="header grid md:grid-cols-2">
-      <div class="flex">
-        <div class="header__ID">
-          <div class="bubble">
-            <div>ID</div>
-          </div>
-        </div>
-        <div class="header__client">
-          <div class="bubble">
-            <div>{{ $localizeText('client') }}</div>
-          </div>
-        </div>
-      </div>
-      <div class="flex">
-        <div class="header__project">
-          <div class="bubble">
-            <div>{{ $localizeText('project') }}</div>
-          </div>
-        </div>
-        <div class="header__year">
-          <div class="bubble">
-            <div>{{ $localizeText('year') }}</div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="projects-index">
-      <ProjectCardTxt
-        v-for="item in input.items || []"
-        :key="item._ref"
-        :input="item"
-      />
+    <ProjectsFilters
+      :projects="input.items || null"
+      @update:filtered-items="onFilteredItemsUpdate"
+    />
+
+    <template v-if="input.layout === 'txt' && filteredItems.length">
+      <ListProjectsTxt :input="filteredItems" />
+    </template>
+    <template v-if="input.layout === 'img' && filteredItems.length">
+      <ListProjectsImg :input="filteredItems" />
+    </template>
+
+    <div v-else-if="!filteredItems.length" class="no-results">
+      No projects match current filters
     </div>
   </section>
 </template>
@@ -96,14 +44,12 @@ const _format = () => {
 <style lang="scss" scoped>
 .module {
   scroll-margin-top: calc(var(--header-h) + 1rem);
-  --opacity: 0;
-  opacity: var(--opacity);
-  .header__ID {
-    width: var(--cardIndex-w);
-  }
+}
 
-  .header__project {
-    width: var(--cardTitle-w);
-  }
+.no-results {
+  text-align: center;
+  padding: var(--spacing-xl);
+  color: var(--color-grey);
+  font-size: var(--font-size-lg);
 }
 </style>

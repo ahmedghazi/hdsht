@@ -9,6 +9,7 @@ export default defineField({
   icon: FaListUl,
   initialValue: {
     colSize: 2,
+    layout: 'txt',
   },
   fields: [
     defineField({
@@ -19,6 +20,17 @@ export default defineField({
       name: 'colSize',
       type: 'number',
       description: 'Number of columns (1-2) on a 2 columns grid',
+      hidden: true,
+    }),
+    defineField({
+      name: 'layout',
+      type: 'string',
+      options: {
+        list: [
+          {title: 'TXT', value: 'txt'},
+          {title: 'IMG', value: 'img'},
+        ],
+      },
     }),
     defineField({
       name: 'items',
@@ -32,12 +44,13 @@ export default defineField({
     select: {
       image: 'items.0.images.0.asset',
       title: 'title',
+      layout: 'layout',
     },
     prepare(selection) {
-      const {title, image} = selection
+      const {title, image, layout} = selection
       return {
         title: title ? title : 'List Projects UI',
-        subtitle: 'List Projects UI',
+        subtitle: `List Projects UI: ${layout}`,
         media: image,
       }
     },

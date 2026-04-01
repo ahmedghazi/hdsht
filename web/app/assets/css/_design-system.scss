@@ -154,11 +154,11 @@
   --pill-radius-ratio: 0.5;
   --pill-size-ratio: 0.4;
 
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
+  // display: inline-flex;
+  // align-items: center;
+  // justify-content: center;
   // width: var(--pill-lh);
-  height: var(--pill-lh);
+  // height: var(--pill-lh);
   padding-inline: calc(
     var(--pill-lh) * var(--pill-size-ratio)
   ); /* intentionally = font-size */
@@ -171,6 +171,11 @@
   transition: background-color 0.2s var(--cubic);
   div {
     display: flex;
+    align-items: center;
+    gap: calc(var(--pill-lh) * var(--pill-size-ratio));
+  }
+  svg {
+    height: var(--pill-lh);
   }
 }
 
@@ -182,6 +187,43 @@
 .pill--icon > img {
   height: var(--pill-lh);
   width: auto;
+}
+
+.select-ui {
+  --select-lh: var(--line-height-lg);
+  --select-size-ratio: 0.4; /* font-size and padding-inline ratio */
+  --select-gap-ratio: 0.25;
+  --select-radius-ratio: 0.5; /* full select */
+  --select-offset-ratio: 0.03;
+  display: inline-block;
+
+  font-family: var(--font-primary);
+  line-height: var(--select-lh);
+  font-size: calc(var(--select-lh) * var(--select-size-ratio));
+  border-radius: calc(var(--select-lh) * var(--select-radius-ratio));
+  padding-inline: calc(
+    var(--select-lh) * var(--select-size-ratio)
+  ); /* intentionally = font-size */
+  white-space: nowrap;
+  cursor: pointer;
+  background: var(--background, var(--color-blur));
+  backdrop-filter: blur(var(--blur-size));
+  color: var(--color, var(--color-white));
+  transition: background-color 0.2s var(--cubic);
+
+  appearance: none;
+  -webkit-appearance: none;
+
+  /* Ton chevron custom en background */
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23fff' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23ffffff' d='M2 4l4 4 4-4'/%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='none' stroke='%23ffffff' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' d='M2 4l4 4 4-4'/%3E%3C/svg%3E");
+
+  background-repeat: no-repeat;
+
+  /* Position : x y */
+  background-position: right 12px center; /* ← ajuste ici */
+  padding-right: 32px;
 }
 
 figure {

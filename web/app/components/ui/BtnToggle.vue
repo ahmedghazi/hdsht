@@ -51,81 +51,83 @@ function toggle() {
       </svg>
     </div>
     <div v-else>
-      <svg
-        id="system_icon_dot"
-        xmlns="http://www.w3.org/2000/svg"
-        width="5"
-        height="30"
-        viewBox="0 0 5 30"
-      >
-        <rect
-          id="Rectangle_4191"
-          data-name="Rectangle 4191"
+      <div class="flex gap-02!">
+        <svg
+          id="system_icon_dot"
+          xmlns="http://www.w3.org/2000/svg"
           width="5"
           height="30"
-          fill="none"
-          opacity="0"
-        />
-        <circle
-          id="Ellipse_460"
-          data-name="Ellipse 460"
-          cx="1.35"
-          cy="1.35"
-          r="1.35"
-          transform="translate(1.15 17)"
-          fill="#fefefe"
-        />
-      </svg>
-      <svg
-        id="system_icon_dot"
-        xmlns="http://www.w3.org/2000/svg"
-        width="5"
-        height="30"
-        viewBox="0 0 5 30"
-      >
-        <rect
-          id="Rectangle_4191"
-          data-name="Rectangle 4191"
+          viewBox="0 0 5 30"
+        >
+          <rect
+            id="Rectangle_4191"
+            data-name="Rectangle 4191"
+            width="5"
+            height="30"
+            fill="none"
+            opacity="0"
+          />
+          <circle
+            id="Ellipse_460"
+            data-name="Ellipse 460"
+            cx="1.35"
+            cy="1.35"
+            r="1.35"
+            transform="translate(1.15 17)"
+            fill="#fefefe"
+          />
+        </svg>
+        <svg
+          id="system_icon_dot"
+          xmlns="http://www.w3.org/2000/svg"
           width="5"
           height="30"
-          fill="none"
-          opacity="0"
-        />
-        <circle
-          id="Ellipse_460"
-          data-name="Ellipse 460"
-          cx="1.35"
-          cy="1.35"
-          r="1.35"
-          transform="translate(1.15 17)"
-          fill="#fefefe"
-        />
-      </svg>
-      <svg
-        id="system_icon_dot"
-        xmlns="http://www.w3.org/2000/svg"
-        width="5"
-        height="30"
-        viewBox="0 0 5 30"
-      >
-        <rect
-          id="Rectangle_4191"
-          data-name="Rectangle 4191"
+          viewBox="0 0 5 30"
+        >
+          <rect
+            id="Rectangle_4191"
+            data-name="Rectangle 4191"
+            width="5"
+            height="30"
+            fill="none"
+            opacity="0"
+          />
+          <circle
+            id="Ellipse_460"
+            data-name="Ellipse 460"
+            cx="1.35"
+            cy="1.35"
+            r="1.35"
+            transform="translate(1.15 17)"
+            fill="#fefefe"
+          />
+        </svg>
+        <svg
+          id="system_icon_dot"
+          xmlns="http://www.w3.org/2000/svg"
           width="5"
           height="30"
-          fill="none"
-          opacity="0"
-        />
-        <circle
-          id="Ellipse_460"
-          data-name="Ellipse 460"
-          cx="1.35"
-          cy="1.35"
-          r="1.35"
-          transform="translate(1.15 17)"
-          fill="#fefefe"
-        />
-      </svg>
+          viewBox="0 0 5 30"
+        >
+          <rect
+            id="Rectangle_4191"
+            data-name="Rectangle 4191"
+            width="5"
+            height="30"
+            fill="none"
+            opacity="0"
+          />
+          <circle
+            id="Ellipse_460"
+            data-name="Ellipse 460"
+            cx="1.35"
+            cy="1.35"
+            r="1.35"
+            transform="translate(1.15 17)"
+            fill="#fefefe"
+          />
+        </svg>
+      </div>
     </div>
   </button>
 </template>

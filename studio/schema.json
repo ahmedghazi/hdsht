@@ -649,6 +649,23 @@
           },
           "optional": true
         },
+        "layout": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "union",
+            "of": [
+              {
+                "type": "string",
+                "value": "txt"
+              },
+              {
+                "type": "string",
+                "value": "img"
+              }
+            ]
+          },
+          "optional": true
+        },
         "items": {
           "type": "objectAttribute",
           "value": {

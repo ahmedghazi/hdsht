@@ -34,6 +34,7 @@
   --font-quaternary: 'Instrument Serif', serif;
 
   /* Spacing */
+  --spacing-02: 0.2rem; /* 6px */
   --spacing-xs: 0.6rem; /* 6px */
   --spacing-sm: 1rem; /* 10px */
   --spacing-md: 2rem; /* 20px */
@@ -48,6 +49,7 @@
   --line-height-md: 2rem;
   --line-height-lg: 3rem;
   --line-height-xl: 6rem;
+  --line-height-2xl: 9rem;
 
   /* Layout */
   --gutter: 1rem;

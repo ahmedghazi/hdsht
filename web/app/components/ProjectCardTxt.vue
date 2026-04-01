@@ -4,8 +4,6 @@ import Client from './Client.vue'
 
 const { input } = defineProps<{ input: ProjectExpanded }>()
 const { _localizeField } = useSanityLocale()
-
-// const hover = ref<boolean>(false)
 </script>
 
 <template>
@@ -34,8 +32,14 @@ const { _localizeField } = useSanityLocale()
         </div>
         <div class="flex">
           <h2 class="card__title">
-            <div class="bubble bubble--lg ellipsis">
-              <div>{{ _localizeField(input.title) }}</div>
+            <div class="inner">
+              <div class="bubble bubble--lg">
+                <div>
+                  <span class="ellipsis">
+                    {{ _localizeField(input.title) }}
+                  </span>
+                </div>
+              </div>
             </div>
           </h2>
 
@@ -51,26 +55,52 @@ const { _localizeField } = useSanityLocale()
 </template>
 
 <style scoped- lang="scss">
+.grid > * {
+  // min-width: 0; /* ← chaque cell de grille */
+}
+
 .card {
   --background: #fff;
   --color: #000;
+
   &--rip {
     --background: var(--color-grey) !important;
     --color: var(--color-white-40) !important;
-    // --color: #70707066 !important;
     opacity: 0.4;
     pointer-events: none;
-    // background: transparent
-    //   radial-gradient(closest-side at 50% 50%, var(--color), 0%, #70707066 100%)
-    //   0% 0% no-repeat padding-box;
   }
+
   .flex {
     align-items: flex-start;
+    width: 100%;
+    min-width: 0; // la ligne peut rétrécir
+    & > div {
+      // flex: 0 1 auto; // prend l’espace dispo entre gauche et year
+      // min-width: 0; // autorise le shrink
+    }
   }
-  .card__title {
-    flex: 2;
+
+  &__title {
+    flex: 1 1 auto; // prend l’espace dispo entre gauche et year
+    min-width: 0; // autorise le shrink
+
+    .inner {
+      min-width: 0;
+    }
+
+    .bubble {
+      display: inline-flex; // ← se met à la largeur du contenu
+      max-width: 100%; // ← mais ne dépasse jamais la place dispo
+      min-width: 0; // ← autorise le shrink
+    }
+
+    .bubble > div {
+      min-width: 0;
+    }
   }
-  @media (max-width: 800px) {
+
+  &__year {
+    flex-shrink: 0; // colonne année rigide
   }
 }
 </style>

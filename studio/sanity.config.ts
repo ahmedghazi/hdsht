@@ -9,7 +9,7 @@ import {linkResolverPreview} from './src/linkResolverPreview'
 import {structure} from './src/deskStructure'
 
 //HDSHT.pink
-const remoteURL = 'https://hdsht.vercel.app'
+const remoteURL = 'https://hdsht-preprod.vercel.app'
 const localURL = 'http://localhost:3000'
 const previewURL = window.location.hostname === 'localhost' ? localURL : remoteURL
 

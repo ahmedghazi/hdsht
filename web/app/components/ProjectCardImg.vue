@@ -1,39 +1,66 @@
 <script lang="ts" setup>
-import type { ProjectExpandedFull } from "~/utils/sanity-api/sanity-extend.types";
+import type { ProjectExpanded } from '~/utils/sanity-api/sanity-expanded.types'
 
-const { input } = defineProps<{ input: ProjectExpandedFull }>();
-//here collect the first image from the project
-const firstImage = computed(() => {
-  return input.images?.[0]?.image;
-});
+const { input } = defineProps<{ input: ProjectExpanded }>()
+const hover = ref<boolean>(false)
 </script>
 
 <template>
-  <article class="card card--project card--project__img">
+  <div
+    :class="{
+      card: true,
+      'card--project-img': true,
+      'card--rip': input.rip,
+      'is-active': hover,
+    }"
+    @mouseenter="hover = true"
+    @mouseleave="hover = false"
+  >
     <NuxtLink :to="_linkResolver(input as any)">
-      <div class="project-img">
-        <img
-          v-if="firstImage"
-          class="visual"
-          :src="
-            firstImage
-              ? urlFor(firstImage as any)
-                  .width(500)
-                  .url()
-              : ''
-          "
-          alt="Cover image" />
+      <div class="header">
+        <div class="bubble bubble-dot">
+          <div>{{ input?.ID }}</div>
+        </div>
+        <Client
+          v-if="input.client"
+          :input="input.client"
+          :disc-only="true"
+          :size="'xl'"
+        />
       </div>
+      <figure v-for="(media, i) in input.media" :key="i">
+        <template v-if="media._type === 'image'">
+          <img
+            :src="$urlFor(media).height(90).url()"
+            :alt="$localizeField(media.caption)"
+          />
+        </template>
+      </figure>
     </NuxtLink>
-  </article>
+  </div>
 </template>
 
 <style scoped lang="scss">
+.header {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  .disc {
+    height: 9rem;
+    width: 9rem;
+  }
+}
+img {
+  height: var(--line-height-2xl);
+  width: auto;
+}
 .card {
-  &:hover {
-    .header {
-      opacity: 1;
-    }
+  a {
+    display: flex;
+    align-items: flex-end;
+  }
+  .project-imgs {
+    display: flex;
   }
 }
 @media (min-width: 575px) {
