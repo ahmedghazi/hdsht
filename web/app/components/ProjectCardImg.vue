@@ -35,6 +35,13 @@ const hover = ref<boolean>(false)
             :alt="$localizeField(media.caption)"
           />
         </template>
+        <template v-else-if="media._type === 'video'">
+          <UiMuxVideo
+            v-if="media.video?.asset?.playbackId"
+            :asset-id="media.video?.asset?.playbackId || ''"
+            :autoplay="true"
+          />
+        </template>
       </figure>
     </NuxtLink>
   </div>
@@ -50,7 +57,8 @@ const hover = ref<boolean>(false)
     width: 9rem;
   }
 }
-img {
+img,
+mux-player {
   height: var(--line-height-2xl);
   width: auto;
 }
