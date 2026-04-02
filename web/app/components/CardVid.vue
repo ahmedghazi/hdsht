@@ -57,16 +57,16 @@ figure {
     justify-content: space-between;
     align-items: flex-start;
   }
-  &.is-paused {
+  &.is-paused mux-player {
     cursor:
-      url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='120' height='40'><text x='50%' y='50%' font-family='sans-serif' font-weight='' font-size='14' dominant-baseline='middle' text-anchor='middle' fill='white'>Play</text></svg>")
-        16 0,
+      url("data:image/svg+xml;utf8,<svg height='30' width='54' xmlns='http://www.w3.org/2000/svg'><text font-family='sans-serif' x='5' y='15' fill='white'>Play</text> </svg>")
+        22 15,
       auto;
   }
-  &.is-playing {
+  &.is-playing mux-player {
     cursor:
-      url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='120' height='40'><text x='50%' y='50%' font-family='sans-serif' font-weight='' font-size='14' dominant-baseline='middle' text-anchor='middle' fill='white'>Pause</text></svg>")
-        16 0,
+      url("data:image/svg+xml;utf8,<svg height='30' width='54' xmlns='http://www.w3.org/2000/svg'><text font-family='sans-serif' x='5' y='15' fill='white'>Pause</text> </svg>")
+        22 15,
       auto;
   }
 }
