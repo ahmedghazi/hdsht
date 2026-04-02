@@ -1,5 +1,5 @@
 <script setup lang="ts">
-type IconValue = 'x' | 'dots' | 'arrowS' | 'arrowN'
+type IconValue = 'x' | 'dots' | 'dot' | 'arrowS' | 'arrowN'
 
 defineProps<{
   value: IconValue
@@ -29,6 +29,17 @@ defineProps<{
       transform="translate(1.401 9.884) rotate(-45)"
       fill="currentColor"
     />
+  </svg>
+
+  <!-- Dot -->
+  <svg
+    v-else-if="value === 'dot'"
+    xmlns="http://www.w3.org/2000/svg"
+    width="10"
+    height="10"
+    viewBox="0 0 10 10"
+  >
+    <circle cx="5" cy="5" r="5" fill="currentColor" />
   </svg>
 
   <!-- Dots -->

@@ -200,6 +200,7 @@
 
   font-family: var(--font-primary);
   line-height: var(--select-lh);
+  // line-height: calc(var(--select-lh) * 1.2);
   font-size: calc(var(--select-lh) * var(--select-size-ratio));
   border-radius: calc(var(--select-lh) * var(--select-radius-ratio));
   padding-inline: calc(
@@ -224,8 +225,18 @@
   background-repeat: no-repeat;
 
   /* Position : x y */
-  background-position: right 12px center; /* ← ajuste ici */
-  padding-right: 32px;
+  background-position: right calc(var(--select-lh) * var(--select-size-ratio))
+    center; /* ← ajuste ici */
+  // padding-right: 32px;
+
+  select {
+    // display: block;
+    transform: translateY(calc(var(--select-lh) * var(--select-offset-ratio)));
+    &:active,
+    &:focus {
+      outline: none;
+    }
+  }
 }
 
 figure {

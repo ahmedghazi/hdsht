@@ -129,6 +129,13 @@ const filteredProjects = computed(() => {
     let aValue: unknown = a[currentSort.value.key as keyof ProjectExpanded]
     let bValue: unknown = b[currentSort.value.key as keyof ProjectExpanded]
 
+    if (typeof aValue === 'object' && aValue && 'name' in aValue) {
+      aValue = (aValue as { name?: string }).name || ''
+    }
+    if (typeof bValue === 'object' && bValue && 'name' in bValue) {
+      bValue = (bValue as { name?: string }).name || ''
+    }
+
     if (typeof aValue === 'object' && aValue && 'en' in aValue) {
       const localizedA = aValue as { en?: string; zh?: string }
       aValue = localizedA.en || localizedA.zh || ''

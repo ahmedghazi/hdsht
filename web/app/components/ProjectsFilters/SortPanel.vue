@@ -43,12 +43,5 @@ defineEmits<{ 'toggle-sort': [key: string] }>()
 }
 
 .sort-arrow {
-  // &.asc {
-  //   transform: scaleY(-1);
-  // }
-
-  // &.desc {
-  //   transform: scaleY(1);
-  // }
 }
 </style>

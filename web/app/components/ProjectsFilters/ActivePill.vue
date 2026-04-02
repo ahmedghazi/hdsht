@@ -7,9 +7,9 @@ defineEmits<{ remove: [] }>()
   <div class="pill pill--icon" @click="$emit('remove')">
     <div>
       <span>{{ label }}</span>
-      <span class="pill__remove">
-        <UiIcon value="x" />
-      </span>
+      <UiIcon value="dot" />
+      <!-- <span class="pill__remove">
+      </span> -->
     </div>
   </div>
 </template>
