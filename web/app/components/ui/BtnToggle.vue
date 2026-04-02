@@ -20,9 +20,7 @@ function toggle() {
       <UiIcon value="x" />
     </div>
     <div v-else>
-      <div class="flex gap-02!">
-        <UiIcon value="dots" />
-      </div>
+      <UiIcon value="dots" />
     </div>
   </button>
 </template>

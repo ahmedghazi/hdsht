@@ -136,7 +136,6 @@ const clientColors = computed(() => ({
         </div>
       </div>
     </section>
-    <pre>{{ data?.media }}</pre>
   </div>
 </template>
 

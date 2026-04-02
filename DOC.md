@@ -8,9 +8,4 @@ https://backoffice--hdsht.sanity.studio/
 
 # to do
 
-- finish footer
-- map add marker
-- icon dot, icon x, icon else
-- media
-
 # qurstions
