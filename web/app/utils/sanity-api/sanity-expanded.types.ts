@@ -1,5 +1,5 @@
 // AUTO-GENERATED EXTENDED TYPES - DO NOT EDIT MANUALLY
-// Generated on: 2026-04-01T14:27:26.904Z
+// Generated on: 2026-04-02T13:30:01.209Z
 // Run 'npm run typegen' to regenerate
 // Project structure: web="../../web", studio="./"
 // Detection method: configuration file
@@ -23,6 +23,11 @@ export type ContributionExpanded = Omit<
   service?: Service | null
   contributors?: Array<Person> | null
 }
+
+// export type ContributionExpanded = Omit<Contribution, 'service' | 'contributors'> & {
+//   service?: Service | null;
+//   contributors?: Array<Person> | null;
+// };
 
 export type ProjectExpanded = Omit<
   Project,

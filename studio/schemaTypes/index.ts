@@ -35,6 +35,7 @@ import granularStripeUI from './objects/modules/granularStripeUI'
 import servicesUI from './objects/modules/servicesUI'
 import listProjectsUI from './objects/modules/listProjectsUI'
 import mediaUI from './objects/modules/mediaUI'
+import videoUI from './objects/modules/videoUI'
 
 export const schemaTypes = [
   settings,
@@ -71,5 +72,6 @@ export const schemaTypes = [
   granularStripeUI,
   servicesUI,
   mediaUI,
+  videoUI,
 ]
 export default schemaTypes

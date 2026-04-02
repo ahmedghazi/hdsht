@@ -16,9 +16,9 @@ import type {
   ContactsUI,
   GranularStripeUI,
   ServicesUI,
-  MediaUI,
+  VideoUI,
 } from '~/utils/sanity-api/sanity.types'
-import ModuleMediaUI from './modules/ModuleMediaUI.vue'
+import ModuleVideoUI from './modules/ModuleVideoUI.vue'
 
 defineProps({
   input: Array<
@@ -30,7 +30,7 @@ defineProps({
     | ContactsUI
     | GranularStripeUI
     | ServicesUI
-    | MediaUI
+    | VideoUI
   >,
 })
 </script>
@@ -56,7 +56,7 @@ defineProps({
           :input="item"
         />
         <ModuleServicesUI v-if="item._type == 'servicesUI'" :input="item" />
-        <ModuleMediaUI v-if="item._type == 'mediaUI'" :input="item" />
+        <ModuleVideoUI v-if="item._type == 'videoUI'" :input="item" />
       </template>
     </div>
   </div>

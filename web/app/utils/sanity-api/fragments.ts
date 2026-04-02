@@ -154,11 +154,26 @@ export const servicesUI = `
   }
 `
 
-export const mediaUI = `
-  _type == 'mediaUI' => {
+// export const mediaUI = `
+//   _type == 'mediaUI' => {
+//     ...,
+//     "items": *[_type == 'sanity.imageAsset']{
+//       asset->
+//     }
+//   }
+// `
+export const videoUI = `
+  _type == 'videoUI' => {
     ...,
-    "items": *[_type == 'sanity.imageAsset']{
-      asset->
+    video{
+      video{
+        asset->{
+          playbackId
+        },
+        placeholder{
+          asset->
+        }
+      }
     }
   }
 `
@@ -172,5 +187,5 @@ export const modules = `
   ${contactsUI},
   ${granularStripeUI},
   ${servicesUI},
-  ${mediaUI}
+  ${videoUI}
 `

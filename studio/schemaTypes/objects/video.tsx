@@ -63,17 +63,12 @@ export default {
       name: 'video',
       type: 'mux.video',
     }),
-    defineField({
-      name: 'colSize',
-      title: 'Colunn size',
-      type: 'number',
-      description: 'in a 6 column grid (ex: 1, 2, 3)',
-    }),
+
     defineField({
       name: 'placeholder',
       type: 'image',
       description: 'optionnal',
-      hidden: true,
+      // hidden: true,
     }),
     // defineField({
     //   name: 'url',
@@ -95,6 +90,13 @@ export default {
       // options: {
       //   list: [{title: 'Landscape', value: 'lands'}],
       // },
+    }),
+    defineField({
+      name: 'colSize',
+      title: 'Colunn size',
+      type: 'number',
+      description:
+        'In a 6 columns grid (ex: 1, 2, 3), if used in a list (media section in project for example)',
     }),
   ],
   components: {
