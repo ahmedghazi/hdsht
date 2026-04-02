@@ -6,7 +6,7 @@ defineEmits<{ 'update:modelValue': [value: string] }>()
 <template>
   <div class="select-ui">
     <select
-      class="select-ui-inner"
+      class="select-ui-inner max-w-[9em] truncate"
       :value="modelValue"
       @change="
         $emit('update:modelValue', ($event.target as HTMLSelectElement).value)
