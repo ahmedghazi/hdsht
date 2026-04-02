@@ -76,8 +76,9 @@ a {
 }
 
 button:hover {
-  background: color-mix(in srgb, var(--color-blur) 100%, var(--color-white) 8%);
+  // background: color-mix(in srgb, var(--color-blur) 100%, var(--color-white) 8%);
   // color: red;
+  color: var(--color-white-40);
 }
 button.is-active {
   color: var(--color-secondary);

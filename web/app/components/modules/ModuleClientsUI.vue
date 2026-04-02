@@ -19,7 +19,7 @@ onMounted(() => {
   >
     <div class="inner">
       <h2 class="bubble">
-        <span>{{ _localizeField(input.title) }}</span>
+        <div>{{ _localizeField(input.title) }}</div>
       </h2>
       <div class="list">
         <Marquee :duration="3">

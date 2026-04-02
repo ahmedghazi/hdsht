@@ -47,6 +47,9 @@ body:has(.content--home) {
   main {
     padding: 0;
   }
+  footer {
+    display: none;
+  }
 }
 .content {
 }

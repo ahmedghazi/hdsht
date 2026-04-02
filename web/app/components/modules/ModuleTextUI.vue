@@ -8,7 +8,12 @@ defineProps<{ input: TextUI }>()
 
 <template>
   <section
-    :class="['module', 'module--textUI', `col-span-${input.colSize || 2}`]"
+    :class="[
+      'module',
+      'module-text-ui',
+      `module-text-ui--${input.look}`,
+      `col-span-${input.colSize || 2}`,
+    ]"
   >
     <div class="inner">
       <ClientOnly>
@@ -27,8 +32,10 @@ defineProps<{ input: TextUI }>()
 </template>
 
 <style lang="scss" scoped>
-.inner {
-  padding: 0 var(--spacing-md);
+.module-text-ui--lg {
+  .inner {
+    padding: 0 var(--spacing-md);
+  }
 }
 @media (min-width: 800px) {
   .text {

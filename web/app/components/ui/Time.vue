@@ -29,6 +29,6 @@ onUnmounted(() => {
 
 <template>
   <div ref="timeRef" class="time bubble">
-    <span>{{ currentTime }}</span>
+    <div>{{ currentTime }}</div>
   </div>
 </template>

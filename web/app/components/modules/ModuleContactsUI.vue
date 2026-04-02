@@ -14,7 +14,7 @@ defineProps<{ input: ContactsUI }>()
     <div class="inner">
       <div class="header">
         <h2 v-if="input.title" class="bubble">
-          <span>{{ _localizeField(input.title) }}</span>
+          <div>{{ _localizeField(input.title) }}</div>
         </h2>
       </div>
       <div v-if="input.text && input.text.en" class="text">

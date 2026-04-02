@@ -60,7 +60,9 @@
   color: var(--color-white);
 
   div {
-    transform: translateY(calc(var(--bubble-dot-lh) * var(--bubble-dot-offset-ratio)));
+    transform: translateY(
+      calc(var(--bubble-dot-lh) * var(--bubble-dot-offset-ratio))
+    );
   }
 
   .dots {
@@ -110,7 +112,9 @@
   line-height: var(--pill-lh);
   font-size: calc(var(--pill-lh) * var(--pill-size-ratio));
   border-radius: calc(var(--pill-lh) * var(--pill-radius-ratio));
-  padding-inline: calc(var(--pill-lh) * var(--pill-size-ratio)); /* intentionally = font-size */
+  padding-inline: calc(
+    var(--pill-lh) * var(--pill-size-ratio)
+  ); /* intentionally = font-size */
   white-space: nowrap;
   cursor: pointer;
   background: var(--background, var(--color-blur));
@@ -125,7 +129,7 @@
 }
 
 .pill:hover {
-  background: color-mix(in srgb, var(--color-blur) 100%, var(--color-white) 8%);
+  // background: color-mix(in srgb, var(--color-blur) 100%, var(--color-white) 8%);
 }
 
 .pill:disabled,
@@ -153,7 +157,9 @@
   --pill-radius-ratio: 0.5;
   --pill-size-ratio: 0.4;
 
-  padding-inline: calc(var(--pill-lh) * var(--pill-size-ratio)); /* intentionally = font-size */
+  padding-inline: calc(
+    var(--pill-lh) * var(--pill-size-ratio)
+  ); /* intentionally = font-size */
   border-radius: calc(var(--pill-lh) * var(--pill-radius-ratio));
   cursor: pointer;
   background: var(--color-blur);
@@ -174,7 +180,7 @@
 }
 
 .pill--icon:hover {
-  background: color-mix(in srgb, var(--color-blur) 100%, var(--color-white) 8%);
+  // background: color-mix(in srgb, var(--color-blur) 100%, var(--color-white) 8%);
 }
 
 .pill--icon > svg,
@@ -199,7 +205,9 @@
   line-height: var(--select-lh);
   font-size: calc(var(--select-lh) * var(--select-size-ratio));
   border-radius: calc(var(--select-lh) * var(--select-radius-ratio));
-  padding-inline: calc(var(--select-lh) * var(--select-size-ratio)); /* intentionally = font-size */
+  padding-inline: calc(
+    var(--select-lh) * var(--select-size-ratio)
+  ); /* intentionally = font-size */
   white-space: nowrap;
   cursor: pointer;
   background: var(--background, var(--color-blur));
@@ -211,7 +219,8 @@
   /* Custom chevron */
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='none' stroke='%23ffffff' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' d='M2 4l4 4 4-4'/%3E%3C/svg%3E");
   background-repeat: no-repeat;
-  background-position: right calc(var(--select-lh) * var(--select-size-ratio)) center;
+  background-position: right calc(var(--select-lh) * var(--select-size-ratio))
+    center;
 
   select {
     transform: translateY(calc(var(--select-lh) * var(--select-offset-ratio)));

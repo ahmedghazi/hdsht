@@ -19,7 +19,6 @@ const { _localizeField } = useSanityLocale()
       { 'is-bottom': scrollEnd },
     ]"
   >
-    footer
     <ul class="flex flex-wrap gap-md">
       <template v-if="logos">
         <li class="logo" v-for="(logo, index) in logos" :key="index">
