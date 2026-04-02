@@ -33,8 +33,7 @@ main {
   padding-top: calc(var(--header-h) + var(--spacing-lg));
   padding-left: var(--spacing-md, 20px);
   padding-right: var(--spacing-md, 20px);
-  // padding-bottom: calc(var(--footer-h) * 0.65 + 2rem);
-  padding-bottom: calc(var(--footer-h) * 1 + 1.4rem);
+  // padding-bottom: calc(var(--footer-h) + 1.4rem);
 }
 
 .h-app {

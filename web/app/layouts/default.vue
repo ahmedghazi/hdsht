@@ -47,7 +47,7 @@ function _format() {
 <template>
   <div id="page">
     <Header v-if="data" :settings="data" />
-    <main class="px-md"><slot /></main>
+    <main><slot /></main>
     <Footer v-if="data" :settings="data" />
   </div>
 </template>
