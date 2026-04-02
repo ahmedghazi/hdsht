@@ -80,6 +80,12 @@ const { _localizeField } = useSanityLocale()
     }
   }
 
+  &__index {
+    width: 7em;
+    .bubble {
+      width: 100%;
+    }
+  }
   &__title {
     flex: 1 1 auto; // prend l’espace dispo entre gauche et year
     min-width: 0; // autorise le shrink

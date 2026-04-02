@@ -31,7 +31,7 @@ html {
   html {
     font-size: 10px;
     // font-size: 12px;
-    font-size: 14px;
+    font-size: 15px;
     // font-size: 20px;
   }
 }
@@ -65,12 +65,13 @@ a {
   text-decoration: none;
   &:hover,
   &[aria-current='page'] {
-    background: color-mix(
-      in srgb,
-      var(--color-blur) 100%,
-      var(--color-white) 8%
-    );
+    // background: color-mix(
+    //   in srgb,
+    //   var(--color-blur) 100%,
+    //   var(--color-white) 8%
+    // );
     // color: var(--color-secondary);
+    color: var(--color-white-40);
   }
 }
 

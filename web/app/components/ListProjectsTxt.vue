@@ -83,6 +83,11 @@ const _format = () => {
 .list-projects-txt {
   --opacity: 0;
   opacity: var(--opacity);
+  .header {
+    position: sticky;
+    top: var(--header-h);
+    z-index: 10;
+  }
   .header__ID {
     width: var(--cardIndex-w);
   }

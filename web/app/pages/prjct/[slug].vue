@@ -109,7 +109,7 @@ const clientColors = computed(() => ({
       <BtnToggle @change="active = !active" />
     </section>
     <section class="media">
-      <div class="grid md:grid-cols-6 gap-md">
+      <div class="grid md:grid-cols-6 gap-x-md">
         <div
           v-for="(item, i) in data?.media"
           :key="i"
