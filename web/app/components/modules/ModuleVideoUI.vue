@@ -5,11 +5,12 @@ defineProps<{ input: VideoUI }>()
 </script>
 
 <template>
-  <section :class="['module', 'module--videoUI', `col-span-2`]">
+  <section :class="['module', 'module-video-ui', `col-span-2`]">
     <UiMuxVideo
       :asset-id="input.video?.video?.asset?.playbackId"
       :caption="$localizeField(input.video?.caption)"
-      :play="true"
+      :autoplay="true"
+      :aspect-ratio="input.video?.video?.asset?.data?.aspect_ratio || '16/9'"
     />
   </section>
 </template>
@@ -19,7 +20,11 @@ defineProps<{ input: VideoUI }>()
   height: 100dvh;
   background-color: black;
   mux-player {
-    height: 100dvh;
+    height: 100%;
+    width: 100%;
+    // aspect-ratio: var(--aspect-video);
+    --media-object-fit: cover;
+    --media-object-position: center;
   }
 }
 </style>

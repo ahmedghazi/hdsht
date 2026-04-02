@@ -55,6 +55,18 @@ export const blockContent = `
     }
 	}
 `
+export const video = `
+  asset->{
+    playbackId,
+    data{
+      aspect_ratio,
+      duration
+    }
+  },
+  placeholder{
+    asset->
+  }
+`
 
 export const projectCard = `
   _type,
@@ -88,9 +100,7 @@ export const projectCard = `
     _type == 'video' => {
       ...,
       video{
-        asset->{
-          playbackId
-        }
+        ${video}
       }
     },
   },
@@ -162,17 +172,13 @@ export const servicesUI = `
 //     }
 //   }
 // `
+
 export const videoUI = `
   _type == 'videoUI' => {
     ...,
     video{
       video{
-        asset->{
-          playbackId
-        },
-        placeholder{
-          asset->
-        }
+        ${video}
       }
     }
   }

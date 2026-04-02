@@ -6,11 +6,13 @@ const {
   caption,
   autoplay = false,
   play = false,
+  aspectRatio,
 } = defineProps<{
   assetId?: string
   caption?: string
   autoplay?: boolean
   play?: boolean
+  aspectRatio?: string
 }>()
 
 const emit = defineEmits<{
@@ -61,10 +63,12 @@ watch(
     immediate: true, // exécute aussi au montage avec la valeur initiale
   },
 )
+const aspectRatioMuxToCss = aspectRatio ? aspectRatio.replace(':', '/') : ''
 </script>
 
 <template>
   <mux-player
+    :style="{ '--aspect-ratio': aspectRatioMuxToCss }"
     v-if="assetId"
     ref="playerRef"
     :playback-id="assetId"
@@ -82,5 +86,6 @@ watch(
 mux-player {
   --controls: none;
   vertical-align: top;
+  aspect-ratio: var(--aspect-ratio, 16/9);
 }
 </style>

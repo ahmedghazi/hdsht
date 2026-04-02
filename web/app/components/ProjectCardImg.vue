@@ -39,6 +39,7 @@ const hover = ref<boolean>(false)
             v-if="media.video?.asset?.playbackId"
             :asset-id="media.video?.asset?.playbackId || ''"
             :autoplay="true"
+            :aspect-ratio="media.video?.asset?.data?.aspect_ratio"
           />
         </template>
         <template v-else>
