@@ -2,5 +2,7 @@
   "client": "Client",
   "project": "Project",
   "year": "Year",
-  "location": "Location"
+  "location": "Location",
+  "sort": "Sort",
+  "filter": "Filter"
 }

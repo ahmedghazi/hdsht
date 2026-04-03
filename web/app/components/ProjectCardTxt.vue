@@ -2,12 +2,17 @@
 import type { ProjectExpanded } from '~/utils/sanity-api/sanity-expanded.types'
 import Client from './Client.vue'
 
-const { input, index = 0 } = defineProps<{
+const {
+  input,
+  index = 0,
+  stagger = 0.01,
+} = defineProps<{
   input: ProjectExpanded
   index?: number
+  stagger?: number
 }>()
 const items = ref<HTMLElement | null>(null)
-const { animeClass } = useDominoAnime(items, index)
+const { animeClass } = useDominoAnime(items, index, stagger)
 </script>
 
 <template>
