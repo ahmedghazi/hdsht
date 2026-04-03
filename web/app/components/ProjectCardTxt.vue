@@ -2,18 +2,22 @@
 import type { ProjectExpanded } from '~/utils/sanity-api/sanity-expanded.types'
 import Client from './Client.vue'
 
-const { input } = defineProps<{ input: ProjectExpanded }>()
-const { _localizeField } = useSanityLocale()
+const { input, index = 0 } = defineProps<{
+  input: ProjectExpanded
+  index?: number
+}>()
+const items = ref<HTMLElement | null>(null)
+const { animeClass } = useDominoAnime(items, index)
 </script>
 
 <template>
   <NuxtLink :to="_linkResolver(input as any)">
     <article
+      ref="items"
       :class="{
         card: true,
         'card--project-txt': true,
         'card--rip': input.rip,
-        // 'mb-md': true,
       }"
       :style="{
         '--background': input.client?.backgroundColor?.hex,
@@ -23,20 +27,22 @@ const { _localizeField } = useSanityLocale()
       <div class="grid md:grid-cols-2">
         <div class="flex">
           <div class="card__index dots">
-            <div class="bubble bubble-dot bubble-dot--lg">
+            <div class="bubble bubble-dot bubble-dot--lg" :class="animeClass">
               <div v-if="input.ID">{{ input.ID }}</div>
               <div v-else>00000</div>
             </div>
           </div>
-          <Client v-if="input.client" :input="input.client" />
+          <div :class="animeClass">
+            <Client v-if="input.client" :input="input.client" />
+          </div>
         </div>
         <div class="flex">
           <h2 class="card__title">
             <div class="inner">
-              <div class="bubble bubble--lg">
+              <div class="bubble bubble--lg" :class="animeClass">
                 <div>
                   <span class="ellipsis">
-                    {{ _localizeField(input.title) }}
+                    {{ $localizeField(input.title) }}
                   </span>
                 </div>
               </div>
@@ -44,7 +50,7 @@ const { _localizeField } = useSanityLocale()
           </h2>
 
           <div class="card__year">
-            <div class="bubble bubble--lg">
+            <div class="bubble bubble--lg" :class="animeClass">
               <div>{{ input.year }}</div>
             </div>
           </div>

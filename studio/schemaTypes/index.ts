@@ -23,6 +23,8 @@ import contactLinkItem from './objects/contactLinkItem'
 import cta from './objects/cta'
 import keyVal from './objects/keyVal'
 import video from './objects/video'
+import accordionItem from './objects/accordionItem'
+import accordion from './objects/accordion'
 
 /** modules */
 import imagesUI from './objects/modules/imagesUI'
@@ -62,6 +64,8 @@ export const schemaTypes = [
   video,
   cta,
   keyVal,
+  accordionItem,
+  accordion,
 
   listProjectsUI,
   imagesUI,

@@ -74,7 +74,7 @@ const _format = () => {
       </div>
     </div>
     <div class="projects-index">
-      <ProjectCardTxt v-for="(item, i) in input || []" :key="i" :input="item" />
+      <ProjectCardTxt v-for="(item, i) in input || []" :key="i" :input="item" :index="i" />
     </div>
   </div>
 </template>

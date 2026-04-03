@@ -1,12 +1,18 @@
 <script lang="ts" setup>
 import type { ProjectExpanded } from '~/utils/sanity-api/sanity-expanded.types'
 
-const { input } = defineProps<{ input: ProjectExpanded }>()
+const { input, index = 0 } = defineProps<{
+  input: ProjectExpanded
+  index?: number
+}>()
 const hover = ref<boolean>(false)
+const wrapper = ref<HTMLElement | null>(null)
+const { animeClass } = useDominoAnime(wrapper, index)
 </script>
 
 <template>
   <div
+    ref="wrapper"
     :class="{
       card: true,
       'card--project-img': true,
@@ -17,17 +23,20 @@ const hover = ref<boolean>(false)
     @mouseleave="hover = false"
   >
     <NuxtLink :to="_linkResolver(input as any)">
-      <div class="bubble bubble-dot">
+      <div :class="{ 'client-wrapper': true, [animeClass]: true }">
+        <Client
+          v-if="input.client"
+          :input="input.client"
+          :disc-only="true"
+          :size="'md'"
+        />
+      </div>
+
+      <div :class="{ 'bubble bubble-dot': true, [animeClass]: true }">
         <div>{{ input?.ID }}</div>
       </div>
-      <Client
-        v-if="input.client"
-        :input="input.client"
-        :disc-only="true"
-        :size="'md'"
-      />
 
-      <figure v-for="(media, i) in input.media" :key="i">
+      <figure v-for="(media, i) in input.media" :key="i" :class="animeClass">
         <template v-if="media._type === 'image'">
           <img
             :src="$urlFor(media).height(90).url()"
@@ -65,6 +74,7 @@ const hover = ref<boolean>(false)
     position: relative;
   }
 
+  .client-wrapper,
   .client,
   figure {
     display: inline-block;

@@ -3,7 +3,7 @@
 const fs = require('fs')
 const path = require('path')
 
-// ─── Config & path detection (unchanged) ─────────────────────────────────────
+// ─── Config & path detection ──────────────────────────────────────────────────
 
 function loadConfig() {
   const configPath = path.join(__dirname, 'typegen.config.json')
@@ -33,6 +33,7 @@ function findProjectStructure() {
         sanityTypesPath,
         extendedTypesPath: path.join(webPath, config.sanityApiPath, config.extendedTypesFile),
         structure: {web: config.webPath, studio: './'},
+        fieldTypeOverrides: config.fieldTypeOverrides || {},
         fromConfig: true,
       }
     } else {
@@ -62,6 +63,7 @@ function findProjectStructure() {
         sanityTypesPath,
         extendedTypesPath: path.join(webPath, 'app/utils/sanity-api/sanity-extend.types.ts'),
         structure,
+        fieldTypeOverrides: {},
         fromConfig: false,
       }
     }
@@ -84,12 +86,11 @@ function capitalize(str) {
  */
 function findReferenceTypes(content) {
   const refs = {}
-  // Match: export type XxxReference = { ... [internalGroqTypeReferenceTo]?: "typename" ... }
   const pattern =
     /export type (\w+Reference) = \{[^[]*\[internalGroqTypeReferenceTo\]\?:\s*['"](\w+)['"]/g
   let m
   while ((m = pattern.exec(content)) !== null) {
-    refs[m[1]] = capitalize(m[2]) // e.g. { "ClientReference": "Client" }
+    refs[m[1]] = capitalize(m[2])
   }
   return refs
 }
@@ -104,7 +105,7 @@ function extractObjectTypeBlock(content, typeName) {
   if (!match) return null
 
   let depth = 0
-  let i = match.index + match[0].length - 1 // opening {
+  let i = match.index + match[0].length - 1
 
   for (; i < content.length; i++) {
     if (content[i] === '{') depth++
@@ -118,7 +119,6 @@ function extractObjectTypeBlock(content, typeName) {
 
 /**
  * Return names of all document types (those with `_id: string` and `_createdAt: string`).
- * These are the types that represent Sanity documents.
  */
 function findDocumentTypeNames(content) {
   const names = []
@@ -136,13 +136,11 @@ function findDocumentTypeNames(content) {
 
 /**
  * Split a type block into its top-level field definition strings.
- * Handles nested `{ }` and `Array< >` without being confused by them.
  */
 function extractTopLevelFields(typeBlock) {
   const startIdx = typeBlock.indexOf('{')
   if (startIdx === -1) return []
 
-  // Find the matching closing brace
   let depth = 0
   let endIdx = -1
   for (let i = startIdx; i < typeBlock.length; i++) {
@@ -158,7 +156,6 @@ function extractTopLevelFields(typeBlock) {
   if (endIdx === -1) return []
 
   const inner = typeBlock.slice(startIdx + 1, endIdx)
-
   const fields = []
   let braceDepth = 0
   let angleDepth = 0
@@ -183,7 +180,27 @@ function extractTopLevelFields(typeBlock) {
 }
 
 /**
- * For a document type block, return all fields that contain a reference type.
+ * Check whether `refTypeName` appears in `fieldText` outside of any `{ }` block.
+ * This prevents matching references nested inside inline object types.
+ *
+ * Example:
+ *   "client?: ClientReference"                        → true  for ClientReference
+ *   "location?: Array<{ _key: string } & LocRef>"    → true  for LocRef (outside braces)
+ *   "contributions?: Array<{ service?: SvcRef; … }>" → false for SvcRef (inside braces)
+ */
+function containsDirectReference(fieldText, refTypeName) {
+  let stripped = ''
+  let depth = 0
+  for (const ch of fieldText) {
+    if (ch === '{') depth++
+    else if (ch === '}') depth--
+    else if (depth === 0) stripped += ch
+  }
+  return stripped.includes(refTypeName)
+}
+
+/**
+ * For a document type block, return all fields that contain a direct reference type.
  * Each result: { fieldName, targetTypeName, isArray }
  */
 function findReferenceFields(typeBlock, referenceTypes) {
@@ -192,7 +209,7 @@ function findReferenceFields(typeBlock, referenceTypes) {
 
   for (const field of fields) {
     for (const [refTypeName, targetTypeName] of Object.entries(referenceTypes)) {
-      if (!field.includes(refTypeName)) continue
+      if (!containsDirectReference(field, refTypeName)) continue
 
       const nameMatch = field.match(/^\s*(\w+)\??:/)
       if (!nameMatch) continue
@@ -200,39 +217,80 @@ function findReferenceFields(typeBlock, referenceTypes) {
       if (fieldName.startsWith('_')) continue
 
       const isArray = /Array\s*</.test(field)
-
       result.push({fieldName, targetTypeName, isArray})
-      break // one reference type per field
+      break
     }
   }
 
   return result
 }
 
+// ─── Topological sort ────────────────────────────────────────────────────────
+
+/**
+ * Sort expanded types so that dependencies come before dependents.
+ * e.g. ContributionExpanded before ProjectExpanded (since Project.contributions → Contribution)
+ */
+function topoSort(expandedMap) {
+  const expandedTypeNames = new Set(expandedMap.keys())
+  const visited = new Set()
+  const sorted = []
+
+  function visit(typeName) {
+    if (visited.has(typeName)) return
+    visited.add(typeName)
+    const refFields = expandedMap.get(typeName) || []
+    for (const f of refFields) {
+      if (expandedTypeNames.has(f.targetTypeName)) {
+        visit(f.targetTypeName)
+      }
+    }
+    sorted.push(typeName)
+  }
+
+  for (const typeName of expandedMap.keys()) {
+    visit(typeName)
+  }
+
+  return sorted
+}
+
 // ─── Code generation ──────────────────────────────────────────────────────────
 
 /**
  * Generate the `XxxExpanded` type for one document type.
- * Uses `Omit` to strip the reference fields and re-declares them with resolved types.
  *
- * Example output:
- *   export type ProjectExpanded = Omit<Project, 'client' | 'persons'> & {
- *     client?: Client | null;
- *     persons?: Array<Person> | null;
- *   };
+ * - Reference fields pointing to a type that itself has an Expanded variant
+ *   automatically use `TargetTypeExpanded` instead of `TargetType`.
+ * - Extra fields from `fieldTypeOverrides[typeName]` are appended and
+ *   their field names are added to the Omit list.
  */
-function generateExpandedType(typeName, refFields) {
-  const omitKeys = refFields.map((f) => `'${f.fieldName}'`).join(' | ')
-  const expandedFields = refFields
-    .map((f) => {
-      // Special handling for contributions field in Project type
-      if (typeName === 'Project' && f.fieldName === 'contributions') {
-        return `  ${f.fieldName}?: Array<ContributionExpanded> | null`
-      }
-      const resolvedType = f.isArray ? `Array<${f.targetTypeName}>` : f.targetTypeName
-      return `  ${f.fieldName}?: ${resolvedType} | null`
-    })
-    .join(';\n')
+function generateExpandedType(typeName, refFields, expandedTypeNames, fieldTypeOverrides) {
+  const overrides = fieldTypeOverrides[typeName] || {}
+  const overrideFieldNames = Object.keys(overrides)
+
+  // Omit both ref fields and overridden fields (deduplicated)
+  const omitSet = new Set([
+    ...refFields.map((f) => f.fieldName),
+    ...overrideFieldNames,
+  ])
+  const omitKeys = [...omitSet].map((k) => `'${k}'`).join(' | ')
+
+  // Ref fields: use TargetTypeExpanded when available
+  const refFieldLines = refFields.map((f) => {
+    const targetName = expandedTypeNames.has(f.targetTypeName)
+      ? `${f.targetTypeName}Expanded`
+      : f.targetTypeName
+    const resolvedType = f.isArray ? `Array<${targetName}>` : targetName
+    return `  ${f.fieldName}?: ${resolvedType} | null`
+  })
+
+  // Override fields (project-specific, from typegen.config.json)
+  const overrideLines = overrideFieldNames.map((fieldName) => {
+    return `  ${fieldName}?: ${overrides[fieldName]}`
+  })
+
+  const expandedFields = [...refFieldLines, ...overrideLines].join(';\n')
 
   return (
     `export type ${typeName}Expanded = Omit<${typeName}, ${omitKeys}> & {\n` +
@@ -253,52 +311,66 @@ function generateExtendedTypes(content, meta) {
   }
 
   const documentTypeNames = findDocumentTypeNames(content)
-  const expandedTypes = []
-  const neededImports = new Set()
 
-  // Always add ContributionExpanded if Contribution type exists and has references
-  const contributionBlock = extractObjectTypeBlock(content, 'Contribution')
-  if (contributionBlock) {
-    const contributionRefFields = findReferenceFields(contributionBlock, referenceTypes)
-    if (contributionRefFields.length > 0) {
-      expandedTypes.push({typeName: 'Contribution', refFields: contributionRefFields})
-      neededImports.add('Contribution')
-      for (const f of contributionRefFields) {
-        neededImports.add(f.targetTypeName)
-      }
-      console.log(
-        `  ✓ ContributionExpanded  [${contributionRefFields.map((f) => (f.isArray ? `${f.fieldName}[]` : f.fieldName)).join(', ')}]`,
-      )
-    }
-  }
-
+  // Build map: typeName → refFields (only types that have reference fields)
+  const expandedMap = new Map()
   for (const typeName of documentTypeNames) {
     const typeBlock = extractObjectTypeBlock(content, typeName)
     if (!typeBlock) continue
-
     const refFields = findReferenceFields(typeBlock, referenceTypes)
-    if (refFields.length === 0) continue
-
-    expandedTypes.push({typeName, refFields})
-    neededImports.add(typeName)
-    for (const f of refFields) {
-      neededImports.add(f.targetTypeName)
+    if (refFields.length > 0) {
+      expandedMap.set(typeName, refFields)
     }
-
-    console.log(
-      `  ✓ ${typeName}Expanded  [${refFields.map((f) => (f.isArray ? `${f.fieldName}[]` : f.fieldName)).join(', ')}]`,
-    )
   }
 
-  if (expandedTypes.length === 0) {
+  // Also include types referenced in fieldTypeOverrides that might not have ref fields
+  for (const typeName of Object.keys(meta.fieldTypeOverrides)) {
+    if (!expandedMap.has(typeName)) {
+      expandedMap.set(typeName, [])
+    }
+  }
+
+  if (expandedMap.size === 0) {
     throw new Error('No document types with reference fields found. Nothing to generate.')
   }
 
-  const importLine = `import type {\n  ${[...neededImports].join(',\n  ')}\n} from './sanity.types'`
+  const expandedTypeNames = new Set(expandedMap.keys())
 
-  const typeDefs = expandedTypes
-    .map(({typeName, refFields}) => generateExpandedType(typeName, refFields))
+  // Sort by dependency order
+  const sortedTypeNames = topoSort(expandedMap)
+
+  // Collect needed imports
+  const neededImports = new Set()
+  for (const [typeName, refFields] of expandedMap) {
+    neededImports.add(typeName)
+    for (const f of refFields) neededImports.add(f.targetTypeName)
+  }
+
+  // Log
+  console.log('🔎 Scanning for reference fields...')
+  for (const typeName of sortedTypeNames) {
+    const refFields = expandedMap.get(typeName)
+    const overrideFields = Object.keys(meta.fieldTypeOverrides[typeName] || {})
+    const allFields = [
+      ...refFields.map((f) => (f.isArray ? `${f.fieldName}[]` : f.fieldName)),
+      ...overrideFields.map((f) => `${f} (override)`),
+    ]
+    console.log(`  ✓ ${typeName}Expanded  [${allFields.join(', ')}]`)
+  }
+
+  // Generate type definitions
+  const typeDefs = sortedTypeNames
+    .map((typeName) =>
+      generateExpandedType(
+        typeName,
+        expandedMap.get(typeName),
+        expandedTypeNames,
+        meta.fieldTypeOverrides,
+      ),
+    )
     .join('\n\n')
+
+  const importLine = `import type {\n  ${[...neededImports].join(',\n  ')}\n} from './sanity.types'`
 
   return (
     `// AUTO-GENERATED EXTENDED TYPES - DO NOT EDIT MANUALLY\n` +
@@ -316,7 +388,7 @@ function generateExtendedTypes(content, meta) {
 // ─── Main ─────────────────────────────────────────────────────────────────────
 
 try {
-  const {webRoot, sanityTypesPath, extendedTypesPath, structure, fromConfig} =
+  const {webRoot, sanityTypesPath, extendedTypesPath, structure, fieldTypeOverrides, fromConfig} =
     findProjectStructure()
 
   console.log(`📂 Web folder: ${webRoot}`)
@@ -331,12 +403,12 @@ try {
 
   const content = fs.readFileSync(sanityTypesPath, 'utf8')
 
-  console.log('🔎 Scanning for reference fields...')
   const extendedTypes = generateExtendedTypes(content, {
     date: new Date().toISOString(),
     web: structure.web,
     studio: structure.studio,
     fromConfig,
+    fieldTypeOverrides,
   })
 
   fs.writeFileSync(extendedTypesPath, extendedTypes)

@@ -34,6 +34,14 @@ useSeoMeta({
   ),
 })
 
+const wrapper = ref<HTMLElement | null>(null)
+const metadataRef = ref<HTMLElement | null>(null)
+const { animeClass, trigger } = useDominoAnime(wrapper, 0)
+
+watch(active, (val) => {
+  if (val) nextTick(() => trigger(metadataRef))
+})
+
 const clientColors = computed(() => ({
   foreGround: data.value?.client?.foregroundColor?.hex || '#000000',
   backGround: data.value?.client?.backgroundColor?.hex || '#ffffff',
@@ -41,29 +49,32 @@ const clientColors = computed(() => ({
 </script>
 
 <template>
-  <div class="content content--page-project">
+  <div ref="wrapper" class="content content--page-project">
     <section class="header">
       <div class="header--item">
-        <div class="bubble">
+        <div class="bubble" :class="animeClass">
           <div>ID</div>
         </div>
-        <div class="bubble bubble-dot bubble-dot--lg">
+        <div class="bubble bubble-dot bubble-dot--lg" :class="animeClass">
           <div>{{ data?.ID }}</div>
         </div>
       </div>
       <div class="header--item">
-        <div class="bubble">
+        <div class="bubble" :class="animeClass">
           <div>{{ $localizeText('client') }}</div>
         </div>
-        <Client v-if="data?.client" :input="data.client" />
+        <div :class="animeClass">
+          <Client v-if="data?.client" :input="data.client" />
+        </div>
       </div>
 
       <div class="header--item">
-        <div class="bubble">
+        <div class="bubble" :class="animeClass">
           <div>{{ $localizeText('project') }}</div>
         </div>
         <div
           class="bubble bubble--lg"
+          :class="animeClass"
           :style="{
             '--color': clientColors.foreGround,
             '--background': clientColors.backGround,
@@ -72,20 +83,20 @@ const clientColors = computed(() => ({
           <h1>{{ $localizeField(data?.title) }}</h1>
         </div>
       </div>
-      <div class="metadata" v-if="active">
+      <div v-if="active" ref="metadataRef" class="metadata">
         <div class="header--item">
-          <div class="bubble">
+          <div class="bubble" :class="animeClass">
             <div>{{ $localizeText('year') }}</div>
           </div>
-          <div class="bubble bubble--lg">
+          <div class="bubble bubble--lg" :class="animeClass">
             <h1>{{ data?.year }}</h1>
           </div>
         </div>
         <div v-for="(item, i) in data?.locations" :key="i" class="header--item">
-          <div class="bubble">
+          <div class="bubble" :class="animeClass">
             <div>{{ $localizeText('location') }}</div>
           </div>
-          <div class="bubble bubble--lg">
+          <div class="bubble bubble--lg" :class="animeClass">
             <h1>{{ item?.name }}</h1>
           </div>
         </div>
@@ -94,12 +105,16 @@ const clientColors = computed(() => ({
           :key="item._key"
           class="header--item"
         >
-          <div v-if="item.service && item.service.title" class="bubble">
+          <div
+            v-if="item.service && item.service.title"
+            class="bubble"
+            :class="animeClass"
+          >
             <div>{{ $localizeField(item.service?.title) }}</div>
           </div>
           <ul>
             <li v-for="(contributor, j) in item.contributors" :key="j">
-              <div class="bubble bubble--lg">
+              <div class="bubble bubble--lg" :class="animeClass">
                 <div>{{ contributor.first_name }} {{ contributor.name }}</div>
               </div>
             </li>
@@ -113,7 +128,10 @@ const clientColors = computed(() => ({
         <div
           v-for="(item, i) in data?.media"
           :key="i"
-          :class="item.colSize ? `col-span-1 md:col-span-${item.colSize}` : ''"
+          :class="{
+            [`col-span-1 md:col-span-${item.colSize}`]: item.colSize,
+            [animeClass]: true,
+          }"
         >
           <template v-if="item._type === 'sanity.imageAsset'">
             <CardImg

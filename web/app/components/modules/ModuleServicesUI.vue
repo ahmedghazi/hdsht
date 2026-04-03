@@ -1,10 +1,6 @@
 <script setup lang="ts">
-import { PortableText } from '@portabletext/vue'
-import { portableTextComponents } from '~/utils/sanity-api/portableTextComponents'
 import type { ServicesUI } from '~/utils/sanity-api/sanity.types'
-import { useSanityLocale } from '~/composables/useSanityLocale'
-
-const { _localizeField } = useSanityLocale()
+import Accordion from '../ui/Accordion.vue'
 
 defineProps<{ input: ServicesUI }>()
 </script>
@@ -16,17 +12,13 @@ defineProps<{ input: ServicesUI }>()
     <div class="inner">
       <div class="header">
         <h2 v-if="input.title" class="bubble">
-          <div>{{ _localizeField(input.title) }}</div>
+          <div>{{ $localizeField(input.title) }}</div>
         </h2>
       </div>
       <div class="grid md:grid-cols-2 gap-md">
         <div>visual</div>
-        <div v-if="input.text && input.text.en" class="text">
-          <PortableText
-            :value="_localizeField(input.text)"
-            :components="portableTextComponents"
-          />
-        </div>
+
+        <Accordion v-if="input.accordion" :input="input.accordion" />
       </div>
     </div>
   </section>

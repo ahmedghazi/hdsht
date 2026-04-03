@@ -37,6 +37,7 @@ export type ServicesUI = {
   title?: LocaleString
   colSize?: number
   text?: LocaleBlockContent
+  accordion?: Accordion
 }
 
 export type SanityImageAssetReference = {
@@ -143,6 +144,25 @@ export type ListProjectsUI = {
   >
 }
 
+export type Accordion = {
+  _type: 'accordion'
+  items?: Array<
+    {
+      _key: string
+    } & AccordionItem
+  >
+}
+
+export type AccordionItem = {
+  _type: 'accordionItem'
+  icon?: string
+  title?: LocaleString
+  color?: Color
+  backgroundColor?: Color
+  foregroundColor?: Color
+  text?: LocaleBlockContent
+}
+
 export type KeyVal = {
   _type: 'keyVal'
   key?: LocaleString
@@ -179,7 +199,6 @@ export type Video = {
   _type: 'video'
   caption?: LocaleString
   video?: MuxVideo
-  colSize?: number
   placeholder?: {
     asset?: SanityImageAssetReference
     media?: unknown
@@ -188,6 +207,7 @@ export type Video = {
     _type: 'image'
   }
   aspectRatio?: string
+  colSize?: number
 }
 
 export type ContactLinkItem = {
@@ -430,6 +450,15 @@ export type PageModulaire = {
   >
 }
 
+export type Color = {
+  _type: 'color'
+  hex?: string
+  alpha?: number
+  hsl?: HslaColor
+  hsv?: HsvaColor
+  rgb?: RgbaColor
+}
+
 export type SanityImageCrop = {
   _type: 'sanity.imageCrop'
   top?: number
@@ -551,15 +580,6 @@ export type Client = {
   slug?: Slug
   backgroundColor?: Color
   foregroundColor?: Color
-}
-
-export type Color = {
-  _type: 'color'
-  hex?: string
-  alpha?: number
-  hsl?: HslaColor
-  hsv?: HsvaColor
-  rgb?: RgbaColor
 }
 
 export type MuxVideoAsset = {
@@ -788,6 +808,8 @@ export type AllSanitySchemaTypes =
   | ImagesUI
   | ProjectReference
   | ListProjectsUI
+  | Accordion
+  | AccordionItem
   | KeyVal
   | Cta
   | LinkExternal
@@ -810,6 +832,7 @@ export type AllSanitySchemaTypes =
   | Infos
   | Settings
   | PageModulaire
+  | Color
   | SanityImageCrop
   | SanityImageHotspot
   | ClientReference
@@ -818,7 +841,6 @@ export type AllSanitySchemaTypes =
   | MuxVideoAssetReference
   | MuxVideo
   | Client
-  | Color
   | MuxVideoAsset
   | MuxAssetData
   | MuxStaticRenditions
@@ -933,7 +955,7 @@ export type SETTINGS_QUERY_RESULT = {
 
 // Source: ../web/app/utils/sanity-api/queries.ts
 // Variable: HOME_QUERY
-// Query: *[_type == "pageModulaire" && homePage == true][0]{  ...,  seo{    	...,	metaImage{		asset->	}  },  modules[]{    	...,	  _type == 'textUI' => {    ...,    text{      	...,	en[]{		...,		markDefs[] {			...,			_type == "linkInternal" => {				...,				reference->,			},		},		_type == 'icon' => {			...,			image{				asset->			},    }	},	fr[]{		...,		markDefs[] {			...,			_type == "linkInternal" => {				...,				reference->,			},		},		_type == 'icon' => {			...,			image{				asset->			},    }	}    }  },		_type == 'listProjectsUI' => {		...,		items[]->{			  _type,  slug,  seo{    	...,	metaImage{		asset->	}  },  title,  imageCover{    ...,    asset->  },  rip,  year,  ID,  client->,  contributions[]{    service->{      title    },    contributors[]->{      name    }  },  media[]{    ...,    _type == 'image' => {      ...,      asset->    },    _type == 'video' => {      ...,      video{        asset->{          playbackId        }      }    },  },		},	},	  	_type == 'clientsUI' => {		...,    items[]{      ...,      asset->    }	},    	_type == 'locationMapUI' => {		...,    map{      asset->    }	},    	_type == 'contactsUI' => {		...,    items[]{      ...    }	},    	_type == 'granularStripeUI' => {		...,    image{      asset->    }	},    _type == 'servicesUI' => {    ...,    text{      	...,	en[]{		...,		markDefs[] {			...,			_type == "linkInternal" => {				...,				reference->,			},		},		_type == 'icon' => {			...,			image{				asset->			},    }	},	fr[]{		...,		markDefs[] {			...,			_type == "linkInternal" => {				...,				reference->,			},		},		_type == 'icon' => {			...,			image{				asset->			},    }	}    }  },    _type == 'videoUI' => {    ...,    video{      asset->{        playbackId      }    },    placeholder{      asset->    }  }  }}
+// Query: *[_type == "pageModulaire" && homePage == true][0]{  ...,  seo{    	...,	metaImage{		asset->	}  },  modules[]{    	...,	  _type == 'textUI' => {    ...,    text{      	...,	en[]{		...,		markDefs[] {			...,			_type == "linkInternal" => {				...,				reference->,			},		},		_type == 'icon' => {			...,			image{				asset->			},    }	},	fr[]{		...,		markDefs[] {			...,			_type == "linkInternal" => {				...,				reference->,			},		},		_type == 'icon' => {			...,			image{				asset->			},    }	}    }  },		_type == 'listProjectsUI' => {		...,		items[]->{			  _type,  slug,  seo{    	...,	metaImage{		asset->	}  },  title,  imageCover{    ...,    asset->  },  rip,  year,  ID,  client->,  contributions[]{    service->{      title    },    contributors[]->{      name    }  },  media[]{    ...,    _type == 'image' => {      ...,      asset->    },    _type == 'video' => {      ...,      video{          asset->{    playbackId,    data{      aspect_ratio,      duration    }  },  placeholder{    asset->  }      }    },  },		},	},	  	_type == 'clientsUI' => {		...,    items[]{      ...,      asset->    }	},    	_type == 'locationMapUI' => {		...,    map{      asset->    }	},    	_type == 'contactsUI' => {		...,    items[]{      ...    }	},    	_type == 'granularStripeUI' => {		...,    image{      asset->    }	},    _type == 'servicesUI' => {    ...,    text{      	...,	en[]{		...,		markDefs[] {			...,			_type == "linkInternal" => {				...,				reference->,			},		},		_type == 'icon' => {			...,			image{				asset->			},    }	},	fr[]{		...,		markDefs[] {			...,			_type == "linkInternal" => {				...,				reference->,			},		},		_type == 'icon' => {			...,			image{				asset->			},    }	}    },    accordion{      ...    }  },    _type == 'videoUI' => {    ...,    video{      video{          asset->{    playbackId,    data{      aspect_ratio,      duration    }  },  placeholder{    asset->  }      }    }  }  }}
 export type HOME_QUERY_RESULT = {
   _id: string
   _type: 'pageModulaire'
@@ -1197,9 +1219,13 @@ export type HOME_QUERY_RESULT = {
                 video: {
                   asset: {
                     playbackId: string | null
+                    data: {
+                      aspect_ratio: string | null
+                      duration: number | null
+                    } | null
                   } | null
+                  placeholder: null
                 } | null
-                colSize?: number
                 placeholder?: {
                   asset?: SanityImageAssetReference
                   media?: unknown
@@ -1208,6 +1234,7 @@ export type HOME_QUERY_RESULT = {
                   _type: 'image'
                 }
                 aspectRatio?: string
+                colSize?: number
               }
           > | null
         }> | null
@@ -1398,6 +1425,14 @@ export type HOME_QUERY_RESULT = {
           zh?: BlockContent
           fr: null
         } | null
+        accordion: {
+          _type: 'accordion'
+          items?: Array<
+            {
+              _key: string
+            } & AccordionItem
+          >
+        } | null
       }
     | {
         _key: string
@@ -1560,16 +1595,24 @@ export type HOME_QUERY_RESULT = {
         _key: string
         _type: 'videoUI'
         video: {
-          asset: null
+          video: {
+            asset: {
+              playbackId: string | null
+              data: {
+                aspect_ratio: string | null
+                duration: number | null
+              } | null
+            } | null
+            placeholder: null
+          } | null
         } | null
-        placeholder: null
       }
   > | null
 } | null
 
 // Source: ../web/app/utils/sanity-api/queries.ts
 // Variable: PAGE_MODULAIRE_QUERY
-// Query: *[_type == "pageModulaire" && slug.current == $slug][0]{  ...,  seo{    	...,	metaImage{		asset->	}  },  modules[]{    	...,	  _type == 'textUI' => {    ...,    text{      	...,	en[]{		...,		markDefs[] {			...,			_type == "linkInternal" => {				...,				reference->,			},		},		_type == 'icon' => {			...,			image{				asset->			},    }	},	fr[]{		...,		markDefs[] {			...,			_type == "linkInternal" => {				...,				reference->,			},		},		_type == 'icon' => {			...,			image{				asset->			},    }	}    }  },		_type == 'listProjectsUI' => {		...,		items[]->{			  _type,  slug,  seo{    	...,	metaImage{		asset->	}  },  title,  imageCover{    ...,    asset->  },  rip,  year,  ID,  client->,  contributions[]{    service->{      title    },    contributors[]->{      name    }  },  media[]{    ...,    _type == 'image' => {      ...,      asset->    },    _type == 'video' => {      ...,      video{        asset->{          playbackId        }      }    },  },		},	},	  	_type == 'clientsUI' => {		...,    items[]{      ...,      asset->    }	},    	_type == 'locationMapUI' => {		...,    map{      asset->    }	},    	_type == 'contactsUI' => {		...,    items[]{      ...    }	},    	_type == 'granularStripeUI' => {		...,    image{      asset->    }	},    _type == 'servicesUI' => {    ...,    text{      	...,	en[]{		...,		markDefs[] {			...,			_type == "linkInternal" => {				...,				reference->,			},		},		_type == 'icon' => {			...,			image{				asset->			},    }	},	fr[]{		...,		markDefs[] {			...,			_type == "linkInternal" => {				...,				reference->,			},		},		_type == 'icon' => {			...,			image{				asset->			},    }	}    }  },    _type == 'videoUI' => {    ...,    video{      asset->{        playbackId      }    },    placeholder{      asset->    }  }  }}
+// Query: *[_type == "pageModulaire" && slug.current == $slug][0]{  ...,  seo{    	...,	metaImage{		asset->	}  },  modules[]{    	...,	  _type == 'textUI' => {    ...,    text{      	...,	en[]{		...,		markDefs[] {			...,			_type == "linkInternal" => {				...,				reference->,			},		},		_type == 'icon' => {			...,			image{				asset->			},    }	},	fr[]{		...,		markDefs[] {			...,			_type == "linkInternal" => {				...,				reference->,			},		},		_type == 'icon' => {			...,			image{				asset->			},    }	}    }  },		_type == 'listProjectsUI' => {		...,		items[]->{			  _type,  slug,  seo{    	...,	metaImage{		asset->	}  },  title,  imageCover{    ...,    asset->  },  rip,  year,  ID,  client->,  contributions[]{    service->{      title    },    contributors[]->{      name    }  },  media[]{    ...,    _type == 'image' => {      ...,      asset->    },    _type == 'video' => {      ...,      video{          asset->{    playbackId,    data{      aspect_ratio,      duration    }  },  placeholder{    asset->  }      }    },  },		},	},	  	_type == 'clientsUI' => {		...,    items[]{      ...,      asset->    }	},    	_type == 'locationMapUI' => {		...,    map{      asset->    }	},    	_type == 'contactsUI' => {		...,    items[]{      ...    }	},    	_type == 'granularStripeUI' => {		...,    image{      asset->    }	},    _type == 'servicesUI' => {    ...,    text{      	...,	en[]{		...,		markDefs[] {			...,			_type == "linkInternal" => {				...,				reference->,			},		},		_type == 'icon' => {			...,			image{				asset->			},    }	},	fr[]{		...,		markDefs[] {			...,			_type == "linkInternal" => {				...,				reference->,			},		},		_type == 'icon' => {			...,			image{				asset->			},    }	}    },    accordion{      ...    }  },    _type == 'videoUI' => {    ...,    video{      video{          asset->{    playbackId,    data{      aspect_ratio,      duration    }  },  placeholder{    asset->  }      }    }  }  }}
 export type PAGE_MODULAIRE_QUERY_RESULT = {
   _id: string
   _type: 'pageModulaire'
@@ -1833,9 +1876,13 @@ export type PAGE_MODULAIRE_QUERY_RESULT = {
                 video: {
                   asset: {
                     playbackId: string | null
+                    data: {
+                      aspect_ratio: string | null
+                      duration: number | null
+                    } | null
                   } | null
+                  placeholder: null
                 } | null
-                colSize?: number
                 placeholder?: {
                   asset?: SanityImageAssetReference
                   media?: unknown
@@ -1844,6 +1891,7 @@ export type PAGE_MODULAIRE_QUERY_RESULT = {
                   _type: 'image'
                 }
                 aspectRatio?: string
+                colSize?: number
               }
           > | null
         }> | null
@@ -2034,6 +2082,14 @@ export type PAGE_MODULAIRE_QUERY_RESULT = {
           zh?: BlockContent
           fr: null
         } | null
+        accordion: {
+          _type: 'accordion'
+          items?: Array<
+            {
+              _key: string
+            } & AccordionItem
+          >
+        } | null
       }
     | {
         _key: string
@@ -2196,9 +2252,17 @@ export type PAGE_MODULAIRE_QUERY_RESULT = {
         _key: string
         _type: 'videoUI'
         video: {
-          asset: null
+          video: {
+            asset: {
+              playbackId: string | null
+              data: {
+                aspect_ratio: string | null
+                duration: number | null
+              } | null
+            } | null
+            placeholder: null
+          } | null
         } | null
-        placeholder: null
       }
   > | null
 } | null
@@ -2364,7 +2428,6 @@ export type PROJECT_QUERY_RESULT = {
             playbackId: string | null
           } | null
         } | null
-        colSize?: number
         placeholder?: {
           asset?: SanityImageAssetReference
           media?: unknown
@@ -2373,6 +2436,7 @@ export type PROJECT_QUERY_RESULT = {
           _type: 'image'
         }
         aspectRatio?: string
+        colSize?: number
       }
   > | null
   relatedProject: null
@@ -2383,8 +2447,8 @@ import '@sanity/client'
 declare module '@sanity/client' {
   interface SanityQueries {
     "*[_type == \"settings\"][0]{\n  ...,\n  logo{\n    asset->{\n      url\n    }\n  },\n  navPrimary[]{\n    ...,\n    _type == 'linkInternal' => {\n      ...,\n      link->{\n        _type,\n        slug,\n        homePage\n      },\n    },\n\n  },\n  navSecondary[]{\n    ...,\n    _type == 'linkInternal' => {\n      ...,\n      link->{\n        _type,\n        slug,\n      },\n    },\n  },\n  logos[]{\n    asset->\n  }\n}": SETTINGS_QUERY_RESULT
-    "*[_type == \"pageModulaire\" && homePage == true][0]{\n  ...,\n  seo{\n    \n\t...,\n\tmetaImage{\n\t\tasset->\n\t}\n\n  },\n  modules[]{\n    \n\t...,\n\t\n  _type == 'textUI' => {\n    ...,\n    text{\n      \n\t...,\n\ten[]{\n\t\t...,\n\t\tmarkDefs[] {\n\t\t\t...,\n\t\t\t_type == \"linkInternal\" => {\n\t\t\t\t...,\n\t\t\t\treference->,\n\n\t\t\t},\n\t\t},\n\t\t_type == 'icon' => {\n\t\t\t...,\n\t\t\timage{\n\t\t\t\tasset->\n\t\t\t},\n    }\n\t},\n\tfr[]{\n\t\t...,\n\t\tmarkDefs[] {\n\t\t\t...,\n\t\t\t_type == \"linkInternal\" => {\n\t\t\t\t...,\n\t\t\t\treference->,\n\n\t\t\t},\n\n\t\t},\n\t\t_type == 'icon' => {\n\t\t\t...,\n\t\t\timage{\n\t\t\t\tasset->\n\t\t\t},\n    }\n\t}\n\n    }\n  }\n,\n\t\n\t_type == 'listProjectsUI' => {\n\t\t...,\n\t\titems[]->{\n\t\t\t\n  _type,\n  slug,\n  seo{\n    \n\t...,\n\tmetaImage{\n\t\tasset->\n\t}\n\n  },\n  title,\n  imageCover{\n    ...,\n    asset->\n  },\n  rip,\n  year,\n  ID,\n  client->,\n  contributions[]{\n    service->{\n      title\n    },\n    contributors[]->{\n      name\n    }\n  },\n  media[]{\n    ...,\n    _type == 'image' => {\n      ...,\n      asset->\n    },\n    _type == 'video' => {\n      ...,\n      video{\n        asset->{\n          playbackId\n        }\n      }\n    },\n  },\n\n\t\t},\n\t}\n,\n\t\n  \t_type == 'clientsUI' => {\n\t\t...,\n    items[]{\n      ...,\n      asset->\n    }\n\t}\n,\n  \n  \t_type == 'locationMapUI' => {\n\t\t...,\n    map{\n      asset->\n    }\n\t}\n,\n  \n  \t_type == 'contactsUI' => {\n\t\t...,\n    items[]{\n      ...\n    }\n\t}\n,\n  \n  \t_type == 'granularStripeUI' => {\n\t\t...,\n    image{\n      asset->\n    }\n\t}\n,\n  \n  _type == 'servicesUI' => {\n    ...,\n    text{\n      \n\t...,\n\ten[]{\n\t\t...,\n\t\tmarkDefs[] {\n\t\t\t...,\n\t\t\t_type == \"linkInternal\" => {\n\t\t\t\t...,\n\t\t\t\treference->,\n\n\t\t\t},\n\t\t},\n\t\t_type == 'icon' => {\n\t\t\t...,\n\t\t\timage{\n\t\t\t\tasset->\n\t\t\t},\n    }\n\t},\n\tfr[]{\n\t\t...,\n\t\tmarkDefs[] {\n\t\t\t...,\n\t\t\t_type == \"linkInternal\" => {\n\t\t\t\t...,\n\t\t\t\treference->,\n\n\t\t\t},\n\n\t\t},\n\t\t_type == 'icon' => {\n\t\t\t...,\n\t\t\timage{\n\t\t\t\tasset->\n\t\t\t},\n    }\n\t}\n\n    }\n  }\n,\n  \n  _type == 'videoUI' => {\n    ...,\n    video{\n      asset->{\n        playbackId\n      }\n    },\n    placeholder{\n      asset->\n    }\n  }\n\n\n  }\n}": HOME_QUERY_RESULT
-    "*[_type == \"pageModulaire\" && slug.current == $slug][0]{\n  ...,\n  seo{\n    \n\t...,\n\tmetaImage{\n\t\tasset->\n\t}\n\n  },\n  modules[]{\n    \n\t...,\n\t\n  _type == 'textUI' => {\n    ...,\n    text{\n      \n\t...,\n\ten[]{\n\t\t...,\n\t\tmarkDefs[] {\n\t\t\t...,\n\t\t\t_type == \"linkInternal\" => {\n\t\t\t\t...,\n\t\t\t\treference->,\n\n\t\t\t},\n\t\t},\n\t\t_type == 'icon' => {\n\t\t\t...,\n\t\t\timage{\n\t\t\t\tasset->\n\t\t\t},\n    }\n\t},\n\tfr[]{\n\t\t...,\n\t\tmarkDefs[] {\n\t\t\t...,\n\t\t\t_type == \"linkInternal\" => {\n\t\t\t\t...,\n\t\t\t\treference->,\n\n\t\t\t},\n\n\t\t},\n\t\t_type == 'icon' => {\n\t\t\t...,\n\t\t\timage{\n\t\t\t\tasset->\n\t\t\t},\n    }\n\t}\n\n    }\n  }\n,\n\t\n\t_type == 'listProjectsUI' => {\n\t\t...,\n\t\titems[]->{\n\t\t\t\n  _type,\n  slug,\n  seo{\n    \n\t...,\n\tmetaImage{\n\t\tasset->\n\t}\n\n  },\n  title,\n  imageCover{\n    ...,\n    asset->\n  },\n  rip,\n  year,\n  ID,\n  client->,\n  contributions[]{\n    service->{\n      title\n    },\n    contributors[]->{\n      name\n    }\n  },\n  media[]{\n    ...,\n    _type == 'image' => {\n      ...,\n      asset->\n    },\n    _type == 'video' => {\n      ...,\n      video{\n        asset->{\n          playbackId\n        }\n      }\n    },\n  },\n\n\t\t},\n\t}\n,\n\t\n  \t_type == 'clientsUI' => {\n\t\t...,\n    items[]{\n      ...,\n      asset->\n    }\n\t}\n,\n  \n  \t_type == 'locationMapUI' => {\n\t\t...,\n    map{\n      asset->\n    }\n\t}\n,\n  \n  \t_type == 'contactsUI' => {\n\t\t...,\n    items[]{\n      ...\n    }\n\t}\n,\n  \n  \t_type == 'granularStripeUI' => {\n\t\t...,\n    image{\n      asset->\n    }\n\t}\n,\n  \n  _type == 'servicesUI' => {\n    ...,\n    text{\n      \n\t...,\n\ten[]{\n\t\t...,\n\t\tmarkDefs[] {\n\t\t\t...,\n\t\t\t_type == \"linkInternal\" => {\n\t\t\t\t...,\n\t\t\t\treference->,\n\n\t\t\t},\n\t\t},\n\t\t_type == 'icon' => {\n\t\t\t...,\n\t\t\timage{\n\t\t\t\tasset->\n\t\t\t},\n    }\n\t},\n\tfr[]{\n\t\t...,\n\t\tmarkDefs[] {\n\t\t\t...,\n\t\t\t_type == \"linkInternal\" => {\n\t\t\t\t...,\n\t\t\t\treference->,\n\n\t\t\t},\n\n\t\t},\n\t\t_type == 'icon' => {\n\t\t\t...,\n\t\t\timage{\n\t\t\t\tasset->\n\t\t\t},\n    }\n\t}\n\n    }\n  }\n,\n  \n  _type == 'videoUI' => {\n    ...,\n    video{\n      asset->{\n        playbackId\n      }\n    },\n    placeholder{\n      asset->\n    }\n  }\n\n\n  }\n}": PAGE_MODULAIRE_QUERY_RESULT
+    "*[_type == \"pageModulaire\" && homePage == true][0]{\n  ...,\n  seo{\n    \n\t...,\n\tmetaImage{\n\t\tasset->\n\t}\n\n  },\n  modules[]{\n    \n\t...,\n\t\n  _type == 'textUI' => {\n    ...,\n    text{\n      \n\t...,\n\ten[]{\n\t\t...,\n\t\tmarkDefs[] {\n\t\t\t...,\n\t\t\t_type == \"linkInternal\" => {\n\t\t\t\t...,\n\t\t\t\treference->,\n\n\t\t\t},\n\t\t},\n\t\t_type == 'icon' => {\n\t\t\t...,\n\t\t\timage{\n\t\t\t\tasset->\n\t\t\t},\n    }\n\t},\n\tfr[]{\n\t\t...,\n\t\tmarkDefs[] {\n\t\t\t...,\n\t\t\t_type == \"linkInternal\" => {\n\t\t\t\t...,\n\t\t\t\treference->,\n\n\t\t\t},\n\n\t\t},\n\t\t_type == 'icon' => {\n\t\t\t...,\n\t\t\timage{\n\t\t\t\tasset->\n\t\t\t},\n    }\n\t}\n\n    }\n  }\n,\n\t\n\t_type == 'listProjectsUI' => {\n\t\t...,\n\t\titems[]->{\n\t\t\t\n  _type,\n  slug,\n  seo{\n    \n\t...,\n\tmetaImage{\n\t\tasset->\n\t}\n\n  },\n  title,\n  imageCover{\n    ...,\n    asset->\n  },\n  rip,\n  year,\n  ID,\n  client->,\n  contributions[]{\n    service->{\n      title\n    },\n    contributors[]->{\n      name\n    }\n  },\n  media[]{\n    ...,\n    _type == 'image' => {\n      ...,\n      asset->\n    },\n    _type == 'video' => {\n      ...,\n      video{\n        \n  asset->{\n    playbackId,\n    data{\n      aspect_ratio,\n      duration\n    }\n  },\n  placeholder{\n    asset->\n  }\n\n      }\n    },\n  },\n\n\t\t},\n\t}\n,\n\t\n  \t_type == 'clientsUI' => {\n\t\t...,\n    items[]{\n      ...,\n      asset->\n    }\n\t}\n,\n  \n  \t_type == 'locationMapUI' => {\n\t\t...,\n    map{\n      asset->\n    }\n\t}\n,\n  \n  \t_type == 'contactsUI' => {\n\t\t...,\n    items[]{\n      ...\n    }\n\t}\n,\n  \n  \t_type == 'granularStripeUI' => {\n\t\t...,\n    image{\n      asset->\n    }\n\t}\n,\n  \n  _type == 'servicesUI' => {\n    ...,\n    text{\n      \n\t...,\n\ten[]{\n\t\t...,\n\t\tmarkDefs[] {\n\t\t\t...,\n\t\t\t_type == \"linkInternal\" => {\n\t\t\t\t...,\n\t\t\t\treference->,\n\n\t\t\t},\n\t\t},\n\t\t_type == 'icon' => {\n\t\t\t...,\n\t\t\timage{\n\t\t\t\tasset->\n\t\t\t},\n    }\n\t},\n\tfr[]{\n\t\t...,\n\t\tmarkDefs[] {\n\t\t\t...,\n\t\t\t_type == \"linkInternal\" => {\n\t\t\t\t...,\n\t\t\t\treference->,\n\n\t\t\t},\n\n\t\t},\n\t\t_type == 'icon' => {\n\t\t\t...,\n\t\t\timage{\n\t\t\t\tasset->\n\t\t\t},\n    }\n\t}\n\n    },\n    accordion{\n      ...\n    }\n  }\n,\n  \n  _type == 'videoUI' => {\n    ...,\n    video{\n      video{\n        \n  asset->{\n    playbackId,\n    data{\n      aspect_ratio,\n      duration\n    }\n  },\n  placeholder{\n    asset->\n  }\n\n      }\n    }\n  }\n\n\n  }\n}": HOME_QUERY_RESULT
+    "*[_type == \"pageModulaire\" && slug.current == $slug][0]{\n  ...,\n  seo{\n    \n\t...,\n\tmetaImage{\n\t\tasset->\n\t}\n\n  },\n  modules[]{\n    \n\t...,\n\t\n  _type == 'textUI' => {\n    ...,\n    text{\n      \n\t...,\n\ten[]{\n\t\t...,\n\t\tmarkDefs[] {\n\t\t\t...,\n\t\t\t_type == \"linkInternal\" => {\n\t\t\t\t...,\n\t\t\t\treference->,\n\n\t\t\t},\n\t\t},\n\t\t_type == 'icon' => {\n\t\t\t...,\n\t\t\timage{\n\t\t\t\tasset->\n\t\t\t},\n    }\n\t},\n\tfr[]{\n\t\t...,\n\t\tmarkDefs[] {\n\t\t\t...,\n\t\t\t_type == \"linkInternal\" => {\n\t\t\t\t...,\n\t\t\t\treference->,\n\n\t\t\t},\n\n\t\t},\n\t\t_type == 'icon' => {\n\t\t\t...,\n\t\t\timage{\n\t\t\t\tasset->\n\t\t\t},\n    }\n\t}\n\n    }\n  }\n,\n\t\n\t_type == 'listProjectsUI' => {\n\t\t...,\n\t\titems[]->{\n\t\t\t\n  _type,\n  slug,\n  seo{\n    \n\t...,\n\tmetaImage{\n\t\tasset->\n\t}\n\n  },\n  title,\n  imageCover{\n    ...,\n    asset->\n  },\n  rip,\n  year,\n  ID,\n  client->,\n  contributions[]{\n    service->{\n      title\n    },\n    contributors[]->{\n      name\n    }\n  },\n  media[]{\n    ...,\n    _type == 'image' => {\n      ...,\n      asset->\n    },\n    _type == 'video' => {\n      ...,\n      video{\n        \n  asset->{\n    playbackId,\n    data{\n      aspect_ratio,\n      duration\n    }\n  },\n  placeholder{\n    asset->\n  }\n\n      }\n    },\n  },\n\n\t\t},\n\t}\n,\n\t\n  \t_type == 'clientsUI' => {\n\t\t...,\n    items[]{\n      ...,\n      asset->\n    }\n\t}\n,\n  \n  \t_type == 'locationMapUI' => {\n\t\t...,\n    map{\n      asset->\n    }\n\t}\n,\n  \n  \t_type == 'contactsUI' => {\n\t\t...,\n    items[]{\n      ...\n    }\n\t}\n,\n  \n  \t_type == 'granularStripeUI' => {\n\t\t...,\n    image{\n      asset->\n    }\n\t}\n,\n  \n  _type == 'servicesUI' => {\n    ...,\n    text{\n      \n\t...,\n\ten[]{\n\t\t...,\n\t\tmarkDefs[] {\n\t\t\t...,\n\t\t\t_type == \"linkInternal\" => {\n\t\t\t\t...,\n\t\t\t\treference->,\n\n\t\t\t},\n\t\t},\n\t\t_type == 'icon' => {\n\t\t\t...,\n\t\t\timage{\n\t\t\t\tasset->\n\t\t\t},\n    }\n\t},\n\tfr[]{\n\t\t...,\n\t\tmarkDefs[] {\n\t\t\t...,\n\t\t\t_type == \"linkInternal\" => {\n\t\t\t\t...,\n\t\t\t\treference->,\n\n\t\t\t},\n\n\t\t},\n\t\t_type == 'icon' => {\n\t\t\t...,\n\t\t\timage{\n\t\t\t\tasset->\n\t\t\t},\n    }\n\t}\n\n    },\n    accordion{\n      ...\n    }\n  }\n,\n  \n  _type == 'videoUI' => {\n    ...,\n    video{\n      video{\n        \n  asset->{\n    playbackId,\n    data{\n      aspect_ratio,\n      duration\n    }\n  },\n  placeholder{\n    asset->\n  }\n\n      }\n    }\n  }\n\n\n  }\n}": PAGE_MODULAIRE_QUERY_RESULT
     "*[_type == \"project\" && slug.current == $slug][0]{\n  ...,\n  seo{\n    \n\t...,\n\tmetaImage{\n\t\tasset->\n\t}\n\n  },\n  imageCover{\n    ...,\n    asset->\n  },\n  ID,\n  client->,\n  locations[]->{\n    name\n  },\n  contributions[]{\n    _key,\n    service->{\n      title\n    },\n    contributors[]->{\n      first_name,\n      name\n    }\n  },\n  media[]{\n    ...,\n    _type == 'image' => {\n      ...\n      asset->\n    },\n    _type == 'video' => {\n      ...,\n      video{\n        asset->{\n          playbackId\n        }\n      }\n    },\n  },\n  relatedProject->{\n    _type,\n    slug,\n    title,\n  }\n}": PROJECT_QUERY_RESULT
   }
 }

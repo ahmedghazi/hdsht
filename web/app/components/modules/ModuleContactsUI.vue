@@ -2,7 +2,6 @@
 import { PortableText } from '@portabletext/vue'
 import { portableTextComponents } from '~/utils/sanity-api/portableTextComponents'
 import type { ContactsUI } from '~/utils/sanity-api/sanity.types'
-const { _localizeField } = useSanityLocale()
 
 defineProps<{ input: ContactsUI }>()
 </script>
@@ -14,12 +13,12 @@ defineProps<{ input: ContactsUI }>()
     <div class="inner">
       <div class="header">
         <h2 v-if="input.title" class="bubble">
-          <div>{{ _localizeField(input.title) }}</div>
+          <div>{{ $localizeField(input.title) }}</div>
         </h2>
       </div>
       <div v-if="input.text && input.text.en" class="text">
         <PortableText
-          :value="_localizeField(input.text)"
+          :value="$localizeField(input.text)"
           :components="portableTextComponents"
         />
       </div>

@@ -160,6 +160,9 @@ export const servicesUI = `
     ...,
     text{
       ${blockContent}
+    },
+    accordion{
+      ...
     }
   }
 `

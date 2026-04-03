@@ -23,6 +23,11 @@ export default defineField({
     defineField({
       name: 'text',
       type: 'localeBlockContent',
+      hidden: true,
+    }),
+    defineField({
+      name: 'accordion',
+      type: 'accordion',
     }),
   ],
 
