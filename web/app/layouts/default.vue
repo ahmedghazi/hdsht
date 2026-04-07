@@ -2,6 +2,7 @@
 import { onMounted, onUnmounted } from 'vue'
 import type { SETTINGS_QUERY_RESULT } from '~/utils/sanity-api/sanity.types'
 import { SETTINGS_QUERY } from '~/utils/sanity-api/queries'
+import PhiberMouse from '~/components/PhiberMouse.vue'
 
 const { data } = await useSanityData<SETTINGS_QUERY_RESULT>(SETTINGS_QUERY)
 
@@ -49,5 +50,6 @@ function _format() {
     <Header v-if="data" :settings="data" />
     <main><slot /></main>
     <Footer v-if="data" :settings="data" />
+    <PhiberMouse />
   </div>
 </template>
