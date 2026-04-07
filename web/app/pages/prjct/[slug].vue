@@ -34,9 +34,9 @@ useSeoMeta({
   ),
 })
 
-const wrapper = ref<HTMLElement | null>(null)
+const pageContentRef = ref<HTMLElement | null>(null)
 const metadataRef = ref<HTMLElement | null>(null)
-const { animeClass, trigger } = useDominoAnime(wrapper, 0)
+const { animeClass, trigger } = useDominoAnime(pageContentRef, 0)
 
 watch(active, (val) => {
   if (val) nextTick(() => trigger(metadataRef))
@@ -49,117 +49,139 @@ const clientColors = computed(() => ({
 </script>
 
 <template>
-  <div ref="wrapper" class="content content--page-project">
-    <section class="header">
-      <div class="header--item">
-        <div class="bubble" :class="animeClass">
-          <div>ID</div>
+  <div class="content content--page-project">
+    <div ref="pageContentRef">
+      <section class="header">
+        <div class="header--item">
+          <div class="bubble" :class="animeClass">
+            <div>ID</div>
+          </div>
+          <div class="bubble bubble-dot bubble-dot--lg" :class="animeClass">
+            <div>{{ data?.ID }}</div>
+          </div>
         </div>
-        <div class="bubble bubble-dot bubble-dot--lg" :class="animeClass">
-          <div>{{ data?.ID }}</div>
+        <div class="header--item">
+          <div class="bubble" :class="animeClass">
+            <div>{{ $localizeText('client') }}</div>
+          </div>
+          <div :class="animeClass">
+            <Client v-if="data?.client" :input="data.client" />
+          </div>
         </div>
-      </div>
-      <div class="header--item">
-        <div class="bubble" :class="animeClass">
-          <div>{{ $localizeText('client') }}</div>
+
+        <div class="header--item">
+          <div class="bubble" :class="animeClass">
+            <div>{{ $localizeText('project') }}</div>
+          </div>
+          <div
+            class="bubble bubble--lg"
+            :class="animeClass"
+            :style="{
+              '--color': clientColors.foreGround,
+              '--background': clientColors.backGround,
+            }"
+          >
+            <h1>{{ $localizeField(data?.title) }}</h1>
+          </div>
         </div>
-        <div :class="animeClass">
-          <Client v-if="data?.client" :input="data.client" />
+        <div v-if="active" ref="metadataRef" class="metadata">
+          <div class="header--item">
+            <div class="bubble" :class="animeClass">
+              <div>{{ $localizeText('year') }}</div>
+            </div>
+            <div class="bubble bubble--lg" :class="animeClass">
+              <h1>{{ data?.year }}</h1>
+            </div>
+          </div>
+          <div
+            v-for="(item, i) in data?.locations"
+            :key="i"
+            class="header--item"
+          >
+            <div class="bubble" :class="animeClass">
+              <div>{{ $localizeText('location') }}</div>
+            </div>
+            <div class="bubble bubble--lg" :class="animeClass">
+              <h1>{{ item?.name }}</h1>
+            </div>
+          </div>
+          <div
+            v-for="item in data?.contributions"
+            :key="item._key"
+            class="header--item"
+          >
+            <div
+              v-if="item.service && item.service.title"
+              class="bubble"
+              :class="animeClass"
+            >
+              <div>{{ $localizeField(item.service?.title) }}</div>
+            </div>
+            <ul>
+              <li v-for="(contributor, j) in item.contributors" :key="j">
+                <div class="bubble bubble--lg" :class="animeClass">
+                  <div>{{ contributor.first_name }} {{ contributor.name }}</div>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <BtnToggle @change="active = !active" />
+      </section>
+      <section class="media mb-md">
+        <div class="grid md:grid-cols-6 gap-x-md">
+          <div
+            v-for="(item, i) in data?.media"
+            :key="i"
+            :class="{
+              [`col-span-1 md:col-span-${item.colSize}`]: item.colSize,
+              [animeClass]: true,
+            }"
+          >
+            <template v-if="item._type === 'sanity.imageAsset'">
+              <CardImg
+                v-if="item.asset"
+                :asset="item.asset"
+                :caption="
+                  item.caption
+                    ? $localePath(item.caption)
+                    : item.originalFilename
+                "
+                :index="i + 1"
+              />
+            </template>
+            <template v-if="item._type === 'video'">
+              <CardVid
+                v-if="item.video?.asset?.playbackId"
+                :asset-id="item.video?.asset?.playbackId"
+                :caption="item.caption ? $localePath(item.caption) : ''"
+                :index="i + 1"
+              />
+            </template>
+          </div>
+        </div>
+      </section>
+    </div>
+    <setion v-if="data?.relatedProjects" class="mb-md">
+      <div class="bubble" :class="animeClass">
+        <div>
+          <h2>NEXT</h2>
         </div>
       </div>
 
-      <div class="header--item">
-        <div class="bubble" :class="animeClass">
-          <div>{{ $localizeText('project') }}</div>
-        </div>
-        <div
-          class="bubble bubble--lg"
-          :class="animeClass"
-          :style="{
-            '--color': clientColors.foreGround,
-            '--background': clientColors.backGround,
-          }"
-        >
-          <h1>{{ $localizeField(data?.title) }}</h1>
+      <div class="">
+        <div v-for="(item, i) in data?.relatedProjects" :key="i" class="mb-md">
+          <ProjectCard v-if="item" :input="item" :index="i + 1" />
         </div>
       </div>
-      <div v-if="active" ref="metadataRef" class="metadata">
-        <div class="header--item">
-          <div class="bubble" :class="animeClass">
-            <div>{{ $localizeText('year') }}</div>
-          </div>
-          <div class="bubble bubble--lg" :class="animeClass">
-            <h1>{{ data?.year }}</h1>
-          </div>
-        </div>
-        <div v-for="(item, i) in data?.locations" :key="i" class="header--item">
-          <div class="bubble" :class="animeClass">
-            <div>{{ $localizeText('location') }}</div>
-          </div>
-          <div class="bubble bubble--lg" :class="animeClass">
-            <h1>{{ item?.name }}</h1>
-          </div>
-        </div>
-        <div
-          v-for="item in data?.contributions"
-          :key="item._key"
-          class="header--item"
-        >
-          <div
-            v-if="item.service && item.service.title"
-            class="bubble"
-            :class="animeClass"
-          >
-            <div>{{ $localizeField(item.service?.title) }}</div>
-          </div>
-          <ul>
-            <li v-for="(contributor, j) in item.contributors" :key="j">
-              <div class="bubble bubble--lg" :class="animeClass">
-                <div>{{ contributor.first_name }} {{ contributor.name }}</div>
-              </div>
-            </li>
-          </ul>
-        </div>
-      </div>
-      <BtnToggle @change="active = !active" />
-    </section>
-    <section class="media">
-      <div class="grid md:grid-cols-6 gap-x-md">
-        <div
-          v-for="(item, i) in data?.media"
-          :key="i"
-          :class="{
-            [`col-span-1 md:col-span-${item.colSize}`]: item.colSize,
-            [animeClass]: true,
-          }"
-        >
-          <template v-if="item._type === 'sanity.imageAsset'">
-            <CardImg
-              v-if="item.asset"
-              :asset="item.asset"
-              :caption="
-                item.caption ? $localePath(item.caption) : item.originalFilename
-              "
-              :index="i + 1"
-            />
-          </template>
-          <template v-if="item._type === 'video'">
-            <CardVid
-              v-if="item.video?.asset?.playbackId"
-              :asset-id="item.video?.asset?.playbackId"
-              :caption="item.caption ? $localePath(item.caption) : ''"
-              :index="i + 1"
-            />
-          </template>
-        </div>
-      </div>
-    </section>
+    </setion>
   </div>
 </template>
 
 <style scoped lang="scss">
 .content {
-  .header {
+  .header,
+  .media {
     margin-bottom: var(--spacing-md);
   }
   .header--item {

@@ -68,6 +68,17 @@ export const video = `
   }
 `
 
+export const projectCardMini = `
+  _type,
+  slug,
+  ID,
+  title,
+  imageCover{
+    ...,
+    asset->
+  },
+  client->,
+`
 export const projectCard = `
   _type,
   slug,

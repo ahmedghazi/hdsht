@@ -6,7 +6,7 @@ const { locale, setLocale } = useI18n()
   <ul class="locale-switcher flex">
     <li v-for="lang in ['en', 'zh']" :key="lang">
       <button
-        :class="{ active: locale === lang, pill: true }"
+        :class="{ 'is-active': locale === lang, pill: true }"
         @click="setLocale(lang as 'en' | 'zh')"
       >
         <span>{{ lang }}</span>

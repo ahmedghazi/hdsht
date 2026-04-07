@@ -182,13 +182,13 @@ export default defineType({
       group: 'editorial',
     }),
 
-    // defineField({
-    //   name: 'relatedProjects',
-    //   title: 'Projets liés',
-    //   type: 'array',
-    //   of: [{type: 'reference', to: [{type: 'project'}]}],
-    //   group: 'editorial',
-    // }),
+    defineField({
+      name: 'relatedProjects',
+      title: 'Projets liés',
+      type: 'array',
+      of: [{type: 'reference', to: [{type: 'project'}]}],
+      group: 'editorial',
+    }),
   ],
 
   preview: {
@@ -197,14 +197,36 @@ export default defineType({
       slug: 'slug',
       image: 'imageCover',
       ID: 'ID',
+      clientBackgroundColor: 'client.backgroundColor.hex',
+      clientForegroundColor: 'client.foregroundColor.hex',
     },
     prepare(selection) {
-      const {title, slug, image, ID} = selection
+      const {title, slug, image, ID, clientBackgroundColor, clientForegroundColor} = selection
       // console.log(images)
       return {
         title: `${ID} — ${title}`,
         subtitle: `/prjct/${slug.current}`,
-        media: image,
+        // media: image,
+        media: image
+          ? image
+          : () => (
+              <div
+                style={{
+                  width: '100%',
+                  height: '100%',
+                  background: `radial-gradient(circle at center, ${clientBackgroundColor ?? '#e5e7eb'}, ${clientBackgroundColor ?? '#000'})`,
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  borderRadius: 20,
+                  fontWeight: 700,
+                  fontSize: 16,
+                  color: clientBackgroundColor ?? '#000',
+                }}
+              >
+                {/* {name?.charAt(0).toUpperCase()} */}
+              </div>
+            ),
       }
     },
   },

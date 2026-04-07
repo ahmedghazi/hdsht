@@ -1,4 +1,4 @@
-import { modules, seo } from './fragments'
+import { modules, projectCard, projectCardMini, seo } from './fragments'
 
 /*****************************************************************************************************
  * SETTINGS
@@ -105,73 +105,7 @@ export const PROJECT_QUERY = groq`*[_type == "project" && slug.current == $slug]
       }
     },
   },
-  relatedProject->{
-    _type,
-    slug,
-    title,
+  relatedProjects[]->{
+    ${projectCardMini}
   }
 }`
-
-/*****************************************************************************************************
- * NOUVELLES QUERIES — STUDIO JIMBO
- * - homeDocumentQuery : singleton `home` (manifesto + index de projets)
- * - projectWithLayoutQuery : document `project` avec layout images + colSize
- */
-
-// // Home (singleton) : manifesto + index de projets
-// export const homeDocumentQuery = groq`*[_type == "home"][0]{
-//   _id,
-//   _type,
-//   title,
-//   slug,
-//   manifesto{
-//     ${blockContent}
-//   },
-//   projectsIndex[]->{
-//     _id,
-//     _type,
-//     slug,
-//     title,
-//     projectType->{
-//       _id,
-//       title,
-//       slug,
-//     },
-//     year,
-//     client,
-//     images[]{
-//       ...,
-//       asset->,
-//       colSize,
-//     },
-//   },
-//   seo{
-//     ${seo}
-//   },
-// }`;
-
-// // Project : layout avec images + colSize
-// export const projectWithLayoutQuery = groq`*[_type == "project" && slug.current == $slug][0]{
-//   _id,
-//   _type,
-//   title,
-//   slug,
-//   projectType->{
-//     _id,
-//     title,
-//     slug,
-//   },
-//   year,
-//   client,
-//   text{
-//     ${blockContent}
-//   },
-//   images[]{
-//     ...,
-//     asset->,
-//     colSize,
-//   },
-//   seo{
-//     ${seo}
-//   },
-// }`;

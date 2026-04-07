@@ -50,6 +50,6 @@ function _format() {
     <Header v-if="data" :settings="data" />
     <main><slot /></main>
     <Footer v-if="data" :settings="data" />
-    <PhiberMouse />
+    <!-- <PhiberMouse /> -->
   </div>
 </template>

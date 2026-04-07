@@ -1,5 +1,5 @@
 // AUTO-GENERATED EXTENDED TYPES - DO NOT EDIT MANUALLY
-// Generated on: 2026-04-03T12:25:38.377Z
+// Generated on: 2026-04-07T11:08:37.125Z
 // Run 'npm run typegen' to regenerate
 // Project structure: web="../../web", studio="./"
 // Detection method: configuration file
@@ -19,11 +19,12 @@ export type ContributionExpanded = Omit<Contribution, 'service' | 'contributors'
   contributors?: Array<Person> | null;
 };
 
-export type ProjectExpanded = Omit<Project, 'client' | 'location' | 'locations' | 'services' | 'contributions' | 'media'> & {
+export type ProjectExpanded = Omit<Project, 'client' | 'location' | 'locations' | 'services' | 'relatedProjects' | 'contributions' | 'media'> & {
   client?: Client | null;
   location?: Array<Location> | null;
   locations?: Array<Location> | null;
   services?: Array<Service> | null;
+  relatedProjects?: Array<ProjectExpanded> | null;
   contributions?: Array<ContributionExpanded> | null;
   media?: Array<NonNullable<Project['media']>[number] extends infer M ? M extends { _type: 'video' } ? Omit<M, 'video'> & { video?: { asset?: { playbackId?: string; data?: { aspect_ratio?: string; duration?: number } } | null } | null } : M : never> | null;
 };
