@@ -14,6 +14,30 @@ const {
 const items = ref<HTMLElement | null>(null)
 const { animeClass } = useDominoAnime(items, index, stagger)
 const hover = ref<boolean>(false)
+const elseHovered = ref<boolean>(false)
+onMounted(() => {
+  const unsub = on('PROJECT-HOVER', (e, payload) => {
+    elseHovered.value = payload === input._id
+  })
+  onUnmounted(() => {
+    unsub()
+  })
+})
+
+watch(
+  () => hover.value,
+  (val) => {
+    console.log('hover', val)
+    if (val) {
+      emit('PROJECT-HOVER', input._id)
+    } else {
+      emit('PROJECT-HOVER', null)
+    }
+  },
+  {
+    immediate: true, // exécute aussi au montage avec la valeur initiale
+  },
+)
 </script>
 
 <template>
@@ -24,6 +48,7 @@ const hover = ref<boolean>(false)
         card: true,
         'card--project-txt': true,
         'card--rip': input.rip,
+        'is-else-hovered': elseHovered,
       }"
       :style="{
         '--background': input.client?.backgroundColor?.hex,
