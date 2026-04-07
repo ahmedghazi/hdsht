@@ -1,14 +1,23 @@
 <script setup lang="ts">
 import type { ProjectExpanded } from '~/utils/sanity-api/sanity-expanded.types'
-import type { Project } from '~/utils/sanity-api/sanity.types'
 
 defineProps<{ input: ProjectExpanded[] }>()
 </script>
 
 <template>
   <div class="projects-media">
-    <ProjectCardImg v-for="(item, i) in input || []" :key="i" :input="item" :index="i" />
-    <ProjectCardImg v-for="(item, i) in input || []" :key="i" :input="item" :index="i" />
+    <ProjectCardImg
+      v-for="(item, i) in input || []"
+      :key="i"
+      :input="item"
+      :index="i"
+    />
+    <ProjectCardImg
+      v-for="(item, i) in input || []"
+      :key="i"
+      :input="item"
+      :index="i"
+    />
   </div>
 </template>
 

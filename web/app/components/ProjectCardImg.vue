@@ -1,13 +1,44 @@
 <script lang="ts" setup>
 import type { ProjectExpanded } from '~/utils/sanity-api/sanity-expanded.types'
+import { on, emit } from '~/utils/pubsub'
 
 const { input, index = 0 } = defineProps<{
   input: ProjectExpanded
   index?: number
 }>()
 const hover = ref<boolean>(false)
+const elseHovered = ref<boolean>(false)
 const wrapper = ref<HTMLElement | null>(null)
 const { animeClass } = useDominoAnime(wrapper, index)
+
+onMounted(() => {
+  const unsub = on('PROJECT-HOVER', (e, payload) => {
+    elseHovered.value = payload === input._id
+    // if (payload !== input._id) {
+    //   elseHovered.value = true
+    // } else {
+    //   elseHovered.value = false
+    // }
+  })
+  onUnmounted(() => {
+    unsub()
+  })
+})
+
+watch(
+  () => hover.value,
+  (val) => {
+    console.log('hover', val)
+    if (val) {
+      emit('PROJECT-HOVER', input._id)
+    } else {
+      emit('PROJECT-HOVER', null)
+    }
+  },
+  {
+    immediate: true, // exécute aussi au montage avec la valeur initiale
+  },
+)
 </script>
 
 <template>
@@ -18,6 +49,7 @@ const { animeClass } = useDominoAnime(wrapper, index)
       'card--project-img': true,
       'card--rip': input.rip,
       'is-active': hover,
+      'is-else-hovered': elseHovered,
     }"
     @mouseenter="hover = true"
     @mouseleave="hover = false"
@@ -67,6 +99,9 @@ const { animeClass } = useDominoAnime(wrapper, index)
   vertical-align: top;
   padding-top: calc(var(--line-height-md) * 1);
   position: relative;
+  &.is-else-hovered:not(.is-active) {
+    opacity: 0.4;
+  }
   a {
     font-size: 0;
     line-height: 0;
