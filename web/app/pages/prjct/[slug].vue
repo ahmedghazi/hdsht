@@ -128,7 +128,7 @@ const clientColors = computed(() => ({
         </div>
         <BtnToggle @change="active = !active" />
       </section>
-      <section class="media mb-md">
+      <section class="media">
         <div class="grid md:grid-cols-6 gap-x-md">
           <div
             v-for="(item, i) in data?.media"
@@ -162,7 +162,7 @@ const clientColors = computed(() => ({
         </div>
       </section>
     </div>
-    <setion v-if="data?.relatedProjects" class="mb-md">
+    <setion v-if="data?.relatedProjects" class="">
       <div class="bubble" :class="animeClass">
         <div>
           <h2>NEXT</h2>

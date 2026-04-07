@@ -13,6 +13,7 @@ const {
 }>()
 const items = ref<HTMLElement | null>(null)
 const { animeClass } = useDominoAnime(items, index, stagger)
+const hover = ref<boolean>(false)
 </script>
 
 <template>
@@ -28,6 +29,8 @@ const { animeClass } = useDominoAnime(items, index, stagger)
         '--background': input.client?.backgroundColor?.hex,
         '--color': input.client?.foregroundColor?.hex,
       }"
+      @mouseenter="hover = true"
+      @mouseleave="hover = false"
     >
       <div class="grid md:grid-cols-2">
         <div class="flex">
@@ -61,6 +64,17 @@ const { animeClass } = useDominoAnime(items, index, stagger)
           </div>
         </div>
       </div>
+      <figure v-if="hover" class="image-cover">
+        <img
+          v-if="input.imageCover?.asset"
+          :src="
+            $urlFor(input.imageCover?.asset as any)
+              .width(2000)
+              .url()
+          "
+          :alt="`${$localizeField(input.title) || ''}`"
+        />
+      </figure>
     </article>
   </NuxtLink>
 </template>
@@ -118,6 +132,16 @@ const { animeClass } = useDominoAnime(items, index, stagger)
 
   &__year {
     flex-shrink: 0; // colonne année rigide
+  }
+  .image-cover {
+    position: fixed;
+    bottom: 0;
+    right: var(--spacing-md);
+    z-index: 251;
+    img {
+      height: 8rem;
+      width: auto;
+    }
   }
 }
 </style>
