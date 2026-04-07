@@ -48,6 +48,7 @@ watch(
         card: true,
         'card--project-txt': true,
         'card--rip': input.rip,
+        'is-active': hover,
         'is-else-hovered': elseHovered,
       }"
       :style="{
