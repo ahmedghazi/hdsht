@@ -26,5 +26,11 @@ defineProps<{ input: VideoUI }>()
     --media-object-fit: cover;
     --media-object-position: center;
   }
+  @media (max-width: 800px) {
+    mux-player {
+      max-width: 100dvw;
+      max-height: 100dvh;
+    }
+  }
 }
 </style>
