@@ -118,8 +118,8 @@ watch(
     transform: translateY(-100%);
   }
   .disc {
-    height: 9rem;
-    width: 9rem;
+    height: var(--line-height-2xl);
+    width: var(--line-height-2xl);
   }
   figure {
   }
@@ -128,10 +128,20 @@ watch(
     height: var(--line-height-2xl);
     width: auto;
   }
-}
-@media (min-width: 575px) {
-}
 
-@media (min-width: 800px) {
+  @media (min-width: 575px) {
+  }
+
+  @media (max-width: 800px) {
+    .disc {
+      height: var(--line-height-xl);
+      width: var(--line-height-xl);
+    }
+    img,
+    mux-player {
+      height: var(--line-height-xl);
+      width: auto;
+    }
+  }
 }
 </style>

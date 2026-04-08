@@ -46,6 +46,7 @@ const {
   &__disc {
     width: var(--line-height-lg);
     height: var(--line-height-lg);
+    aspect-ratio: 1;
     background: transparent
       radial-gradient(
         closest-side at 50% 50%,
@@ -70,6 +71,22 @@ const {
 
     .bubble > div {
       min-width: 0;
+    }
+  }
+  @media (max-width: 800px) {
+    align-items: flex-start;
+    &__disc,
+    &__name {
+      vertical-align: top;
+    }
+    &__disc {
+      display: inline-block;
+    }
+    .bubble {
+      display: table-caption;
+    }
+    .ellipsis {
+      all: unset;
     }
   }
 }

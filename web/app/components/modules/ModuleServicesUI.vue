@@ -7,7 +7,11 @@ defineProps<{ input: ServicesUI }>()
 
 <template>
   <section
-    :class="['module', 'module--services-ui', `col-span-${input.colSize || 2}`]"
+    :class="[
+      'module',
+      'module--services-ui',
+      `md:col-span-${input.colSize || 2}`,
+    ]"
   >
     <div class="inner">
       <div class="header">

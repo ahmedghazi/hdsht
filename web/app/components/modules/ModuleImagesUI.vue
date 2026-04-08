@@ -10,7 +10,11 @@ onMounted(() => {
 
 <template>
   <section
-    :class="['module', 'module--images-ui', `col-span-${input.colSize || 1}`]"
+    :class="[
+      'module',
+      'module--images-ui',
+      `md:col-span-${input.colSize || 1}`,
+    ]"
   >
     <!-- <pre>{{ input.items }}</pre> -->
     <div :class="`grid md:grid-cols-${input.gridSize} gap-sm`">

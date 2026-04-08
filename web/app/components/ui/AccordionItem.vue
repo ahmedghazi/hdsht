@@ -58,10 +58,10 @@ watch(active, (isActive) => {
       </h3>
     </div>
     <div ref="detailRef" class="detail">
-      <div class="text">
+      <div class="text md:text-lg">
         <PortableText
           v-if="input.text"
-          :value="$localizeField(input.text)"
+          :value="$localizeField(input.text) || []"
           :components="portableTextComponents"
         />
       </div>
@@ -121,5 +121,8 @@ watch(active, (isActive) => {
 .detail {
   overflow: hidden;
   height: 0;
+  .text {
+    padding: var(--spacing-xs) 0 var(--spacing-md);
+  }
 }
 </style>

@@ -266,9 +266,14 @@ figure {
    Grid helpers
    ============================================================ */
 @for $i from 1 through 12 {
-  .col-span-#{$i},
-  .md\:col-span-#{$i} {
+  .col-span-#{$i} {
     grid-column: span $i / span $i;
+  }
+
+  @media (min-width: 800px) {
+    .md\:col-span-#{$i} {
+      grid-column: span $i / span $i;
+    }
   }
 }
 

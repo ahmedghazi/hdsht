@@ -29,6 +29,7 @@ defineProps<{ input: LocationMapUI }>()
             "
             :alt="input.title?.en || 'Location map'"
           />
+          <div class="marker"></div>
         </div>
         <div class="footer">
           <a
@@ -55,10 +56,21 @@ defineProps<{ input: LocationMapUI }>()
   }
   .map-container {
     margin-bottom: var(--spacing-md);
+    position: relative;
     img {
       width: 100%;
       height: auto;
       border-radius: 0.5rem;
+    }
+    .marker {
+      position: absolute;
+      top: 17%;
+      left: 51%;
+      width: 1rem;
+      height: 1rem;
+      background-color: var(--color-white);
+      mix-blend-mode: difference;
+      border-radius: 50%;
     }
   }
 }

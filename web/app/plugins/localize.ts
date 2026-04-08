@@ -30,7 +30,6 @@ export default defineNuxtPlugin((nuxtApp) => {
   }
 
   function localizeText(key: string): string {
-    console.log('localizeText', key)
     return i18n.t(key)
   }
 

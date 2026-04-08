@@ -12,7 +12,7 @@ defineProps<{ input: TextUI }>()
       'module',
       'module-text-ui',
       `module-text-ui--${input.look}`,
-      `col-span-${input.colSize || 2}`,
+      `md:col-span-${input.colSize || 2}`,
     ]"
   >
     <div class="inner">

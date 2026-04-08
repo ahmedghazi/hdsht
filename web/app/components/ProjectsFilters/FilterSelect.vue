@@ -12,9 +12,9 @@ defineEmits<{ 'update:modelValue': [value: string] }>()
         $emit('update:modelValue', ($event.target as HTMLSelectElement).value)
       "
     >
-      <option value="">{{ $localizeText(label) }}</option>
+      <option value="">{{ label }}</option>
       <option v-for="opt in options" :key="opt" :value="opt">
-        {{ $localizeText(opt) }}
+        {{ opt }}
       </option>
     </select>
   </div>

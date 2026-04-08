@@ -1,6 +1,5 @@
 import pageModulaire from './documents/pageModulaire'
 import project from './documents/project'
-import infos from './singletons/infos'
 import client from './documents/client'
 import contribution from './documents/contribution'
 import person from './documents/person'
@@ -43,7 +42,6 @@ export const schemaTypes = [
   settings,
   pageModulaire,
   project,
-  infos,
   contribution,
   person,
   client,
@@ -60,7 +58,6 @@ export const schemaTypes = [
   linkInternal,
   linkIcon,
   contactLinkItem,
-  // seo,
   video,
   cta,
   keyVal,

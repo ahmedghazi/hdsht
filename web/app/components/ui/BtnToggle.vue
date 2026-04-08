@@ -16,12 +16,14 @@ function toggle() {
     :class="{ 'pill--icon': true, 'pill--icon--active': active }"
     @click="toggle"
   >
-    <div v-if="active">
+    <UiIcon :value="active ? 'x' : 'dots'" />
+
+    <!-- <div v-if="active">
       <UiIcon value="x" />
     </div>
     <div v-else>
       <UiIcon value="dots" />
-    </div>
+    </div> -->
   </button>
 </template>
 

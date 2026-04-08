@@ -2,7 +2,10 @@
 import type { ProjectExpanded } from '~/utils/sanity-api/sanity-expanded.types'
 import Client from './Client.vue'
 
-type ProjectCardInput = Pick<ProjectExpanded, '_type' | 'slug' | 'ID' | 'title' | 'client'>
+type ProjectCardInput = Pick<
+  ProjectExpanded,
+  '_type' | 'slug' | 'ID' | 'title' | 'client'
+>
 
 const {
   input,
@@ -18,18 +21,14 @@ const { animeClass } = useDominoAnime(items, index, stagger)
 </script>
 
 <template>
-  <NuxtLink :to="_linkResolver(input as any)">
-    <article
-      ref="items"
-      :class="{
-        card: true,
-        'card--project': true,
-      }"
-      :style="{
-        '--background': input.client?.backgroundColor?.hex,
-        '--color': input.client?.foregroundColor?.hex,
-      }"
-    >
+  <article
+    ref="items"
+    :class="{
+      card: true,
+      'card--project-teaser': true,
+    }"
+  >
+    <NuxtLink :to="_linkResolver(input as any)">
       <div class="header">
         <div class="header--item">
           <div class="bubble" :class="animeClass">
@@ -64,14 +63,14 @@ const { animeClass } = useDominoAnime(items, index, stagger)
           </div>
         </div>
       </div>
-    </article>
-  </NuxtLink>
+    </NuxtLink>
+  </article>
 </template>
 
-<style scoped- lang="scss">
-.card {
-  --background: #fff;
-  --color: #000;
+<style scoped lang="scss">
+.card.card--project-teaser {
+  // --background: inherit;
+  // --color: inherit;
   .header--item {
     display: flex;
     align-items: flex-start;

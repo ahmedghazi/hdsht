@@ -26,6 +26,7 @@ export default defineConfig({
     colorInput(),
     muxInput(),
     presentationTool({
+      title: 'Live preview',
       resolve: linkResolverPreview,
       previewUrl: {
         origin: previewURL,

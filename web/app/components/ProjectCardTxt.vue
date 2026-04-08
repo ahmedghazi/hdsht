@@ -27,7 +27,6 @@ onMounted(() => {
 watch(
   () => hover.value,
   (val) => {
-    console.log('hover', val)
     if (val) {
       emit('PROJECT-HOVER', input._id)
     } else {
@@ -58,7 +57,7 @@ watch(
       @mouseenter="hover = true"
       @mouseleave="hover = false"
     >
-      <div class="grid md:grid-cols-2">
+      <div class="md:grid md:grid-cols-2">
         <div class="flex">
           <div class="card__index dots">
             <div class="bubble bubble-dot bubble-dot--lg" :class="animeClass">
@@ -83,7 +82,7 @@ watch(
             </div>
           </h2>
 
-          <div class="card__year">
+          <div class="card__year hidden-sm">
             <div class="bubble bubble--lg" :class="animeClass">
               <div>{{ input.year }}</div>
             </div>
@@ -105,12 +104,12 @@ watch(
   </NuxtLink>
 </template>
 
-<style scoped- lang="scss">
+<style scoped lang="scss">
 .grid > * {
   // min-width: 0; /* ← chaque cell de grille */
 }
 
-.card {
+.card.card--project-txt {
   --background: #fff;
   --color: #000;
 
@@ -167,6 +166,15 @@ watch(
     img {
       height: 8rem;
       width: auto;
+    }
+  }
+
+  @media (max-width: 800px) {
+    &__index {
+      width: auto;
+    }
+    .ellipsis {
+      all: unset;
     }
   }
 }

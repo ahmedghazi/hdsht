@@ -15,17 +15,21 @@ const filteredItems = ref<ProjectExpanded[]>([])
 function onFilteredItemsUpdate(items: ProjectExpanded[]) {
   filteredItems.value = items
 }
+function onSelectedFilters(filters: string[]) {
+  console.log('selectedFilters', filters)
+}
 </script>
 
 <template>
   <section
     id="projects"
     ref="moduleRef"
-    :class="['module', 'module--list-projects-ui', 'col-span-2']"
+    :class="['module', 'module--list-projects-ui', 'md:col-span-2']"
   >
     <ProjectsFilters
       :projects="input.items || null"
       @update:filtered-items="onFilteredItemsUpdate"
+      @selected-filters="onSelectedFilters"
     />
 
     <template v-if="input.layout === 'txt' && filteredItems.length">

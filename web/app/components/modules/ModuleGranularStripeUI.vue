@@ -9,7 +9,7 @@ defineProps<{ input: GranularStripeUI }>()
     :class="[
       'module',
       'module--granular-stripe-ui',
-      `col-span-${input.colSize || 1}`,
+      `md:col-span-${input.colSize || 1}`,
     ]"
   >
     <div class="inner">

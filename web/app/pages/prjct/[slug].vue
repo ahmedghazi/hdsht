@@ -51,7 +51,7 @@ const clientColors = computed(() => ({
 <template>
   <div class="content content--page-project">
     <div ref="pageContentRef">
-      <section class="header">
+      <section class="header mb-md">
         <div class="header--item">
           <div class="bubble" :class="animeClass">
             <div>ID</div>
@@ -128,7 +128,7 @@ const clientColors = computed(() => ({
         </div>
         <BtnToggle @change="active = !active" />
       </section>
-      <section class="media">
+      <section class="media mb-md">
         <div class="grid md:grid-cols-6 gap-x-md">
           <div
             v-for="(item, i) in data?.media"
@@ -162,7 +162,7 @@ const clientColors = computed(() => ({
         </div>
       </section>
     </div>
-    <setion v-if="data?.relatedProjects" class="">
+    <setion v-if="data?.relatedProjects" class="related">
       <div class="bubble" :class="animeClass">
         <div>
           <h2>NEXT</h2>
@@ -178,12 +178,12 @@ const clientColors = computed(() => ({
   </div>
 </template>
 
-<style scoped lang="scss">
+<style scoped- lang="scss">
 .content {
-  .header,
-  .media {
-    margin-bottom: var(--spacing-md);
-  }
+  // .header,
+  // .media {
+  //   margin-bottom: var(--spacing-md);
+  // }
   .header--item {
     display: flex;
     align-items: flex-start;
@@ -194,5 +194,17 @@ const clientColors = computed(() => ({
   }
 }
 @media (max-width: 800px) {
+  .header--item {
+    .ellipsis {
+      all: unset;
+    }
+    li {
+      font-size: 0;
+      line-height: 0;
+      .bubble {
+        display: table-caption;
+      }
+    }
+  }
 }
 </style>

@@ -8,7 +8,11 @@ defineProps<{ input: ContactsUI }>()
 
 <template>
   <section
-    :class="['module', 'module--contacts-ui', `col-span-${input.colSize || 1}`]"
+    :class="[
+      'module',
+      'module--contacts-ui',
+      `md:col-span-${input.colSize || 1}`,
+    ]"
   >
     <div class="inner">
       <div class="header">

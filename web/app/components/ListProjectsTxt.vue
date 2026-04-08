@@ -47,7 +47,7 @@ const _format = () => {
 
 <template>
   <div ref="moduleRef" class="list-projects-txt">
-    <div class="header grid md:grid-cols-2">
+    <div class="header flex md:grid! md:grid-cols-2">
       <div class="flex">
         <div class="header__ID">
           <div class="bubble">
@@ -66,7 +66,7 @@ const _format = () => {
             <div>{{ $localizeText('project') }}</div>
           </div>
         </div>
-        <div class="header__year">
+        <div class="header__year hidden-sm">
           <div class="bubble">
             <div>{{ $localizeText('year') }}</div>
           </div>
@@ -99,6 +99,12 @@ const _format = () => {
 
   .header__project {
     width: var(--cardTitle-w);
+  }
+  @media (max-width: 800px) {
+    .header__ID,
+    .header__project {
+      width: auto;
+    }
   }
 }
 </style>

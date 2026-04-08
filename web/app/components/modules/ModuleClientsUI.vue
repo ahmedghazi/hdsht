@@ -15,7 +15,11 @@ onMounted(() => {
 
 <template>
   <section
-    :class="['module', 'module--clients-ui', `col-span-${input.colSize || 1}`]"
+    :class="[
+      'module',
+      'module--clients-ui',
+      `md:col-span-${input.colSize || 1}`,
+    ]"
   >
     <div class="inner">
       <h2 class="bubble">
@@ -33,7 +37,7 @@ onMounted(() => {
                 :width="item.asset?.metadata?.dimensions?.width || 'auto'"
               />
             </li>
-            <li v-for="item in input.items" :key="item" class="client--item">
+            <!-- <li v-for="item in input.items" :key="item" class="client--item">
               <img
                 :src="item.asset?.url || ''"
                 alt=""
@@ -50,7 +54,7 @@ onMounted(() => {
                 :height="item.asset?.metadata?.dimensions?.height || 20"
                 :width="item.asset?.metadata?.dimensions?.width || 'auto'"
               />
-            </li>
+            </li> -->
           </ul>
         </Marquee>
       </div>
@@ -76,6 +80,12 @@ onMounted(() => {
 }
 @media (max-width: 800px) {
   .module {
+    .list {
+      max-width: calc(100dvw - var(--spacing-md));
+    }
+    .client--item {
+      padding: 0.6rem var(--text-md);
+    }
   }
 }
 </style>

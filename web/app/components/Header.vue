@@ -21,7 +21,11 @@ const { scrollDirection, scrollEnd } = useScroll()
           <HdShtLogo />
         </NuxtLink>
       </div>
-      <Nav :navPrimary="settings?.navPrimary || []" :settings="settings" />
+      <Nav
+        :nav-primary="settings?.navPrimary || []"
+        :nav-secondary="settings?.navSecondary || []"
+        :settings="settings"
+      />
     </div>
   </header>
 </template>
@@ -50,6 +54,10 @@ header {
     a:hover {
       text-decoration: none;
     }
+  }
+  @media (max-width: 800px) {
+    padding: var(--spacing-sm);
+    padding-bottom: 0;
   }
 }
 </style>
