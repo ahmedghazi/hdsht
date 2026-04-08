@@ -17,7 +17,7 @@ const hover = ref<boolean>(false)
 const elseHovered = ref<boolean>(false)
 onMounted(() => {
   const unsub = on('PROJECT-HOVER', (e, payload) => {
-    elseHovered.value = payload === input._id
+    // elseHovered.value = payload === input._id
   })
   onUnmounted(() => {
     unsub()

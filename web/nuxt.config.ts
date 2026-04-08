@@ -9,6 +9,12 @@ export default defineNuxtConfig({
   ],
   css: ['~/assets/css/main.css', '~/assets/css/index.scss'],
 
+  vue: {
+    compilerOptions: {
+      isCustomElement: (tag) => tag === 'mux-player',
+    },
+  },
+
   routeRules: {
     '/': { prerender: true },
   },
