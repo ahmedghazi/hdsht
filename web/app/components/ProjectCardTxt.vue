@@ -16,12 +16,12 @@ const { animeClass } = useDominoAnime(items, index, stagger)
 const hover = ref<boolean>(false)
 const elseHovered = ref<boolean>(false)
 onMounted(() => {
-  const unsub = on('PROJECT-HOVER', (e, payload) => {
-    // elseHovered.value = payload === input._id
-  })
-  onUnmounted(() => {
-    unsub()
-  })
+  // const unsub = on('PROJECT-HOVER', (e, payload) => {
+  //   elseHovered.value = payload === input._id
+  // })
+  // onUnmounted(() => {
+  //   unsub()
+  // })
 })
 
 watch(
@@ -130,13 +130,13 @@ watch(
     }
   }
 
-  &__index {
+  .card__index {
     width: 7em;
     .bubble {
       width: 100%;
     }
   }
-  &__title {
+  .card__title {
     flex: 1 1 auto; // prend l’espace dispo entre gauche et year
     min-width: 0; // autorise le shrink
 

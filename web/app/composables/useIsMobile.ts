@@ -10,7 +10,10 @@ export function useIsMobile(): {
     }
   }
 
-  onMounted(() => window.addEventListener('resize', onResize))
+  onMounted(() => {
+    window.addEventListener('resize', onResize)
+    onResize()
+  })
   onUnmounted(() => window.removeEventListener('resize', onResize))
   return {
     isMobile,

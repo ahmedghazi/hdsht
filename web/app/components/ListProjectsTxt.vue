@@ -4,7 +4,6 @@ import type { ProjectExpanded } from '~/utils/sanity-api/sanity-expanded.types'
 defineProps<{ input: ProjectExpanded[] }>()
 
 const moduleRef = ref<HTMLElement | null>(null)
-
 onMounted(() => {
   _format()
   window.addEventListener('resize', _format)

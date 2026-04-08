@@ -6,7 +6,7 @@ import ProjectsFiltersSortPanel from './SortPanel.vue'
 import ProjectsFiltersActivePill from './ActivePill.vue'
 
 const props = defineProps<{ projects: ProjectExpanded[] | null }>()
-const emit = defineEmits(['update:filtered-items', 'selected-filters'])
+const emit = defineEmits(['update:filtered-items', 'active-filters'])
 
 const showFilterPanel = ref(false)
 const showSortPanel = ref(false)
@@ -59,7 +59,7 @@ function updateFilter(
   value: string,
 ) {
   activeFilters[key] = value ? [value] : []
-  emit('selected-filters', activeFilters)
+  emit('active-filters', activeFilters)
 }
 
 function clearFilter(filterType: string, value?: string) {

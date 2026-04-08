@@ -31,3 +31,7 @@ export type LocaleField = LocaleString | LocaleText | LocaleBlockContent
 // Ex : LocaleValue<LocaleString> → string
 //      LocaleValue<LocaleBlockContent> → BlockContent
 export type LocaleValue<T extends LocaleField> = T[LocaleCode]
+
+export type FilterType = 'clients' | 'years' | 'services' | 'ids'
+export type FilterValue = string[]
+export type Filters = Record<FilterType, FilterValue>
