@@ -63,3 +63,8 @@ main {
     // padding-top: 130px;
   }
 }
+
+::selection {
+  background-color: transparent;
+  color: #ef73ed;
+}
