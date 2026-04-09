@@ -12,7 +12,7 @@ defineProps<{ input: LocationMapUI }>()
         <h2 v-if="input.title" class="bubble">
           <div>{{ $localizeField(input.title) }}</div>
         </h2>
-        <Time />
+        <Time location="Berlin" />
       </div>
       <div class="">
         <div class="map-container">

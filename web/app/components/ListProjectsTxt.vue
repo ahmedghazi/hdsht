@@ -87,6 +87,7 @@ const _format = () => {
 .list-projects-txt {
   --opacity: 0;
   opacity: var(--opacity);
+
   .header {
     position: sticky;
     top: var(--header-h);

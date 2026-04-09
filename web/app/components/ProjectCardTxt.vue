@@ -105,14 +105,14 @@ watch(
 </template>
 
 <style scoped lang="scss">
-.grid > * {
-  // min-width: 0; /* ← chaque cell de grille */
-}
-
 .card.card--project-txt {
   --background: #fff;
   --color: #000;
 
+  &:hover {
+    --background: var(--color-grey) !important;
+    --color: var(--color-white) !important;
+  }
   &--rip {
     --background: var(--color-grey) !important;
     --color: var(--color-white-40) !important;
@@ -124,10 +124,6 @@ watch(
     align-items: flex-start;
     width: 100%;
     min-width: 0; // la ligne peut rétrécir
-    & > div {
-      // flex: 0 1 auto; // prend l’espace dispo entre gauche et year
-      // min-width: 0; // autorise le shrink
-    }
   }
 
   .card__index {
