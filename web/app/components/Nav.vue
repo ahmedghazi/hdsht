@@ -1,29 +1,20 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import type { SETTINGS_QUERY_RESULT } from '~/utils/sanity-api/sanity.types'
-import { useSanityLocale } from '~/composables/useSanityLocale'
 import LocaleSwitcher from './ui/LocaleSwitcher.vue'
-
-// const isMobile = ref<boolean>(false)
-const isOpen = ref<boolean>(false)
 
 defineProps<{
   navPrimary?: NonNullable<SETTINGS_QUERY_RESULT>['navPrimary']
   navSecondary?: NonNullable<SETTINGS_QUERY_RESULT>['navSecondary']
 }>()
 
-const { _localizeField } = useSanityLocale()
 const { isMobile } = useIsMobile()
-// onMounted(() => {
-//   if (window.innerWidth < 800) {
-//     isMobile.value = true
-//   }
-// })
+const route = useRoute()
+const isOpen = ref<boolean>(false)
+
 const toggle = (val: boolean) => {
   isOpen.value = val
 }
-
-const route = useRoute()
 
 watch(
   route,

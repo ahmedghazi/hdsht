@@ -1,13 +1,10 @@
 <script setup lang="ts">
 import type { SETTINGS_QUERY_RESULT } from '~/utils/sanity-api/sanity.types'
-import { useSanityLocale } from '~/composables/useSanityLocale'
 
 const { settings } = defineProps<{ settings: SETTINGS_QUERY_RESULT }>()
 const logos = settings?.logos
 const navSecondary = settings?.navSecondary
 const { scrollDirection, scrollEnd } = useScroll()
-
-const { _localizeField } = useSanityLocale()
 </script>
 
 <template>
@@ -21,7 +18,7 @@ const { _localizeField } = useSanityLocale()
   >
     <ul class="flex flex-wrap gap-md">
       <template v-if="logos">
-        <li class="logo" v-for="(logo, index) in logos" :key="index">
+        <li v-for="(logo, index) in logos" :key="index" class="logo">
           <img
             :src="$urlFor(logo).url()"
             alt=""

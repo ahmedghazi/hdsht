@@ -1,14 +1,11 @@
 <script setup lang="ts">
 import type { ClientsUI } from '~/utils/sanity-api/sanity.types'
-import { useSanityLocale } from '~/composables/useSanityLocale'
 import Marquee from '@selemondev/vue3-marquee'
 import '@selemondev/vue3-marquee/dist/index.css'
 
-const { _localizeField } = useSanityLocale()
 defineProps<{ input: ClientsUI }>()
 
 onMounted(() => {
-  console.log('ModuleListArticlesUI mounted')
   // console.log()
 })
 </script>
@@ -23,7 +20,7 @@ onMounted(() => {
   >
     <div class="inner">
       <h2 class="bubble">
-        <div>{{ _localizeField(input.title) }}</div>
+        <div>{{ $localizeField(input.title) }}</div>
       </h2>
       <div class="list">
         <Marquee :duration="3">

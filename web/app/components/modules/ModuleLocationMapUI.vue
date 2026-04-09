@@ -1,9 +1,6 @@
 <script setup lang="ts">
 import type { LocationMapUI } from '~/utils/sanity-api/sanity.types'
-import { useSanityLocale } from '~/composables/useSanityLocale'
 import Time from '../ui/Time.vue'
-
-const { _localizeField } = useSanityLocale()
 
 defineProps<{ input: LocationMapUI }>()
 </script>
@@ -13,7 +10,7 @@ defineProps<{ input: LocationMapUI }>()
     <div class="inner">
       <div class="header">
         <h2 v-if="input.title" class="bubble">
-          <div>{{ _localizeField(input.title) }}</div>
+          <div>{{ $localizeField(input.title) }}</div>
         </h2>
         <Time />
       </div>

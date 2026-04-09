@@ -21,9 +21,8 @@ export default defineField({
       description: 'Number of columns (1-2) on a 2 columns grid',
     }),
     defineField({
-      name: 'text',
-      type: 'localeBlockContent',
-      hidden: true,
+      name: 'placeholder',
+      type: 'image',
     }),
     defineField({
       name: 'accordion',
