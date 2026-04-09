@@ -51,8 +51,9 @@ defineProps<{
       width="5"
       height="30"
       viewBox="0 0 5 30"
+      :opacity="1 / 4 + i * (1 / 4)"
     >
-      <rect width="5" height="30" fill="none" opacity="0" />
+      {{ i }}
       <circle
         cx="1.35"
         cy="1.35"

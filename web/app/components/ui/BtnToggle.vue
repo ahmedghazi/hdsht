@@ -17,22 +17,18 @@ function toggle() {
     @click="toggle"
   >
     <UiIcon :value="active ? 'x' : 'dots'" />
-
-    <!-- <div v-if="active">
-      <UiIcon value="x" />
-    </div>
-    <div v-else>
-      <UiIcon value="dots" />
-    </div> -->
   </button>
 </template>
 
 <style scoped lang="scss">
-button:not(.pill--icon--active) {
-  svg:nth-child(1) {
+button.pill--icon:not(.pill--icon--active) {
+  span svg {
+    opacity: 0;
+  }
+  span svg:nth-child(1) {
     opacity: 0.3;
   }
-  svg:nth-child(2) {
+  span svg:nth-child(2) {
     opacity: 0.6;
   }
 }
