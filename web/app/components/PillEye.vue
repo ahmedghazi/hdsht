@@ -4,19 +4,31 @@ const pillRef = ref<HTMLElement>()
 
 onMounted(() => {
   window.addEventListener('mousemove', onMouseMove)
+  window.addEventListener('touchmove', onTouchMove)
   onUnmounted(() => {
     window.removeEventListener('mousemove', onMouseMove)
+    window.removeEventListener('touchmove', onTouchMove)
   })
 })
 
 function onMouseMove(e: MouseEvent) {
   const { clientX, clientY } = e
+  update(clientX, clientY)
+}
+function onTouchMove(e: TouchEvent) {
+  const touch = e.targetTouches[0]
+  if (!touch) return
+  const { clientX, clientY } = touch
+  update(clientX, clientY)
+}
+
+function update(x: number, y: number) {
   if (!pillRef.value) return
 
   const rect = pillRef.value.getBoundingClientRect()
   const anchorX = rect.left + rect.width / 2
   const anchorY = rect.top + rect.height / 2
-  const angleDeg = getAngle(anchorX, anchorY, clientX, clientY)
+  const angleDeg = getAngle(anchorX, anchorY, x, y)
 
   angle.value = angleDeg
 }
