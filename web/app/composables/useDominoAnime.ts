@@ -1,17 +1,19 @@
 import gsap from 'gsap'
 
 const CARD_STAGGER = 0.08
-const ITEM_STAGGER = 0.04
-const DURATION = 0.1
+const ITEM_STAGGER = 0.02
+const DURATION = 0.05
 const ANIME_CLASS = 'domino-anime'
 
 const animate = (el: HTMLElement, delay = 0, stagger = ITEM_STAGGER) => {
   gsap.from(el.querySelectorAll(`.${ANIME_CLASS}`), {
-    opacity: 0,
+    // opacity: 0,
+    autoAlpha: 0,
     duration: DURATION,
     stagger,
     delay,
-    ease: 'none', // linéaire — apparition franche, pas de fondu doux
+    ease: 'expo.out',
+    // ease: 'none', // linéaire — apparition franche, pas de fondu doux
   })
 }
 
