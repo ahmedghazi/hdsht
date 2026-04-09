@@ -46,7 +46,7 @@ main {
 .sm-only {
   display: none;
 }
-@media all and (max-width: variables.$md) {
+@media all and (max-width: variables.$sm) {
   .sm-only {
     display: block;
   }

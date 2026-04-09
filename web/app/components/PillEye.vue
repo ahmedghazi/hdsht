@@ -48,6 +48,7 @@ function getAngle(cx: number, cy: number, ex: number, ey: number) {
   color: var(--color-black);
   width: var(--pill-lh);
   height: var(--pill-lh);
+  will-change: transform;
   svg {
     transform: scale(0.65) translateX(calc(var(--pill-lh) / 2));
   }

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 const { currentSort, sortOptions } = defineProps<{
-  currentSort: { key: string; order: 'asc' | 'desc' }
+  currentSort: { key: string; order: 'asc' | 'desc' | 'random' }
   sortOptions: { key: string; label: string }[]
 }>()
 
@@ -24,10 +24,19 @@ defineEmits<{ 'toggle-sort': [key: string] }>()
             :class="{
               asc: currentSort.order === 'asc',
               desc: currentSort.order === 'desc',
+              random: currentSort.order === 'random',
             }"
           >
             <UiIcon
-              :value="currentSort.order === 'asc' ? 'arrowN' : 'arrowS'"
+              :value="
+                currentSort.order === 'asc'
+                  ? 'arrowN'
+                  : currentSort.order === 'desc'
+                    ? 'arrowS'
+                    : Math.random() > 0.5
+                      ? 'arrowN'
+                      : 'arrowS'
+              "
             />
           </span>
         </div>

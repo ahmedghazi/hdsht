@@ -11,9 +11,9 @@ const emit = defineEmits(['update:filtered-items', 'active-filters'])
 const showFilterPanel = ref(false)
 const showSortPanel = ref(false)
 
-const currentSort = ref<{ key: string; order: 'asc' | 'desc' }>({
+const currentSort = ref<{ key: string; order: 'asc' | 'desc' | 'random' }>({
   key: 'ID',
-  order: 'asc',
+  order: 'random',
 })
 
 const filterOptions = computed(() => {
@@ -147,6 +147,11 @@ const filteredProjects = computed(() => {
     }
 
     if (currentSort.value.key === 'ID') {
+      if (currentSort.value.order === 'random') {
+        // True random sort - different order each page load
+        return Math.random() - 0.5
+      }
+
       const aId = String(aValue || '')
       const bId = String(bValue || '')
       if (/^\d+$/.test(aId) && /^\d+$/.test(bId)) {
@@ -157,6 +162,11 @@ const filteredProjects = computed(() => {
       return currentSort.value.order === 'asc'
         ? aId.localeCompare(bId)
         : bId.localeCompare(aId)
+    }
+
+    if (currentSort.value.order === 'random') {
+      // True random sort for non-ID keys
+      return Math.random() - 0.5
     }
 
     return currentSort.value.order === 'asc'
@@ -186,7 +196,13 @@ function closeAllPanels() {
 
 function toggleSort(key: string) {
   if (currentSort.value.key === key) {
-    currentSort.value.order = currentSort.value.order === 'asc' ? 'desc' : 'asc'
+    if (currentSort.value.order === 'asc') {
+      currentSort.value.order = 'desc'
+    } else if (currentSort.value.order === 'desc') {
+      currentSort.value.order = 'random'
+    } else {
+      currentSort.value.order = 'asc'
+    }
   } else {
     currentSort.value.key = key
     currentSort.value.order = 'asc'
