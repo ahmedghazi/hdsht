@@ -16,26 +16,16 @@ function onMouseMove(e: MouseEvent) {
   const rect = pillRef.value.getBoundingClientRect()
   const anchorX = rect.left + rect.width / 2
   const anchorY = rect.top + rect.height / 2
-  const angleDeg = getAngle(clientX, clientY, anchorX, anchorY)
-  // const width = pillRef.value.getBoundingClientRect().width / 2
-  // const height = pillRef.value.getBoundingClientRect().height / 2
+  const angleDeg = getAngle(anchorX, anchorY, clientX, clientY)
 
-  // const centerX = pillRef.value.getBoundingClientRect().x + width
-  // const centerY = pillRef.value.getBoundingClientRect().y + height
-
-  // const diffX = clientX - centerX
-  // const diffY = clientY - centerY
-
-  // const radians = Math.atan2(diffX, diffY)
-  // const degree = radians * (180 / Math.PI) * -1 - 180
   angle.value = angleDeg
 }
 
-function getAngle(cx, cy, ex, ey) {
+function getAngle(cx: number, cy: number, ex: number, ey: number) {
   const dy = ey - cy
   const dx = ex - cx
   const rad = Math.atan2(dy, dx)
-  const deg = (rad * 180) / Math.PI
+  const deg = (rad * 180) / Math.PI + 180
   return deg
 }
 </script>
@@ -59,7 +49,7 @@ function getAngle(cx, cy, ex, ey) {
   width: var(--pill-lh);
   height: var(--pill-lh);
   svg {
-    transform: translateX(calc(var(--pill-lh) / 2));
+    transform: scale(0.65) translateX(calc(var(--pill-lh) / 2));
   }
 }
 </style>
