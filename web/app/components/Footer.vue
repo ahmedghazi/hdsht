@@ -4,16 +4,16 @@ import type { SETTINGS_QUERY_RESULT } from '~/utils/sanity-api/sanity.types'
 const { settings } = defineProps<{ settings: SETTINGS_QUERY_RESULT }>()
 const logos = settings?.logos
 const navSecondary = settings?.navSecondary
-const { scrollDirection, scrollEnd } = useScroll()
+// const { scrollDirection, scrollEnd } = useScroll()
+//    v-if="scrollDirection || scrollEnd"
 </script>
 
 <template>
   <footer
-    v-if="scrollDirection || scrollEnd"
     id="footer-site"
     :class="[
-      scrollDirection && `is-${scrollDirection}`,
-      { 'is-bottom': scrollEnd },
+      // scrollDirection && `is-${scrollDirection}`,
+      // { 'is-bottom': scrollEnd },
     ]"
   >
     <ul class="flex flex-wrap gap-md">

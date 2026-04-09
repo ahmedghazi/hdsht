@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { SETTINGS_QUERY_RESULT } from '~/utils/sanity-api/sanity.types'
-
+import PillEye from './PillEye.vue'
 defineProps<{
   navSecondary?: NonNullable<SETTINGS_QUERY_RESULT>['navSecondary']
 }>()
@@ -9,12 +9,14 @@ defineProps<{
 <template>
   <nav class="nav-secondary">
     <div class="pills">
-      <div class="pill--icon">
+      <PillEye />
+      <PillEye />
+      <!-- <div class="pill--icon">
         <div><UiIcon value="dot" /></div>
       </div>
       <div class="pill--icon">
         <div><UiIcon value="dot" /></div>
-      </div>
+      </div> -->
     </div>
     <ul>
       <li v-for="item in navSecondary" :key="item._key">
@@ -48,17 +50,17 @@ nav.nav-secondary {
     transform: translateY(-50%);
     z-index: 3;
     display: flex;
-    .pill--icon {
-      background-color: var(--color-white);
-      border-radius: 100%;
-      padding: 0;
-      color: var(--color-black);
-      width: var(--pill-lh);
-      height: var(--pill-lh);
-      svg {
-        transform: translateX(calc(var(--pill-lh) / 2));
-      }
-    }
+    // .pill--icon {
+    //   background-color: var(--color-white);
+    //   border-radius: 100%;
+    //   padding: 0;
+    //   color: var(--color-black);
+    //   width: var(--pill-lh);
+    //   height: var(--pill-lh);
+    //   svg {
+    //     transform: translateX(calc(var(--pill-lh) / 2));
+    //   }
+    // }
   }
   ul {
     display: flex;

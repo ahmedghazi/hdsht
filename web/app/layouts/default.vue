@@ -47,9 +47,9 @@ function _format() {
 
 <template>
   <div id="page">
-    <Header v-if="data" :settings="data" />
+    <Header :settings="data" />
     <main><slot /></main>
-    <Footer v-if="data" :settings="data" />
+    <Footer :settings="data" />
     <!-- <PhiberMouse /> -->
   </div>
 </template>
