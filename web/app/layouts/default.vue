@@ -50,6 +50,6 @@ function _format() {
     <Header :settings="data" />
     <main><slot /></main>
     <Footer :settings="data" />
-    <!-- <PhiberMouse /> -->
+    <PhiberMouse />
   </div>
 </template>
