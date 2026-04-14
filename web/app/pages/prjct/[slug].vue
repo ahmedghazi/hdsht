@@ -39,7 +39,8 @@ const metadataRef = ref<HTMLElement | null>(null)
 const { animeClass, trigger } = useDominoAnime(pageContentRef, 0)
 
 watch(active, (val) => {
-  if (val) nextTick(() => trigger(metadataRef))
+  if (val) nextTick(() => trigger(metadataRef, 0))
+  else nextTick(() => trigger(metadataRef, 1))
 })
 
 const clientColors = computed(() => ({
@@ -53,7 +54,7 @@ const clientColors = computed(() => ({
     <div ref="pageContentRef">
       <section class="header mb-md">
         <div class="header--item">
-          <div class="bubble" :class="animeClass">
+          <div class="bubble key" :class="animeClass">
             <div>ID</div>
           </div>
           <div class="bubble bubble-dot bubble-dot--lg" :class="animeClass">
@@ -61,7 +62,7 @@ const clientColors = computed(() => ({
           </div>
         </div>
         <div class="header--item">
-          <div class="bubble" :class="animeClass">
+          <div class="bubble key" :class="animeClass">
             <div>{{ $localizeText('client') }}</div>
           </div>
           <div :class="animeClass">
@@ -70,7 +71,7 @@ const clientColors = computed(() => ({
         </div>
 
         <div class="header--item">
-          <div class="bubble" :class="animeClass">
+          <div class="bubble key" :class="animeClass">
             <div>{{ $localizeText('project') }}</div>
           </div>
           <div
@@ -86,7 +87,7 @@ const clientColors = computed(() => ({
         </div>
         <div v-if="active" ref="metadataRef" class="metadata">
           <div class="header--item">
-            <div class="bubble" :class="animeClass">
+            <div class="bubble key" :class="animeClass">
               <div>{{ $localizeText('year') }}</div>
             </div>
             <div class="bubble bubble--lg" :class="animeClass">
@@ -98,7 +99,7 @@ const clientColors = computed(() => ({
             :key="i"
             class="header--item"
           >
-            <div class="bubble" :class="animeClass">
+            <div class="bubble key" :class="animeClass">
               <div>{{ $localizeText('location') }}</div>
             </div>
             <div class="bubble bubble--lg" :class="animeClass">
@@ -112,7 +113,7 @@ const clientColors = computed(() => ({
           >
             <div
               v-if="item.service && item.service.title"
-              class="bubble"
+              class="bubble key"
               :class="animeClass"
             >
               <div>{{ $localizeField(item.service?.title) }}</div>
@@ -187,6 +188,10 @@ const clientColors = computed(() => ({
   .header--item {
     display: flex;
     align-items: flex-start;
+    .key {
+      position: sticky;
+      top: var(--header-h);
+    }
   }
   .metadata .bubble--lg {
     --color: var(--color-black);
