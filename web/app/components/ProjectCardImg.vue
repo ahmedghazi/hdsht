@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 import type { ProjectExpanded } from '~/utils/sanity-api/sanity-expanded.types'
 import { on, emit } from '~/utils/pubsub'
+import Thumbnail from './Thumbnail.vue'
 
 const { input, index = 0 } = defineProps<{
   input: ProjectExpanded
@@ -35,6 +36,7 @@ watch(
     immediate: true, // exécute aussi au montage avec la valeur initiale
   },
 )
+console.log('input', input)
 </script>
 
 <template>
@@ -66,7 +68,7 @@ watch(
 
       <figure v-for="(media, i) in input.media" :key="i" :class="animeClass">
         <template v-if="media._type === 'image'">
-          <img
+          <!-- <img
             v-if="media.asset"
             class="visual"
             :src="
@@ -74,6 +76,11 @@ watch(
                 .height(90)
                 .url()
             "
+            :alt="$localizeField(media.caption) || ''"
+          /> -->
+          <Thumbnail
+            :asset="media.asset"
+            :size="90"
             :alt="$localizeField(media.caption) || ''"
           />
         </template>

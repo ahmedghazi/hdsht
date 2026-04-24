@@ -142,7 +142,7 @@ const clientColors = computed(() => ({
             <template v-if="item._type === 'sanity.imageAsset'">
               <CardImg
                 v-if="item.asset"
-                :asset="item.asset"
+                :asset="item.asset as any"
                 :caption="
                   item.caption
                     ? $localePath(item.caption)

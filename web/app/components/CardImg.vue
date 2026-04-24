@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import type { Image } from '@sanity/types'
+import { getSanityImageDimensionsFromRef } from '~/utils/sanity-api/sanity-utils'
 import type { SanityImageAsset } from '~/utils/sanity-api/sanity.types'
 
 const { asset, caption, index } = defineProps<{
@@ -18,6 +19,8 @@ const src = computed(() => {
     .width(2000)
     .url()
 })
+
+const dims = computed(() => getSanityImageDimensionsFromRef(asset?._ref))
 </script>
 
 <template>
@@ -30,7 +33,13 @@ const src = computed(() => {
         </div>
       </div>
     </figcaption>
-    <img v-if="src" class="visual" :src="src" :alt="caption || ''" />
+    <img
+      v-if="src"
+      class="visual"
+      :src="src"
+      :alt="caption || ''"
+      :style="{ aspectRatio: dims?.aspectRatio, height: '100%' }"
+    />
   </figure>
 </template>
 
