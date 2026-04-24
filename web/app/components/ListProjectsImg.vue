@@ -12,12 +12,6 @@ defineProps<{ input: ProjectExpanded[] }>()
       :input="item"
       :index="i"
     />
-    <ProjectCardImg
-      v-for="(item, i) in input || []"
-      :key="i"
-      :input="item"
-      :index="i"
-    />
   </div>
 </template>
 

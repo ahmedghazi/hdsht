@@ -142,7 +142,7 @@ export default defineType({
           type: 'image',
           icon: MdImage,
           initialValue: {
-            colSize: 4,
+            colSize: 6,
           },
           fields: [
             defineField({

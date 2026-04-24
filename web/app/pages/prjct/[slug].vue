@@ -135,7 +135,7 @@ const clientColors = computed(() => ({
             v-for="(item, i) in data?.media"
             :key="i"
             :class="{
-              [`col-span-1 md:col-span-${item.colSize}`]: item.colSize,
+              [`col-span-1 md:col-span-${item.colSize || 6}`]: item.colSize,
               [animeClass]: true,
             }"
           >
