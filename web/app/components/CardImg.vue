@@ -1,11 +1,23 @@
 <script setup lang="ts">
-import type { SanityImageAssetReference } from '~/utils/sanity-api/sanity.types'
+import type { Image } from '@sanity/types'
+import type { SanityImageAsset } from '~/utils/sanity-api/sanity.types'
 
 const { asset, caption, index } = defineProps<{
-  asset?: SanityImageAssetReference
+  asset?: SanityImageAsset
   caption?: string
   index: number
 }>()
+
+const { $urlFor } = useNuxtApp()
+
+const isGif = computed(() => asset?.mimeType === 'image/gif')
+const src = computed(() => {
+  if (!asset) return undefined
+  if (isGif.value) return asset.url
+  return $urlFor(asset as unknown as Image)
+    .width(2000)
+    .url()
+})
 </script>
 
 <template>
@@ -18,16 +30,7 @@ const { asset, caption, index } = defineProps<{
         </div>
       </div>
     </figcaption>
-    <img
-      v-if="asset"
-      class="visual"
-      :src="
-        $urlFor(asset as any)
-          .width(2000)
-          .url()
-      "
-      :alt="caption || ''"
-    />
+    <img v-if="src" class="visual" :src="src" :alt="caption || ''" />
   </figure>
 </template>
 

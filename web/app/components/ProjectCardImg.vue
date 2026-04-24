@@ -66,11 +66,6 @@ watch(
 
       <figure v-for="(media, i) in input.media" :key="i" :class="animeClass">
         <template v-if="media._type === 'image'">
-          <!-- <pre>{{ JSON.stringify(media, null, 2) }}</pre> -->
-          <!-- <img
-            :src="$urlFor(media).height(90).url()"
-            :alt="$localizeField(media.caption)"
-          /> -->
           <img
             v-if="media.asset"
             class="visual"
