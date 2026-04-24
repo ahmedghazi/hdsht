@@ -54,7 +54,7 @@ export default defineType({
       name: 'imageCover',
       type: 'image',
       title: 'Image Cover',
-      description: 'Visible on liste pages, project cards (largeur 1400px)',
+      description: 'Visible on liste pages, project cards (1400px width)',
       group: 'editorial',
     }),
 
@@ -157,12 +157,13 @@ export default defineType({
               description: 'in a 6 column grid (ex: 1, 2, 3)',
             }),
           ],
-          preview: {
-            select: {
-              title: 'caption.en',
-              subtitle: 'colSize',
-            },
-          },
+          // preview: {
+          //   select: {
+          //     title: 'caption.en',
+          //     subtitle: 'colSize',
+          //     media: 'image',
+          //   },
+          // },
         },
         // {
         //   type: 'mux.video',
@@ -184,7 +185,7 @@ export default defineType({
 
     defineField({
       name: 'relatedProjects',
-      title: 'Projets liés',
+      title: 'Related Projects',
       type: 'array',
       of: [{type: 'reference', to: [{type: 'project'}]}],
       group: 'editorial',

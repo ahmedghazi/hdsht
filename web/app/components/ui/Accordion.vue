@@ -6,8 +6,8 @@ defineProps<{ input: Accordion }>()
 
 <template>
   <div class="accordion">
-    <div v-for="item in input.items" :key="item._key">
-      <UiAccordionItem :input="item" />
+    <div v-for="(item, i) in input.items" :key="item._key">
+      <UiAccordionItem :input="item" :is-active="i === 0" />
     </div>
   </div>
 </template>

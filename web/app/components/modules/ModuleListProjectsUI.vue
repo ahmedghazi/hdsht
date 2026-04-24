@@ -29,6 +29,7 @@ function onActiveFilters(filters: Filters[]) {
     ref="moduleRef"
     :class="['module', 'module--list-projects-ui', 'md:col-span-2']"
   >
+    <!-- <pre>{{ filteredItems }}</pre> -->
     <ProjectsFilters
       :projects="input.items || null"
       @update:filtered-items="onFilteredItemsUpdate"

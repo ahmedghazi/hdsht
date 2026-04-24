@@ -4,10 +4,14 @@ import { PortableText } from '@portabletext/vue'
 import { portableTextComponents } from '~/utils/sanity-api/portableTextComponents'
 import { gsap } from 'gsap'
 
-defineProps<{ input: AccordionItem }>()
+const props = defineProps<{ input: AccordionItem; isActive?: boolean }>()
 const active = ref<boolean>(false)
 const detailRef = ref<HTMLElement>()
 
+onMounted(() => {
+  console.log('active', active.value)
+  active.value = props.isActive
+})
 // use gsap to transition the detail height from 0 to detail intrinsic height. Classic accordion animation
 watch(active, (isActive) => {
   if (detailRef.value) {
@@ -42,6 +46,7 @@ watch(active, (isActive) => {
 
 <template>
   <div :class="{ accordion__item: true, 'accordion__item--active': active }">
+    <div v-if="active">active</div>
     <div
       class="summary"
       :style="{

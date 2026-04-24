@@ -25,13 +25,13 @@
     "@sanity/color-input": "^6.0.4",
     "@sanity/icons": "^3.7.4",
     "@sanity/ui": "^3.1.14",
-    "@sanity/vision": "^5.20.0",
+    "@sanity/vision": "^5.22.0",
     "pluralize-esm": "^9.0.5",
     "react": "^19.2.4",
     "react-dom": "^19.2.4",
     "react-icons": "^5.6.0",
     "react-player": "^3.4.0",
-    "sanity": "^5.20.0",
+    "sanity": "^5.22.0",
     "sanity-plugin-media": "^4.1.1",
     "sanity-plugin-mux-input": "^2.17.0",
     "styled-components": "^6.1.18"
@@ -48,5 +48,6 @@
     "printWidth": 100,
     "semi": false,
     "singleQuote": true
-  }
+  },
+  "packageManager": "pnpm@10.33.2+sha512.a90faf6feeab71ad6c6e57f94e0fe1a12f5dcc22cd754db40ae9593eb6a3e0b6b12e3540218bb37ae083404b1f2ce6db2a4121e979829b4aff94b99f49da1cf8"
 }
