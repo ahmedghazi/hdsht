@@ -33,13 +33,9 @@ const dims = computed(() => getSanityImageDimensionsFromRef(asset?._ref))
         </div>
       </div>
     </figcaption>
-    <img
-      v-if="src"
-      class="visual"
-      :src="src"
-      :alt="caption || ''"
-      :style="{ aspectRatio: dims?.aspectRatio, height: '100%' }"
-    />
+    <div :style="{ aspectRatio: dims?.aspectRatio, height: '100%' }">
+      <img v-if="src" class="visual" :src="src" :alt="caption || ''" />
+    </div>
   </figure>
 </template>
 

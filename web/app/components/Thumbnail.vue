@@ -26,7 +26,7 @@ const dims = computed(() => getSanityImageDimensionsFromRef(asset?._ref))
 <template>
   <img
     v-if="src"
-    class="visual"
+    class="visual-thumbnail"
     :src="src"
     :alt="alt || ''"
     :style="{ aspectRatio: dims?.aspectRatio, height: '100%' }"
@@ -34,7 +34,7 @@ const dims = computed(() => getSanityImageDimensionsFromRef(asset?._ref))
 </template>
 
 <style lang="scss">
-img {
+img.visual-thumbnail {
   min-height: var(--line-height-2xl);
   max-height: var(--line-height-2xl);
 }
