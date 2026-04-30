@@ -159,8 +159,10 @@ watch(
     bottom: 0;
     right: var(--spacing-md);
     z-index: 251;
+    pointer-events: none;
     img {
       height: 8rem;
+      height: 50dvh;
       width: auto;
     }
   }
