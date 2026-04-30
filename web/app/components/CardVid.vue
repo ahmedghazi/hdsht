@@ -7,21 +7,41 @@ const { assetId, caption, index } = defineProps<{
   index: number
 }>()
 
+const { audioUnlocked, unlock } = useAudioUnlock()
+
 const currentTime = ref<string>('00:00:00')
 const play = ref<boolean>(false)
+const figureEl = useTemplateRef<HTMLElement>('figure')
 
-function onTimeUpdate(_currentTime: string) {
-  currentTime.value = _currentTime
-  console.log(_currentTime)
+const isMuted = computed(() => !audioUnlocked.value)
+
+function onDocumentClick() {
+  unlock()
 }
-function onPlaying(_isPlaying: boolean) {
-  play.value = _isPlaying
-  console.log(_isPlaying)
-}
+
+let observer: IntersectionObserver | null = null
+
+onMounted(() => {
+  if (!figureEl.value) return
+  observer = new IntersectionObserver(
+    (entries) => { play.value = entries[0]?.isIntersecting ?? false },
+    { threshold: 0.5 },
+  )
+  observer.observe(figureEl.value)
+  document.addEventListener('click', onDocumentClick)
+})
+
+onBeforeUnmount(() => {
+  observer?.disconnect()
+  document.removeEventListener('click', onDocumentClick)
+})
 </script>
 
 <template>
-  <figure :class="{ 'is-playing': play, 'is-paused': !play }">
+  <figure
+    ref="figure"
+    :class="{ 'is-playing': play, 'is-paused': !play }"
+  >
     <div class="header">
       <figcaption v-if="caption">
         <div class="bubble bubble-dots-n-primary">
@@ -34,7 +54,6 @@ function onPlaying(_isPlaying: boolean) {
       <div class="timer bubble">
         <div>
           <span>{{ currentTime }}</span>
-          <!-- <span v-if="!isPlaying" class="ml-sm inline-block">⏸︎</span> -->
         </div>
       </div>
     </div>
@@ -43,8 +62,8 @@ function onPlaying(_isPlaying: boolean) {
       :asset-id="assetId"
       :caption="caption"
       :play="play"
-      @on-time-update="onTimeUpdate"
-      @is-playing="onPlaying"
+      :muted="isMuted"
+      @time-update="currentTime = $event"
     />
   </figure>
 </template>
@@ -65,7 +84,7 @@ figure {
   }
   &.is-playing mux-player {
     cursor:
-      url("data:image/svg+xml;utf8,<svg height='30' width='54' xmlns='http://www.w3.org/2000/svg'><text font-family='sans-serif' x='5' y='15' fill='white'>Pause</text> </svg>")
+      url("data:image/svg+xml;utf8,<svg height='30' width='54' xmlns='http://www.w3.org/2020/svg'><text font-family='sans-serif' x='5' y='15' fill='white'>Pause</text> </svg>")
         22 15,
       auto;
   }

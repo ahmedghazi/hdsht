@@ -8,4 +8,6 @@ https://backoffice--hdsht.sanity.studio/
 
 # to do
 
+video play auto
+
 # qurstions
