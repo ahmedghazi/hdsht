@@ -35,10 +35,11 @@ function formatTime(seconds: number): string {
   return [h, m, s].map((v) => String(v).padStart(2, '0')).join(':')
 }
 
-// Set initial mute state when the player element first mounts
+// Set initial mute + volume when the player element first mounts
 watch(playerRef, (player) => {
   if (!player) return
   player.muted = muted
+  player.volume = volume
 })
 
 watch(
@@ -55,7 +56,10 @@ watch(
 watch(
   () => muted,
   (val) => {
-    if (playerRef.value) playerRef.value.muted = val
+    if (!playerRef.value) return
+    playerRef.value.muted = val
+    // sync volume on unmute so the player doesn't blast at browser-stored level
+    if (!val) playerRef.value.volume = volume
   },
 )
 
