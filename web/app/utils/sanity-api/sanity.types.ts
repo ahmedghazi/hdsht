@@ -32,19 +32,25 @@ export type LocaleString = {
   zh?: string
 }
 
-export type ServicesUI = {
-  _type: 'servicesUI'
-  title?: LocaleString
-  colSize?: number
-  text?: LocaleBlockContent
-  accordion?: Accordion
-}
-
 export type SanityImageAssetReference = {
   _ref: string
   _type: 'reference'
   _weak?: boolean
   [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
+}
+
+export type ServicesUI = {
+  _type: 'servicesUI'
+  title?: LocaleString
+  colSize?: number
+  placeholder?: {
+    asset?: SanityImageAssetReference
+    media?: unknown
+    hotspot?: SanityImageHotspot
+    crop?: SanityImageCrop
+    _type: 'image'
+  }
+  accordion?: Accordion
 }
 
 export type GranularStripeUI = {
@@ -356,17 +362,6 @@ export type Service = {
   slug?: Slug
 }
 
-export type Infos = {
-  _id: string
-  _type: 'infos'
-  _createdAt: string
-  _updatedAt: string
-  _rev: string
-  title?: LocaleString
-  slug?: Slug
-  text?: LocaleBlockContent
-}
-
 export type Settings = {
   _id: string
   _type: 'settings'
@@ -505,6 +500,7 @@ export type Project = {
     crop?: SanityImageCrop
     _type: 'image'
   }
+  videoCover?: Video
   rip?: boolean
   ID?: string
   client?: ClientReference
@@ -563,18 +559,6 @@ export type Project = {
   >
 }
 
-export type MuxVideoAssetReference = {
-  _ref: string
-  _type: 'reference'
-  _weak?: boolean
-  [internalGroqTypeReferenceTo]?: 'mux.videoAsset'
-}
-
-export type MuxVideo = {
-  _type: 'mux.video'
-  asset?: MuxVideoAssetReference
-}
-
 export type Client = {
   _id: string
   _type: 'client'
@@ -585,6 +569,18 @@ export type Client = {
   slug?: Slug
   backgroundColor?: Color
   foregroundColor?: Color
+}
+
+export type MuxVideoAssetReference = {
+  _ref: string
+  _type: 'reference'
+  _weak?: boolean
+  [internalGroqTypeReferenceTo]?: 'mux.videoAsset'
+}
+
+export type MuxVideo = {
+  _type: 'mux.video'
+  asset?: MuxVideoAssetReference
 }
 
 export type MuxVideoAsset = {
@@ -702,6 +698,15 @@ export type HslaColor = {
   a?: number
 }
 
+export type MediaTag = {
+  _id: string
+  _type: 'media.tag'
+  _createdAt: string
+  _updatedAt: string
+  _rev: string
+  name?: Slug
+}
+
 export type SanityImagePaletteSwatch = {
   _type: 'sanity.imagePaletteSwatch'
   background?: string
@@ -803,8 +808,8 @@ export type AllSanitySchemaTypes =
   | VideoUI
   | MediaUI
   | LocaleString
-  | ServicesUI
   | SanityImageAssetReference
+  | ServicesUI
   | GranularStripeUI
   | LocationMapUI
   | ContactsUI
@@ -834,7 +839,6 @@ export type AllSanitySchemaTypes =
   | PersonReference
   | Contribution
   | Service
-  | Infos
   | Settings
   | PageModulaire
   | Color
@@ -843,9 +847,9 @@ export type AllSanitySchemaTypes =
   | ClientReference
   | LocationReference
   | Project
+  | Client
   | MuxVideoAssetReference
   | MuxVideo
-  | Client
   | MuxVideoAsset
   | MuxAssetData
   | MuxStaticRenditions
@@ -855,6 +859,7 @@ export type AllSanitySchemaTypes =
   | RgbaColor
   | HsvaColor
   | HslaColor
+  | MediaTag
   | SanityImagePaletteSwatch
   | SanityImagePalette
   | SanityImageDimensions
@@ -1280,161 +1285,13 @@ export type HOME_QUERY_RESULT = {
         _type: 'servicesUI'
         title?: LocaleString
         colSize?: number
-        text: {
-          _type: 'localeBlockContent'
-          en: Array<
-            | {
-                children?: Array<{
-                  marks?: Array<string>
-                  text?: string
-                  _type: 'span'
-                  _key: string
-                }>
-                style?: 'normal' | 'text-lg'
-                listItem?: 'bullet'
-                markDefs: Array<
-                  | {
-                      href?: string
-                      _type: 'linkExternal'
-                      _key: string
-                    }
-                  | {
-                      reference:
-                        | {
-                            _id: string
-                            _type: 'pageModulaire'
-                            _createdAt: string
-                            _updatedAt: string
-                            _rev: string
-                            seo?: Seo
-                            homePage?: boolean
-                            title?: LocaleString
-                            slug?: Slug
-                            modules?: Array<
-                              | ({
-                                  _key: string
-                                } & ClientsUI)
-                              | ({
-                                  _key: string
-                                } & ContactsUI)
-                              | ({
-                                  _key: string
-                                } & GranularStripeUI)
-                              | ({
-                                  _key: string
-                                } & ImagesUI)
-                              | ({
-                                  _key: string
-                                } & ListProjectsUI)
-                              | ({
-                                  _key: string
-                                } & LocationMapUI)
-                              | ({
-                                  _key: string
-                                } & ServicesUI)
-                              | ({
-                                  _key: string
-                                } & TextUI)
-                              | ({
-                                  _key: string
-                                } & VideoUI)
-                            >
-                          }
-                        | {
-                            _id: string
-                            _type: 'project'
-                            _createdAt: string
-                            _updatedAt: string
-                            _rev: string
-                            seo?: Seo
-                            title?: LocaleString
-                            slug?: Slug
-                            imageCover?: {
-                              asset?: SanityImageAssetReference
-                              media?: unknown
-                              hotspot?: SanityImageHotspot
-                              crop?: SanityImageCrop
-                              _type: 'image'
-                            }
-                            rip?: boolean
-                            ID?: string
-                            client?: ClientReference
-                            year?: string
-                            location?: Array<
-                              {
-                                _key: string
-                              } & LocationReference
-                            >
-                            locations?: Array<
-                              {
-                                _key: string
-                              } & LocationReference
-                            >
-                            contributions?: Array<{
-                              service?: ServiceReference
-                              contributors?: Array<
-                                {
-                                  _key: string
-                                } & PersonReference
-                              >
-                              _type: 'contribution'
-                              _key: string
-                            }>
-                            services?: Array<
-                              {
-                                _key: string
-                              } & ServiceReference
-                            >
-                            metas?: Array<
-                              {
-                                _key: string
-                              } & KeyVal
-                            >
-                            description?: LocaleText
-                            text?: LocaleBlockContent
-                            media?: Array<
-                              | ({
-                                  _key: string
-                                } & Video)
-                              | {
-                                  asset?: SanityImageAssetReference
-                                  media?: unknown
-                                  hotspot?: SanityImageHotspot
-                                  crop?: SanityImageCrop
-                                  caption?: LocaleString
-                                  colSize?: number
-                                  _type: 'image'
-                                  _key: string
-                                }
-                            >
-                            relatedProjects?: Array<
-                              {
-                                _key: string
-                              } & ProjectReference
-                            >
-                          }
-                        | null
-                      _type: 'linkInternal'
-                      _key: string
-                    }
-                > | null
-                level?: number
-                _type: 'block'
-                _key: string
-              }
-            | {
-                asset?: SanityImageAssetReference
-                media?: unknown
-                hotspot?: SanityImageHotspot
-                crop?: SanityImageCrop
-                _type: 'image'
-                _key: string
-                markDefs: null
-              }
-          > | null
-          zh?: BlockContent
-          fr: null
-        } | null
+        placeholder?: {
+          asset?: SanityImageAssetReference
+          media?: unknown
+          hotspot?: SanityImageHotspot
+          crop?: SanityImageCrop
+          _type: 'image'
+        }
         accordion: {
           _type: 'accordion'
           items?: Array<
@@ -1443,6 +1300,7 @@ export type HOME_QUERY_RESULT = {
             } & AccordionItem
           >
         } | null
+        text: null
       }
     | {
         _key: string
@@ -1526,6 +1384,7 @@ export type HOME_QUERY_RESULT = {
                               crop?: SanityImageCrop
                               _type: 'image'
                             }
+                            videoCover?: Video
                             rip?: boolean
                             ID?: string
                             client?: ClientReference
@@ -1947,161 +1806,13 @@ export type PAGE_MODULAIRE_QUERY_RESULT = {
         _type: 'servicesUI'
         title?: LocaleString
         colSize?: number
-        text: {
-          _type: 'localeBlockContent'
-          en: Array<
-            | {
-                children?: Array<{
-                  marks?: Array<string>
-                  text?: string
-                  _type: 'span'
-                  _key: string
-                }>
-                style?: 'normal' | 'text-lg'
-                listItem?: 'bullet'
-                markDefs: Array<
-                  | {
-                      href?: string
-                      _type: 'linkExternal'
-                      _key: string
-                    }
-                  | {
-                      reference:
-                        | {
-                            _id: string
-                            _type: 'pageModulaire'
-                            _createdAt: string
-                            _updatedAt: string
-                            _rev: string
-                            seo?: Seo
-                            homePage?: boolean
-                            title?: LocaleString
-                            slug?: Slug
-                            modules?: Array<
-                              | ({
-                                  _key: string
-                                } & ClientsUI)
-                              | ({
-                                  _key: string
-                                } & ContactsUI)
-                              | ({
-                                  _key: string
-                                } & GranularStripeUI)
-                              | ({
-                                  _key: string
-                                } & ImagesUI)
-                              | ({
-                                  _key: string
-                                } & ListProjectsUI)
-                              | ({
-                                  _key: string
-                                } & LocationMapUI)
-                              | ({
-                                  _key: string
-                                } & ServicesUI)
-                              | ({
-                                  _key: string
-                                } & TextUI)
-                              | ({
-                                  _key: string
-                                } & VideoUI)
-                            >
-                          }
-                        | {
-                            _id: string
-                            _type: 'project'
-                            _createdAt: string
-                            _updatedAt: string
-                            _rev: string
-                            seo?: Seo
-                            title?: LocaleString
-                            slug?: Slug
-                            imageCover?: {
-                              asset?: SanityImageAssetReference
-                              media?: unknown
-                              hotspot?: SanityImageHotspot
-                              crop?: SanityImageCrop
-                              _type: 'image'
-                            }
-                            rip?: boolean
-                            ID?: string
-                            client?: ClientReference
-                            year?: string
-                            location?: Array<
-                              {
-                                _key: string
-                              } & LocationReference
-                            >
-                            locations?: Array<
-                              {
-                                _key: string
-                              } & LocationReference
-                            >
-                            contributions?: Array<{
-                              service?: ServiceReference
-                              contributors?: Array<
-                                {
-                                  _key: string
-                                } & PersonReference
-                              >
-                              _type: 'contribution'
-                              _key: string
-                            }>
-                            services?: Array<
-                              {
-                                _key: string
-                              } & ServiceReference
-                            >
-                            metas?: Array<
-                              {
-                                _key: string
-                              } & KeyVal
-                            >
-                            description?: LocaleText
-                            text?: LocaleBlockContent
-                            media?: Array<
-                              | ({
-                                  _key: string
-                                } & Video)
-                              | {
-                                  asset?: SanityImageAssetReference
-                                  media?: unknown
-                                  hotspot?: SanityImageHotspot
-                                  crop?: SanityImageCrop
-                                  caption?: LocaleString
-                                  colSize?: number
-                                  _type: 'image'
-                                  _key: string
-                                }
-                            >
-                            relatedProjects?: Array<
-                              {
-                                _key: string
-                              } & ProjectReference
-                            >
-                          }
-                        | null
-                      _type: 'linkInternal'
-                      _key: string
-                    }
-                > | null
-                level?: number
-                _type: 'block'
-                _key: string
-              }
-            | {
-                asset?: SanityImageAssetReference
-                media?: unknown
-                hotspot?: SanityImageHotspot
-                crop?: SanityImageCrop
-                _type: 'image'
-                _key: string
-                markDefs: null
-              }
-          > | null
-          zh?: BlockContent
-          fr: null
-        } | null
+        placeholder?: {
+          asset?: SanityImageAssetReference
+          media?: unknown
+          hotspot?: SanityImageHotspot
+          crop?: SanityImageCrop
+          _type: 'image'
+        }
         accordion: {
           _type: 'accordion'
           items?: Array<
@@ -2110,6 +1821,7 @@ export type PAGE_MODULAIRE_QUERY_RESULT = {
             } & AccordionItem
           >
         } | null
+        text: null
       }
     | {
         _key: string
@@ -2193,6 +1905,7 @@ export type PAGE_MODULAIRE_QUERY_RESULT = {
                               crop?: SanityImageCrop
                               _type: 'image'
                             }
+                            videoCover?: Video
                             rip?: boolean
                             ID?: string
                             client?: ClientReference
@@ -2360,6 +2073,7 @@ export type PROJECT_QUERY_RESULT = {
     crop?: SanityImageCrop
     _type: 'image'
   } | null
+  videoCover?: Video
   rip?: boolean
   ID: string | null
   client: {

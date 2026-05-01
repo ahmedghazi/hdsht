@@ -57,6 +57,13 @@ export default defineType({
       description: 'Visible on liste pages, project cards (1400px width)',
       group: 'editorial',
     }),
+    defineField({
+      name: 'videoCover',
+      type: 'video',
+      title: 'video Cover',
+      description: 'Visible on liste pages, project cards',
+      group: 'editorial',
+    }),
 
     defineField({
       name: 'rip',
@@ -142,7 +149,7 @@ export default defineType({
           type: 'image',
           icon: MdImage,
           initialValue: {
-            colSize: 6,
+            colSize: 3,
           },
           fields: [
             defineField({
@@ -172,6 +179,9 @@ export default defineType({
         {
           type: 'video',
           icon: MdVideoFile,
+          initialValue: {
+            colSize: 3,
+          },
           preview: {
             select: {
               title: 'title.en',

@@ -89,17 +89,28 @@ watch(
           </div>
         </div>
       </div>
-      <figure v-if="hover" class="image-cover">
-        <img
-          v-if="input.imageCover?.asset"
-          :src="
-            $urlFor(input.imageCover?.asset as any)
-              .width(2000)
-              .url()
-          "
-          :alt="`${$localizeField(input.title) || ''}`"
-        />
-      </figure>
+      <div class="thumbnail">
+        <figure v-if="hover && input.imageCover" class="image-cover">
+          <img
+            v-if="input.imageCover?.asset"
+            :src="
+              $urlFor(input.imageCover?.asset as any)
+                .width(2000)
+                .url()
+            "
+            :alt="`${$localizeField(input.title) || ''}`"
+          />
+        </figure>
+        <figure v-if="hover && input.videoCover" class="video-cover">
+          <UiMuxVideo
+            v-if="input.videoCover.video?.asset?.playbackId"
+            :asset-id="input.videoCover.video?.asset?.playbackId || ''"
+            :autoplay="true"
+            :loop="true"
+            :aspect-ratio="input.videoCover.video?.asset?.data?.aspect_ratio"
+          />
+        </figure>
+      </div>
     </article>
   </NuxtLink>
 </template>
@@ -154,13 +165,14 @@ watch(
   &__year {
     flex-shrink: 0; // colonne année rigide
   }
-  .image-cover {
+  .thumbnail {
     position: fixed;
     bottom: 0;
     right: var(--spacing-md);
     z-index: 251;
     pointer-events: none;
-    img {
+    img,
+    mux-player {
       height: 8rem;
       height: 50dvh;
       width: auto;

@@ -90,6 +90,12 @@ export const projectCard = `
     ...,
     asset->
   },
+  videoCover{
+    ...,
+    video{
+      asset->
+    }
+  },
   rip,
   year,
   ID,

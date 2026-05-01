@@ -8,6 +8,7 @@ https://backoffice--hdsht.sanity.studio/
 
 # to do
 
-video play auto
+- [done] video play auto
+- [done] txt card thumbnail
 
 # qurstions
