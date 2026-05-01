@@ -24,7 +24,7 @@ function fadeVolume(target: number) {
 
 function onMouseEnter() {
   isHovered.value = true
-  if (audioUnlocked.value && vol.value < 1) fadeVolume(1)
+  if (audioUnlocked.value) fadeVolume(1)
 }
 
 function onMouseLeave() {
@@ -32,12 +32,9 @@ function onMouseLeave() {
   fadeVolume(0)
 }
 
-watch(audioUnlocked, (unlocked) => {
-  if (unlocked && isHovered.value && vol.value < 1) fadeVolume(1)
-})
-
 function onDocumentClick() {
   unlock()
+  if (isHovered.value) fadeVolume(1)
 }
 
 let observer: IntersectionObserver | null = null
