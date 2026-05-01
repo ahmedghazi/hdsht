@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import '@mux/mux-player'
+import gsap from 'gsap'
 
 const { assetId, caption, index } = defineProps<{
   assetId?: string
@@ -12,8 +13,28 @@ const { audioUnlocked, unlock } = useAudioUnlock()
 const currentTime = ref<string>('00:00:00')
 const play = ref<boolean>(false)
 const figureEl = useTemplateRef<HTMLElement>('figure')
+const isHovered = ref(false)
+const vol = reactive({ value: 0 })
 
 const isMuted = computed(() => !audioUnlocked.value)
+
+function fadeVolume(target: number) {
+  gsap.to(vol, { value: target, duration: 0.6, ease: 'power2.inOut' })
+}
+
+function onMouseEnter() {
+  isHovered.value = true
+  if (audioUnlocked.value && vol.value < 1) fadeVolume(1)
+}
+
+function onMouseLeave() {
+  isHovered.value = false
+  fadeVolume(0)
+}
+
+watch(audioUnlocked, (unlocked) => {
+  if (unlocked && isHovered.value && vol.value < 1) fadeVolume(1)
+})
 
 function onDocumentClick() {
   unlock()
@@ -41,6 +62,8 @@ onBeforeUnmount(() => {
   <figure
     ref="figure"
     :class="{ 'is-playing': play, 'is-paused': !play }"
+    @mouseenter="onMouseEnter"
+    @mouseleave="onMouseLeave"
   >
     <div class="header">
       <figcaption v-if="caption">
@@ -63,6 +86,7 @@ onBeforeUnmount(() => {
       :caption="caption"
       :play="play"
       :muted="isMuted"
+      :volume="vol.value"
       @time-update="currentTime = $event"
     />
   </figure>

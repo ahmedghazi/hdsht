@@ -25,7 +25,6 @@ onMounted(() => {
 watch(
   () => hover.value,
   (val) => {
-    console.log('hover', val)
     if (val) {
       emit('PROJECT-HOVER', input._id)
     } else {
@@ -36,7 +35,6 @@ watch(
     immediate: true, // exécute aussi au montage avec la valeur initiale
   },
 )
-console.log('input', input)
 </script>
 
 <template>

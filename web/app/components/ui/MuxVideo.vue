@@ -6,6 +6,7 @@ const {
   caption,
   play = false,
   muted = true,
+  volume = 0,
   loop = false,
   aspectRatio,
 } = defineProps<{
@@ -13,6 +14,7 @@ const {
   caption?: string
   play?: boolean
   muted?: boolean
+  volume?: number
   loop?: boolean
   aspectRatio?: string
 }>()
@@ -54,6 +56,13 @@ watch(
   () => muted,
   (val) => {
     if (playerRef.value) playerRef.value.muted = val
+  },
+)
+
+watch(
+  () => volume,
+  (val) => {
+    if (playerRef.value) playerRef.value.volume = val
   },
 )
 

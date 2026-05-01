@@ -101,7 +101,10 @@ watch(
             :alt="`${$localizeField(input.title) || ''}`"
           />
         </figure>
-        <figure v-if="hover && input.videoCover" class="video-cover">
+        <figure
+          v-if="hover && !input.imageCover && input.videoCover"
+          class="video-cover"
+        >
           <UiMuxVideo
             v-if="input.videoCover.video?.asset?.playbackId"
             :asset-id="input.videoCover.video?.asset?.playbackId || ''"
