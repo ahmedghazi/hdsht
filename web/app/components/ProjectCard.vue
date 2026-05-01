@@ -56,7 +56,7 @@ const { animeClass } = useDominoAnime(items, index, stagger)
               '--color': input.client?.foregroundColor?.hex,
             }"
           >
-            <h1>{{ $localizeField(input?.title) }}</h1>
+            <h3 v-if="input.title">{{ $localizeField(input?.title) }}</h3>
           </div>
         </div>
       </div>

@@ -26,12 +26,12 @@ const plugins = [
       },
     },
   }),
-  visionTool(),
   media(),
-  colorInput(),
   muxInput(),
+  colorInput(),
 ]
 if (isDev) plugins.push(visionTool())
+
 export default defineConfig({
   name: 'default',
   title: 'HDSHT.pink — website',

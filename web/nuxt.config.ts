@@ -7,6 +7,11 @@ export default defineNuxtConfig({
     '@nuxtjs/i18n',
     '@nuxtjs/sanity',
   ],
+  app: {
+    head: {
+      link: [{ rel: 'icon', type: 'image/png', href: '/favicon.png' }],
+    },
+  },
   css: ['~/assets/css/main.css', '~/assets/css/index.scss'],
 
   vue: {
@@ -52,6 +57,7 @@ export default defineNuxtConfig({
       { name: 'Instrument Serif', provider: 'google' },
     ],
   },
+
   i18n: {
     defaultLocale: 'en',
     langDir: 'locales',
