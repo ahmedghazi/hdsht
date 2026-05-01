@@ -66,6 +66,10 @@ export const PAGE_MODULAIRE_QUERY = groq`*[_type == "pageModulaire" && slug.curr
 /*****************************************************************************************************
  * PAGE PROJECT (ancienne version, slider simple)
  */
+export const RANDOM_PROJECTS_QUERY = groq`*[_type == "project" && slug.current != $slug][$offset...$limit]{
+  ${projectCardMini}
+}`
+
 export const PROJECT_QUERY = groq`*[_type == "project" && slug.current == $slug][0]{
   ...,
   seo{

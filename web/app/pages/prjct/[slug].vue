@@ -15,7 +15,8 @@ const { data } = await useSanityData<PROJECT_QUERY_RESULT>(PROJECT_QUERY, {
 if (!data.value) {
   throw createError({
     statusCode: 404,
-    statusMessage: 'Sorry, the requested page does not exist.',
+    statusMessage:
+      'Sorry, the requested page does not exist: ' + route.params.slug,
   })
 }
 
@@ -163,19 +164,7 @@ const clientColors = computed(() => ({
         </div>
       </section>
     </div>
-    <setion v-if="data?.relatedProjects" class="related">
-      <div class="bubble" :class="animeClass">
-        <div>
-          <h2>NEXT</h2>
-        </div>
-      </div>
-
-      <div class="">
-        <div v-for="(item, i) in data?.relatedProjects" :key="i" class="mb-md">
-          <ProjectCard v-if="item" :input="item" :index="i + 1" />
-        </div>
-      </div>
-    </setion>
+    <ProjectRelated v-if="route.params.slug" :slug="route.params.slug" />
   </div>
 </template>
 

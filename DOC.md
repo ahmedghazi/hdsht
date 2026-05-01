@@ -10,5 +10,6 @@ https://backoffice--hdsht.sanity.studio/
 
 - [done] video play auto
 - [done] txt card thumbnail
+- add random 5 projects related
 
 # qurstions

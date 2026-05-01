@@ -17,7 +17,15 @@ const src = computed(() => {
   if (isGif.value) return asset.url
   return $urlFor(asset as unknown as Image)
     .height(size)
+    .format('webp')
     .url()
+})
+console.log(src)
+const srcset = computed(() => {
+  const b = $urlFor(asset)
+  return [400, 800, 1200]
+    .map((w) => `${b.width(w).format('webp').url()} ${w}w`)
+    .join(', ')
 })
 
 const dims = computed(() => getSanityImageDimensionsFromRef(asset?._ref))
@@ -28,7 +36,11 @@ const dims = computed(() => getSanityImageDimensionsFromRef(asset?._ref))
     v-if="src"
     class="visual-thumbnail"
     :src="src"
+    :srcset="srcset"
+    sizes="(max-width: 600px) 400px, (max-width: 1024px) 800px, 1200px"
     :alt="alt || ''"
+    loading="lazy"
+    decoding="async"
     :style="{ aspectRatio: dims?.aspectRatio, height: '100%' }"
   />
 </template>

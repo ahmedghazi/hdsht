@@ -16,7 +16,8 @@ const src = computed(() => {
   if (!asset) return undefined
   if (isGif.value) return asset.url
   return $urlFor(asset as unknown as Image)
-    .width(2000)
+    .width(3000)
+    .format('webp')
     .url()
 })
 
@@ -34,7 +35,14 @@ const dims = computed(() => getSanityImageDimensionsFromRef(asset?._ref))
       </div>
     </figcaption>
     <div :style="{ aspectRatio: dims?.aspectRatio, height: '100%' }">
-      <img v-if="src" class="visual" :src="src" :alt="caption || ''" />
+      <img
+        v-if="src"
+        class="visual"
+        :src="src"
+        :alt="caption || ''"
+        loading="lazy"
+        decoding="async"
+      />
     </div>
   </figure>
 </template>

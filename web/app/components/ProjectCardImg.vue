@@ -66,19 +66,9 @@ watch(
 
       <figure v-for="(media, i) in input.media" :key="i" :class="animeClass">
         <template v-if="media._type === 'image'">
-          <!-- <img
-            v-if="media.asset"
-            class="visual"
-            :src="
-              $urlFor(media.asset as any)
-                .height(90)
-                .url()
-            "
-            :alt="$localizeField(media.caption) || ''"
-          /> -->
           <Thumbnail
             :asset="media.asset"
-            :size="90"
+            :size="360"
             :alt="$localizeField(media.caption) || ''"
           />
         </template>
