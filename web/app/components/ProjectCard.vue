@@ -1,11 +1,8 @@
 <script lang="ts" setup>
-import type { ProjectExpanded } from '~/utils/sanity-api/sanity-expanded.types'
+import type { RANDOM_PROJECTS_QUERY_RESULT } from '~/utils/sanity-api/sanity.types'
 import Client from './Client.vue'
 
-type ProjectCardInput = Pick<
-  ProjectExpanded,
-  '_type' | 'slug' | 'ID' | 'title' | 'client'
->
+type ProjectCardInput = RANDOM_PROJECTS_QUERY_RESULT[number]
 
 const {
   input,

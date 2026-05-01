@@ -199,6 +199,7 @@ export default defineType({
       type: 'array',
       of: [{type: 'reference', to: [{type: 'project'}]}],
       group: 'editorial',
+      hidden: true,
     }),
   ],
 
