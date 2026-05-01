@@ -3,10 +3,25 @@ import type { ClientsUI } from '~/utils/sanity-api/sanity.types'
 import Marquee from '@selemondev/vue3-marquee'
 import '@selemondev/vue3-marquee/dist/index.css'
 
-defineProps<{ input: ClientsUI }>()
+const props = defineProps<{ input: ClientsUI }>()
 
-onMounted(() => {
-  // console.log()
+const ready = ref(false)
+const preloadRef = ref<HTMLDivElement>()
+
+onMounted(async () => {
+  await nextTick()
+  const imgs = Array.from(preloadRef.value?.querySelectorAll('img') ?? [])
+  await Promise.all(
+    imgs.map((img) =>
+      img.complete
+        ? Promise.resolve()
+        : new Promise<void>((resolve) => {
+            img.addEventListener('load', () => resolve(), { once: true })
+            img.addEventListener('error', () => resolve(), { once: true })
+          }),
+    ),
+  )
+  ready.value = true
 })
 </script>
 
@@ -23,36 +38,38 @@ onMounted(() => {
         <div>{{ $localizeField(input.title) }}</div>
       </h2>
       <div class="list">
-        <Marquee :duration="3">
-          <ul class="flex gap-sm">
-            <li v-for="item in input.items" :key="item" class="client--item">
-              <img
-                :src="item.asset?.url || ''"
-                alt=""
-                srcset=""
-                :height="item.asset?.metadata?.dimensions?.height || 20"
-                :width="item.asset?.metadata?.dimensions?.width || 'auto'"
-              />
-            </li>
-            <!-- <li v-for="item in input.items" :key="item" class="client--item">
-              <img
-                :src="item.asset?.url || ''"
-                alt=""
-                srcset=""
-                :height="item.asset?.metadata?.dimensions?.height || 20"
-                :width="item.asset?.metadata?.dimensions?.width || 'auto'"
-              />
-            </li>
-            <li v-for="item in input.items" :key="item" class="client--item">
-              <img
-                :src="item.asset?.url || ''"
-                alt=""
-                srcset=""
-                :height="item.asset?.metadata?.dimensions?.height || 20"
-                :width="item.asset?.metadata?.dimensions?.width || 'auto'"
-              />
-            </li> -->
-          </ul>
+        <!-- preload images so marquee calculates widths correctly -->
+        <div
+          ref="preloadRef"
+          aria-hidden="true"
+          style="position: absolute; visibility: hidden; pointer-events: none"
+        >
+          <img
+            v-for="item in props.input.items"
+            :key="item._key"
+            :src="$urlFor(item.asset).height(30).format('webp').url()"
+          />
+        </div>
+        <Marquee v-if="ready" :duration="30" :pause-on-hover="true">
+          <!-- <ul class="flex- gap-sm"> -->
+          <div
+            v-for="(item, i) in input.items"
+            :key="item"
+            class="client--item"
+            :style="{
+              '--ar': `${item.asset?.metadata?.dimensions?.width / item.asset?.metadata?.dimensions?.height}`,
+            }"
+          >
+            <img
+              :src="$urlFor(item.asset).height(30).format('webp').url()"
+              alt=""
+              srcset=""
+              :style="{
+                aspectRatio: `${item.asset?.metadata?.dimensions?.width || 20} / ${item.asset?.metadata?.dimensions?.height || 20}`,
+              }"
+            />
+          </div>
+          <!-- </ul> -->
         </Marquee>
       </div>
     </div>
@@ -66,13 +83,21 @@ onMounted(() => {
   .list {
     background-color: var(--color-white);
   }
+  ul {
+  }
   .client--item {
     flex-shrink: 0;
-    padding: 0.6rem var(--text-lg);
+    margin: 0.6rem var(--spacing-sm);
+    height: 100%;
+    width: 100%;
+    --width: calc(var(--ar) * 1.7rem);
+    height: 1.7rem;
+    width: var(--width, auto);
+  }
+  span {
+    color: red;
   }
   img {
-    height: 1.7rem;
-    width: auto;
   }
 }
 @media (max-width: 800px) {
