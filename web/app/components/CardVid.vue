@@ -12,8 +12,9 @@ const { assetId, caption, index } = defineProps<{
 // muted stays true until unlocked — volume is always 0 at start regardless
 const { audioUnlocked, unlock } = useAudioUnlock()
 
-const currentTime = ref<string>('00:00:00')
-const duration = ref<string>('00:00:00')
+const currentTime = ref<number>(0)
+const duration = ref<number>(0)
+const progress = ref<number>(0)
 const play = ref<boolean>(false)
 const figureEl = useTemplateRef<HTMLElement>('figure')
 const isHovered = ref(false)
@@ -63,6 +64,13 @@ onBeforeUnmount(() => {
   observer?.disconnect()
   document.removeEventListener('click', onDocumentClick)
 })
+
+function formatTime(seconds: number): string {
+  const h = Math.floor(seconds / 3600)
+  const m = Math.floor((seconds % 3600) / 60)
+  const s = Math.floor(seconds % 60)
+  return [h, m, s].map((v) => String(v).padStart(2, '0')).join(':')
+}
 </script>
 
 <template>
@@ -83,9 +91,9 @@ onBeforeUnmount(() => {
       </figcaption>
       <div class="timer bubble">
         <div>
-          <span v-if="currentTime !== '00:00:00'">{{ currentTime }}</span>
-          <span v-if="currentTime !== '00:00:00'">/</span>
-          <span v-if="duration !== '00:00:00'">{{ duration }}</span>
+          <span v-if="currentTime">{{ formatTime(currentTime) }}</span>
+          <span v-if="currentTime">/</span>
+          <span v-if="duration">{{ formatTime(duration) }}</span>
         </div>
       </div>
       <!-- <div v-if="vol.value > 0" class="timer bubble">
@@ -104,15 +112,23 @@ onBeforeUnmount(() => {
         (t, d) => {
           currentTime = t
           duration = d
+          progress = currentTime / duration
         }
       "
     />
-    <div class="progress"></div>
+    <div
+      class="progress"
+      :style="{ left: `${progress * 100}%` }"
+      :title="currentTime"
+    ></div>
+    <!-- <div class="progress">{{ duration }}</div>
+    <div class="progress">{{ progress }}</div> -->
   </figure>
 </template>
 
 <style lang="scss">
 figure {
+  position: relative;
   .header {
     width: 100%;
     display: flex;
@@ -135,5 +151,18 @@ figure {
 mux-player {
   --controls: none;
   vertical-align: top;
+}
+.progress {
+  width: 0.5em;
+  height: 0.5em;
+  border-radius: 0.5em;
+  background-color: var(--color-primary);
+  mix-blend-mode: difference;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  transform: translate(-50%, 50%);
+  will-change: left;
+  transition: left 0.2s;
 }
 </style>

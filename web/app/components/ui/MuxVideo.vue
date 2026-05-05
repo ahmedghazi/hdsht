@@ -20,7 +20,7 @@ const {
 }>()
 
 const emit = defineEmits<{
-  timeUpdate: [currentTime: string, duration: string]
+  timeUpdate: [currentTime: number, duration: number]
   toggle: []
 }>()
 
@@ -87,8 +87,10 @@ const aspectRatioCss = aspectRatio ? aspectRatio.replace(':', '/') : ''
       (e: Event) =>
         emit(
           'timeUpdate',
-          formatTime((e.target as any).currentTime),
-          formatTime((e.target as any).duration),
+          (e.target as any).currentTime,
+          (e.target as any).duration,
+          // formatTime((e.target as any).currentTime),
+          // formatTime((e.target as any).duration),
         )
     "
     @click="emit('toggle')"
