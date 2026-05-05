@@ -13,6 +13,7 @@ const { assetId, caption, index } = defineProps<{
 const { audioUnlocked, unlock } = useAudioUnlock()
 
 const currentTime = ref<string>('00:00:00')
+const duration = ref<string>('00:00:00')
 const play = ref<boolean>(false)
 const figureEl = useTemplateRef<HTMLElement>('figure')
 const isHovered = ref(false)
@@ -76,13 +77,15 @@ onBeforeUnmount(() => {
         <div class="bubble bubble-dots-n-primary">
           <div>
             <span class="dots ellipsis">{{ caption }}</span>
-            <span class="font-primary">{{ index }}</span>
+            <!-- <span class="font-primary">{{ index }}</span> -->
           </div>
         </div>
       </figcaption>
       <div class="timer bubble">
         <div>
-          <span>{{ currentTime }}</span>
+          <span v-if="currentTime !== '00:00:00'">{{ currentTime }}</span>
+          <span v-if="currentTime !== '00:00:00'">/</span>
+          <span v-if="duration !== '00:00:00'">{{ duration }}</span>
         </div>
       </div>
       <!-- <div v-if="vol.value > 0" class="timer bubble">
@@ -97,8 +100,14 @@ onBeforeUnmount(() => {
       :muted="isMuted"
       :volume="vol.value"
       :loop="true"
-      @time-update="currentTime = $event"
+      @time-update="
+        (t, d) => {
+          currentTime = t
+          duration = d
+        }
+      "
     />
+    <div class="progress"></div>
   </figure>
 </template>
 

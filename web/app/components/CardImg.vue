@@ -30,7 +30,7 @@ const dims = computed(() => getSanityImageDimensionsFromRef(asset?._ref))
       <div class="bubble bubble-dots-n-primary">
         <div>
           <span class="dots ellipsis">{{ caption }}</span>
-          <span class="font-primary">{{ index }}</span>
+          <!-- <span class="font-primary">{{ index }}</span> -->
         </div>
       </div>
     </figcaption>
