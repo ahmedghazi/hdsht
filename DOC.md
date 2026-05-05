@@ -14,3 +14,5 @@ https://backoffice--hdsht.sanity.studio/
 - media image qual
 
 # qurstions
+
+- hover effect on media

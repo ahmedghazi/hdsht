@@ -60,6 +60,31 @@ const { animeClass } = useDominoAnime(items, index, stagger)
           </div>
         </div>
       </div>
+      <div class="thumbnail">
+        <figure v-if="input.imageCover" class="image-cover">
+          <img
+            v-if="input.imageCover?.asset"
+            :src="
+              $urlFor(input.imageCover?.asset as any)
+                .width(200)
+                .url()
+            "
+            :alt="`${$localizeField(input?.title) || ''}`"
+          />
+        </figure>
+        <figure
+          v-if="!input.imageCover && input.videoCover"
+          class="video-cover"
+        >
+          <UiMuxVideo
+            v-if="input.videoCover.video?.asset?.playbackId"
+            :asset-id="input.videoCover.video?.asset?.playbackId || ''"
+            :autoplay="true"
+            :loop="true"
+            :aspect-ratio="input.videoCover.video?.asset?.data?.aspect_ratio"
+          />
+        </figure>
+      </div>
     </NuxtLink>
   </article>
 </template>
@@ -68,9 +93,21 @@ const { animeClass } = useDominoAnime(items, index, stagger)
 .card.card--project-teaser {
   // --background: inherit;
   // --color: inherit;
+  position: relative;
+  &:hover {
+    z-index: 10;
+    .thumbnail {
+      opacity: 1;
+    }
+  }
   .header--item {
     display: flex;
     align-items: flex-start;
+  }
+  .thumbnail {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
   }
 }
 </style>
