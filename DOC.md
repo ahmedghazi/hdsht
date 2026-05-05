@@ -16,3 +16,4 @@ https://backoffice--hdsht.sanity.studio/
 # qurstions
 
 - hover effect on media
+- maybe me make all FONTS : way smaller
