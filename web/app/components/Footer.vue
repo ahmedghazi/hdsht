@@ -29,17 +29,6 @@ const navSecondary = settings?.navSecondary
             "
           />
         </li>
-        <li v-for="(logo, index) in logos" :key="index" class="logo">
-          <img
-            :src="$urlFor(logo).url()"
-            alt=""
-            height="79"
-            :width="
-              (logo?.asset?.metadata?.dimensions?.width ?? 0) /
-                (logo?.asset?.metadata?.dimensions?.aspectRatio ?? 1) || 'auto'
-            "
-          />
-        </li>
       </template>
       <NavLegals :nav-secondary="navSecondary" />
     </ul>
