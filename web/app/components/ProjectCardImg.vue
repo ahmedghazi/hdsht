@@ -2,6 +2,7 @@
 import type { ProjectExpanded } from '~/utils/sanity-api/sanity-expanded.types'
 import { on, emit } from '~/utils/pubsub'
 import Thumbnail from './Thumbnail.vue'
+import { gsap } from 'gsap'
 
 const { input, index = 0 } = defineProps<{
   input: ProjectExpanded
@@ -25,11 +26,82 @@ onMounted(() => {
 watch(
   () => hover.value,
   (val) => {
-    if (val) {
-      emit('PROJECT-HOVER', input._id)
-    } else {
-      emit('PROJECT-HOVER', null)
+    // GSAP random opacity animation for children
+    if (wrapper.value && val) {
+      // Get all child elements within the wrapper
+      const children = wrapper.value.querySelectorAll('figure')
+
+      children.forEach((_child, index) => {
+        // Create nervous, chaotic opacity sequence
+        const timeline = gsap.timeline({ repeatDelay: 0 })
+
+        // Very random delays and durations for nervous effect
+        const initialDelay = Math.random() * 0.2
+        const baseDuration = 0.05 + Math.random() * 0.1 // Very fast: 0.05-0.15s
+
+        timeline
+          .to(_child, {
+            // opacity: Math.random() < 0.5 ? 0 : 0.3,
+            opacity: 0.1,
+            duration: baseDuration * 0.5,
+            ease: 'none',
+          })
+          .to(_child, {
+            // opacity: Math.random() < 0.5 ? 1 : 0.7,
+            opacity: 1,
+            duration: baseDuration * 0.3,
+            ease: 'none',
+          })
+          .to(_child, {
+            // opacity: Math.random() < 0.5 ? 0 : 0.2,
+            opacity: 0.2,
+            duration: baseDuration * 0.7,
+            ease: 'none',
+          })
+          .to(_child, {
+            // opacity: Math.random() < 0.5 ? 1 : 0.8,
+            opacity: 1,
+            duration: baseDuration * 0.4,
+            ease: 'none',
+          })
+          .to(_child, {
+            opacity: Math.random() < 0.5 ? 0.1 : 0.4,
+            duration: baseDuration * 0.6,
+            ease: 'none',
+          })
+          .to(_child, {
+            opacity: Math.random() < 0.5 ? 0.9 : 1,
+            duration: baseDuration * 0.2,
+            ease: 'none',
+          })
+
+        timeline.play(initialDelay)
+
+        // Add some scale jitter for extra nervousness
+        gsap.to(_child, {
+          scale: 0.95 + Math.random() * 0.1,
+          duration: 0.1,
+          // repeat: -1,
+          repeat: 5,
+          // yoyo: true,
+          ease: 'none',
+          delay: initialDelay,
+        })
+      })
+    } else if (wrapper.value && !val) {
+      // Kill all animations and reset opacity when hover ends
+      const children = wrapper.value.querySelectorAll('figure')
+      children.forEach((child) => {
+        gsap.killTweensOf(child)
+        gsap.set(child, { opacity: 1, scale: 1 })
+      })
     }
+
+    // if (val) {
+    //   emit('PROJECT-HOVER', input._id)
+    // } else {
+    //   emit('PROJECT-HOVER', null)
+    // }
   },
   {
     immediate: true, // exécute aussi au montage avec la valeur initiale
