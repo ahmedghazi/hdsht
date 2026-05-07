@@ -50,11 +50,10 @@ const clientColors = computed(() => ({
 }))
 
 const _mediaCaption = () => {
-  const year = data.value?.year
-  const shortYear = year ? String(year).slice(-2) : ''
-  const ID = data.value?.ID
+  const year = Number(data.value?.year)
+  const shortYear = year ? year % 100 : ''
+  const ID = data.value?.ID || '000'
   const shortID = ID?.substring(0, 3)
-  // const indexWithLeadingZero = index < 10 ? `0${index}` : index
   return shortID + shortYear
 }
 </script>
