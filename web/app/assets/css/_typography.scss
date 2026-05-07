@@ -18,10 +18,10 @@ body {
 }
 .dots {
   font-family: var(--font-secondary);
-  font-feature-settings:
-    'tnum' on,
-    'lnum' on,
-    'case' on;
+  // font-feature-settings:
+  //   'tnum' on,
+  //   'lnum' on,
+  //   'case' on;
 }
 
 html {

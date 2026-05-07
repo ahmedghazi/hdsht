@@ -46,7 +46,7 @@ watch(active, (isActive) => {
 
 <template>
   <div :class="{ accordion__item: true, 'accordion__item--active': active }">
-    <div v-if="active">active</div>
+    <!-- <div v-if="active">active</div> -->
     <div
       class="summary"
       :style="{

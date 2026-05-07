@@ -21,12 +21,13 @@ const src = computed(() => {
     .url()
 })
 console.log(src)
-const srcset = computed(() => {
-  const b = $urlFor(asset)
-  return [400, 800, 1200]
-    .map((w) => `${b.width(w).format('webp').url()} ${w}w`)
-    .join(', ')
-})
+// const srcset = computed(() => {
+//   const b = $urlFor(asset)
+//   return [400, 800, 1200]
+//     .map((w) => `${b.width(w).format('webp').url()} ${w}w`)
+//     .join(', ')
+// })
+const srcset = ''
 
 const dims = computed(() => getSanityImageDimensionsFromRef(asset?._ref))
 </script>

@@ -48,6 +48,15 @@ const clientColors = computed(() => ({
   foreGround: data.value?.client?.foregroundColor?.hex || '#000000',
   backGround: data.value?.client?.backgroundColor?.hex || '#ffffff',
 }))
+
+const _mediaCaption = () => {
+  const year = data.value?.year
+  const shortYear = year ? String(year).slice(-2) : ''
+  const ID = data.value?.ID
+  const shortID = ID?.substring(0, 3)
+  // const indexWithLeadingZero = index < 10 ? `0${index}` : index
+  return shortID + shortYear
+}
 </script>
 
 <template>
@@ -145,9 +154,10 @@ const clientColors = computed(() => ({
                 v-if="item.asset"
                 :asset="item.asset as any"
                 :caption="
-                  item.caption
-                    ? $localePath(item.caption)
-                    : item.originalFilename
+                  _mediaCaption()
+                  // item.caption
+                  //   ? $localePath(item.caption)
+                  //   : item.originalFilename
                 "
                 :index="i + 1"
               />
@@ -156,7 +166,7 @@ const clientColors = computed(() => ({
               <CardVid
                 v-if="item.video?.asset?.playbackId"
                 :asset-id="item.video?.asset?.playbackId"
-                :caption="item.caption ? $localePath(item.caption) : ''"
+                :caption="_mediaCaption()"
                 :index="i + 1"
               />
             </template>
