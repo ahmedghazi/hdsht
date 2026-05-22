@@ -48,7 +48,7 @@ nav.nav-secondary {
     left: 0;
     top: 0;
     transform: translateY(-50%);
-    z-index: 3;
+    // z-index: 3;
     display: flex;
     // .pill--icon {
     //   background-color: var(--color-white);

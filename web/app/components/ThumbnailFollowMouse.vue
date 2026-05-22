@@ -45,6 +45,7 @@ watch(
   pointer-events: none;
   will-change: transform;
   max-width: 400px;
+  z-index: 10;
 
   &--visible {
     opacity: 1;

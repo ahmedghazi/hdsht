@@ -69,7 +69,8 @@ const hover = ref<boolean>(false)
             v-if="input.imageCover?.asset"
             :src="
               $urlFor(input.imageCover?.asset as any)
-                .width(400)
+                .width(800)
+                .dpr(2)
                 .url()
             "
             :alt="`${$localizeField(input?.title) || ''}`"
