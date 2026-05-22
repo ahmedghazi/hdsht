@@ -13,50 +13,32 @@ const wrapper = ref<HTMLElement | null>(null)
 const { animeClass } = useDominoAnime(wrapper, index)
 
 const hover = ref<boolean>(false)
-const elseHovered = ref<boolean>(false)
-onMounted(() => {
-  const unsub = on('PROJECT-HOVER', (e, payload) => {
-    elseHovered.value = payload === input._id
-  })
-  onUnmounted(() => {
-    unsub()
-  })
-})
+const activeTimelines = ref<gsap.core.Timeline[]>([])
 
 watch(
   () => hover.value,
   (val) => {
-    // GSAP random opacity animation for children
     if (wrapper.value && val) {
-      const children = wrapper.value.querySelectorAll('figure')
-
-      children.forEach((child, index) => {
-        // random stroboscopic chaotic visibility
-
-        gsap
-          .timeline({ repeat: 4, yoyo: true })
-          .set(children, { mixBlendMode: 'difference' })
-          .to({}, { duration: 0.05 })
-          .set(children, { mixBlendMode: 'normal' })
+      const children = Array.from(
+        wrapper.value.querySelectorAll('figure .overlay-blended'),
+      )
+      const step = 0.012
+      const on = 0.2
+      const masterTl = gsap.timeline({ repeat: -1, yoyo: true })
+      children.forEach((child, i) => {
+        masterTl
+          .set(child, { visibility: 'visible' }, i * step)
+          .set(child, { visibility: 'hidden' }, i * step + on)
       })
+      activeTimelines.value.push(masterTl)
     } else if (wrapper.value && !val) {
-      // Kill all animations and reset opacity when hover ends
-      const children = wrapper.value.querySelectorAll('figure')
+      activeTimelines.value.forEach((tl) => tl.kill())
+      activeTimelines.value = []
+      const children = wrapper.value.querySelectorAll('figure .overlay-blended')
       children.forEach((child) => {
-        gsap.killTweensOf(child)
-        gsap.set(child, {
-          opacity: 1,
-          visibility: 'visible',
-          mixBlendMode: 'normal',
-        })
+        gsap.set(child, { visibility: 'hidden' })
       })
     }
-
-    // if (val) {
-    //   emit('PROJECT-HOVER', input._id)
-    // } else {
-    //   emit('PROJECT-HOVER', null)
-    // }
   },
   {
     immediate: true, // exécute aussi au montage avec la valeur initiale
@@ -72,7 +54,7 @@ watch(
       'card--project-img': true,
       'card--rip': input.rip,
       'is-active': hover,
-      'is-else-hovered': elseHovered,
+      // 'is-else-hovered': elseHovered,
     }"
     @mouseenter="hover = true"
     @mouseleave="hover = false"
@@ -92,7 +74,7 @@ watch(
       </div>
 
       <figure v-for="(media, i) in input.media" :key="i" :class="animeClass">
-        <template v-if="media._type === 'image'">
+        <template v-if="media._type === 'image' && media.asset?._id">
           <Thumbnail
             :asset="media.asset"
             :size="360"
@@ -107,9 +89,16 @@ watch(
             :aspect-ratio="media.video?.asset?.data?.aspect_ratio"
           />
         </template>
-        <template v-else>
-          <div class="aspect-square">Unsupported media type</div>
-        </template>
+
+        <div
+          class="overlay-blended"
+          :style="{
+            '--background':
+              i % 2 === 0
+                ? input?.client?.backgroundColor?.hex
+                : input?.client?.foregroundColor?.hex,
+          }"
+        ></div>
       </figure>
     </NuxtLink>
   </div>
@@ -150,7 +139,16 @@ watch(
     width: var(--line-height-2xl);
   }
   figure {
-    background-color: white;
+  }
+  figure {
+    position: relative;
+    .overlay-blended {
+      position: absolute;
+      inset: 0;
+      background-color: var(--background);
+      mix-blend-mode: difference;
+      visibility: hidden;
+    }
   }
   img,
   mux-player {

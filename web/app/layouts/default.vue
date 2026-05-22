@@ -51,7 +51,7 @@ function _format() {
     <Header :settings="data" />
     <main><slot /></main>
     <Footer :settings="data" />
-    <PhiberMouse />
-    <Canvasfavicon :letter="'H'" :background="'#ef73ed'" :foreground="'#000'" />
+    <!-- <PhiberMouse /> -->
+    <!-- <Canvasfavicon :letter="'H'" :background="'#ef73ed'" :foreground="'#000'" /> -->
   </div>
 </template>

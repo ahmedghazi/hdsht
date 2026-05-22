@@ -31,6 +31,7 @@ function onActiveFilters(filters: Filters[]) {
   >
     <!-- <pre>{{ filteredItems }}</pre> -->
     <ProjectsFilters
+      v-if="input.layout === 'txt'"
       :projects="input.items || null"
       @update:filtered-items="onFilteredItemsUpdate"
       @active-filters="onActiveFilters"
@@ -71,13 +72,13 @@ function onActiveFilters(filters: Filters[]) {
     <template v-if="input.layout === 'txt' && filteredItems.length">
       <ListProjectsTxt :input="filteredItems" />
     </template>
-    <template v-if="input.layout === 'img' && filteredItems.length">
-      <ListProjectsImg :input="filteredItems" />
+    <template v-if="input.layout === 'img' && input.items?.length">
+      <ListProjectsImg :input="input.items" />
     </template>
 
-    <div v-else-if="!filteredItems.length" class="no-results">
+    <!-- <div v-else-if="!filteredItems.length" class="no-results">
       No projects match current filters
-    </div>
+    </div> -->
   </section>
 </template>
 
