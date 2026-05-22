@@ -204,6 +204,7 @@ export type LinkInternal = {
 export type Video = {
   _type: 'video'
   caption?: LocaleString
+  colSize?: number
   video?: MuxVideo
   placeholder?: {
     asset?: SanityImageAssetReference
@@ -213,7 +214,6 @@ export type Video = {
     _type: 'image'
   }
   aspectRatio?: string
-  colSize?: number
 }
 
 export type ContactLinkItem = {
@@ -583,6 +583,30 @@ export type MuxVideo = {
   asset?: MuxVideoAssetReference
 }
 
+export type RgbaColor = {
+  _type: 'rgbaColor'
+  r?: number
+  g?: number
+  b?: number
+  a?: number
+}
+
+export type HsvaColor = {
+  _type: 'hsvaColor'
+  h?: number
+  s?: number
+  v?: number
+  a?: number
+}
+
+export type HslaColor = {
+  _type: 'hslaColor'
+  h?: number
+  s?: number
+  l?: number
+  a?: number
+}
+
 export type MuxVideoAsset = {
   _id: string
   _type: 'mux.videoAsset'
@@ -672,30 +696,6 @@ export type MuxTrack = {
   status?: string
   text_source?: string
   text_type?: string
-}
-
-export type RgbaColor = {
-  _type: 'rgbaColor'
-  r?: number
-  g?: number
-  b?: number
-  a?: number
-}
-
-export type HsvaColor = {
-  _type: 'hsvaColor'
-  h?: number
-  s?: number
-  v?: number
-  a?: number
-}
-
-export type HslaColor = {
-  _type: 'hslaColor'
-  h?: number
-  s?: number
-  l?: number
-  a?: number
 }
 
 export type MediaTag = {
@@ -850,15 +850,15 @@ export type AllSanitySchemaTypes =
   | Client
   | MuxVideoAssetReference
   | MuxVideo
+  | RgbaColor
+  | HsvaColor
+  | HslaColor
   | MuxVideoAsset
   | MuxAssetData
   | MuxStaticRenditions
   | MuxStaticRenditionFile
   | MuxPlaybackId
   | MuxTrack
-  | RgbaColor
-  | HsvaColor
-  | HslaColor
   | MediaTag
   | SanityImagePaletteSwatch
   | SanityImagePalette
@@ -1171,6 +1171,7 @@ export type HOME_QUERY_RESULT = {
           videoCover: {
             _type: 'video'
             caption?: LocaleString
+            colSize?: number
             video: {
               asset: {
                 _id: string
@@ -1194,7 +1195,6 @@ export type HOME_QUERY_RESULT = {
               _type: 'image'
             }
             aspectRatio?: string
-            colSize?: number
           } | null
           rip: boolean | null
           year: string | null
@@ -1254,6 +1254,7 @@ export type HOME_QUERY_RESULT = {
                 _key: string
                 _type: 'video'
                 caption?: LocaleString
+                colSize?: number
                 video: {
                   asset: {
                     playbackId: string | null
@@ -1272,7 +1273,6 @@ export type HOME_QUERY_RESULT = {
                   _type: 'image'
                 }
                 aspectRatio?: string
-                colSize?: number
               }
           > | null
         }> | null
@@ -1720,6 +1720,7 @@ export type PAGE_MODULAIRE_QUERY_RESULT = {
           videoCover: {
             _type: 'video'
             caption?: LocaleString
+            colSize?: number
             video: {
               asset: {
                 _id: string
@@ -1743,7 +1744,6 @@ export type PAGE_MODULAIRE_QUERY_RESULT = {
               _type: 'image'
             }
             aspectRatio?: string
-            colSize?: number
           } | null
           rip: boolean | null
           year: string | null
@@ -1803,6 +1803,7 @@ export type PAGE_MODULAIRE_QUERY_RESULT = {
                 _key: string
                 _type: 'video'
                 caption?: LocaleString
+                colSize?: number
                 video: {
                   asset: {
                     playbackId: string | null
@@ -1821,7 +1822,6 @@ export type PAGE_MODULAIRE_QUERY_RESULT = {
                   _type: 'image'
                 }
                 aspectRatio?: string
-                colSize?: number
               }
           > | null
         }> | null
@@ -2267,6 +2267,7 @@ export type PROJECT_QUERY_RESULT = {
         _key: string
         _type: 'video'
         caption?: LocaleString
+        colSize?: number
         video: {
           asset: {
             playbackId: string | null
@@ -2280,7 +2281,6 @@ export type PROJECT_QUERY_RESULT = {
           _type: 'image'
         }
         aspectRatio?: string
-        colSize?: number
       }
   > | null
   relatedProjects: Array<{

@@ -35,6 +35,9 @@ export default defineNuxtConfig({
     },
   },
   fonts: {
+    providers: {
+      bunny: false,
+    },
     families: [
       {
         name: 'CooperHewitt-Book',

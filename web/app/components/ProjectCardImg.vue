@@ -28,72 +28,27 @@ watch(
   (val) => {
     // GSAP random opacity animation for children
     if (wrapper.value && val) {
-      // Get all child elements within the wrapper
       const children = wrapper.value.querySelectorAll('figure')
 
-      children.forEach((_child, index) => {
-        // Create nervous, chaotic opacity sequence
-        const timeline = gsap.timeline({ repeatDelay: 0 })
+      children.forEach((child, index) => {
+        // random stroboscopic chaotic visibility
 
-        // Very random delays and durations for nervous effect
-        const initialDelay = Math.random() * 0.2
-        const baseDuration = 0.05 + Math.random() * 0.1 // Very fast: 0.05-0.15s
-
-        timeline
-          .to(_child, {
-            // opacity: Math.random() < 0.5 ? 0 : 0.3,
-            opacity: 0.1,
-            duration: baseDuration * 0.5,
-            ease: 'none',
-          })
-          .to(_child, {
-            // opacity: Math.random() < 0.5 ? 1 : 0.7,
-            opacity: 1,
-            duration: baseDuration * 0.3,
-            ease: 'none',
-          })
-          .to(_child, {
-            // opacity: Math.random() < 0.5 ? 0 : 0.2,
-            opacity: 0.2,
-            duration: baseDuration * 0.7,
-            ease: 'none',
-          })
-          .to(_child, {
-            // opacity: Math.random() < 0.5 ? 1 : 0.8,
-            opacity: 1,
-            duration: baseDuration * 0.4,
-            ease: 'none',
-          })
-          .to(_child, {
-            opacity: Math.random() < 0.5 ? 0.1 : 0.4,
-            duration: baseDuration * 0.6,
-            ease: 'none',
-          })
-          .to(_child, {
-            opacity: Math.random() < 0.5 ? 0.9 : 1,
-            duration: baseDuration * 0.2,
-            ease: 'none',
-          })
-
-        timeline.play(initialDelay)
-
-        // Add some scale jitter for extra nervousness
-        gsap.to(_child, {
-          scale: 0.95 + Math.random() * 0.1,
-          duration: 0.1,
-          // repeat: -1,
-          repeat: 5,
-          // yoyo: true,
-          ease: 'none',
-          delay: initialDelay,
-        })
+        gsap
+          .timeline({ repeat: 4, yoyo: true })
+          .set(children, { mixBlendMode: 'difference' })
+          .to({}, { duration: 0.05 })
+          .set(children, { mixBlendMode: 'normal' })
       })
     } else if (wrapper.value && !val) {
       // Kill all animations and reset opacity when hover ends
       const children = wrapper.value.querySelectorAll('figure')
       children.forEach((child) => {
         gsap.killTweensOf(child)
-        gsap.set(child, { opacity: 1, scale: 1 })
+        gsap.set(child, {
+          opacity: 1,
+          visibility: 'visible',
+          mixBlendMode: 'normal',
+        })
       })
     }
 
@@ -168,7 +123,7 @@ watch(
   vertical-align: top;
   padding-top: calc(var(--line-height-md) * 1);
   position: relative;
-
+  backface-visibility: hidden;
   a {
     font-size: 0;
     line-height: 0;
@@ -195,6 +150,7 @@ watch(
     width: var(--line-height-2xl);
   }
   figure {
+    background-color: white;
   }
   img,
   mux-player {

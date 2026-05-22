@@ -57,10 +57,21 @@ export default {
       name: 'caption',
       type: 'localeString',
       description: 'Caption',
-      hidden: ({parent, document}) => {
-        console.log(parent, document)
-        return document?._type === 'project'
-      },
+      // hidden: ({parent, document}) => {
+      //   console.log(parent, document)
+      //   return document?._type === 'project'
+      // },
+    }),
+    defineField({
+      name: 'colSize',
+      title: 'Colunn size',
+      type: 'number',
+      description:
+        'In a 6 columns grid (ex: 1, 2, 3), if used in a list (media section in project for example)',
+      // hidden: ({parent, document}) => {
+      //   console.log(parent, document)
+      //   return document?._type === 'project'
+      // },
     }),
     defineField({
       title: 'Video mux',
@@ -73,10 +84,10 @@ export default {
       type: 'image',
       description: 'optionnal',
       // hidden: true,
-      hidden: ({parent, document}) => {
-        console.log(parent, document)
-        return document?._type === 'project'
-      },
+      // hidden: ({parent, document}) => {
+      //   console.log(parent, document)
+      //   return document?._type === 'project'
+      // },
     }),
     // defineField({
     //   name: 'url',
@@ -98,17 +109,6 @@ export default {
       // options: {
       //   list: [{title: 'Landscape', value: 'lands'}],
       // },
-    }),
-    defineField({
-      name: 'colSize',
-      title: 'Colunn size',
-      type: 'number',
-      description:
-        'In a 6 columns grid (ex: 1, 2, 3), if used in a list (media section in project for example)',
-      hidden: ({parent, document}) => {
-        console.log(parent, document)
-        return document?._type === 'project'
-      },
     }),
   ],
   components: {

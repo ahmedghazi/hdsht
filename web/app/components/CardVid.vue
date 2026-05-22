@@ -14,7 +14,7 @@ const { audioUnlocked, unlock } = useAudioUnlock()
 
 const currentTime = ref<number>(0)
 const duration = ref<number>(0)
-const progress = ref<number>(0)
+const progress = reactive({ value: 0 })
 const play = ref<boolean>(false)
 const figureEl = useTemplateRef<HTMLElement>('figure')
 const isHovered = ref(false)
@@ -115,13 +115,13 @@ function formatTime(seconds: number): string {
         (t, d) => {
           currentTime = t
           duration = d
-          progress = currentTime / duration
+          gsap.to(progress, { value: t / d, duration: 0.25, ease: 'none', overwrite: true })
         }
       "
     />
     <div
       class="progress"
-      :style="{ left: `${progress * 100}%` }"
+      :style="{ left: `${progress.value * 100}%` }"
       :title="currentTime"
     ></div>
     <!-- <div class="progress">{{ duration }}</div>
@@ -166,6 +166,6 @@ mux-player {
   left: 0;
   transform: translate(-50%, 50%);
   will-change: left;
-  transition: left 0.2s;
+  transition: none;
 }
 </style>
