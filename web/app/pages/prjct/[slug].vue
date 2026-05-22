@@ -97,6 +97,15 @@ const _mediaCaption = () => {
         <div v-if="active" ref="metadataRef" class="metadata">
           <div class="header--item">
             <div class="bubble key" :class="animeClass">
+              <div>{{ $localizeText('description') }}</div>
+            </div>
+            <div class="bubble bubble--lg" :class="animeClass">
+              <h1>{{ $localizeField(data?.description) }}</h1>
+            </div>
+          </div>
+
+          <div class="header--item">
+            <div class="bubble key" :class="animeClass">
               <div>{{ $localizeText('year') }}</div>
             </div>
             <div class="bubble bubble--lg" :class="animeClass">
