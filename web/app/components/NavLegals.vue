@@ -43,12 +43,15 @@ defineProps<{
 nav.nav-secondary {
   min-width: 50%;
   position: relative;
+  z-index: 1;
+
   .pills {
     position: absolute;
     left: 0;
     top: 0;
     transform: translateY(-50%);
     // z-index: 3;
+    z-index: 1;
     display: flex;
     // .pill--icon {
     //   background-color: var(--color-white);

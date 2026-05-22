@@ -8,9 +8,10 @@ const x = ref(0)
 const y = ref(0)
 
 function onMouseMove(e: MouseEvent) {
-  const rect = (e.currentTarget as HTMLElement).getBoundingClientRect()
-  x.value = e.clientX
-  y.value = e.clientY
+  const gap = 24
+  // const rect = (e.currentTarget as HTMLElement).getBoundingClientRect()
+  x.value = e.clientX + gap
+  y.value = e.clientY + gap
 }
 
 watch(
