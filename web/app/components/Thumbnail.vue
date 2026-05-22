@@ -20,7 +20,6 @@ const src = computed(() => {
     .format('webp')
     .url()
 })
-console.log(src)
 // const srcset = computed(() => {
 //   const b = $urlFor(asset)
 //   return [400, 800, 1200]

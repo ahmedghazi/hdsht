@@ -18,7 +18,6 @@ function onFilteredItemsUpdate(items: ProjectExpanded[]) {
   filteredItems.value = items
 }
 function onActiveFilters(filters: Filters[]) {
-  console.log('activeFilters', filters)
   activeFilters.value = filters
 }
 </script>

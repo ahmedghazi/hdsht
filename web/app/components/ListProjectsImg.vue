@@ -16,8 +16,8 @@ const shuffled = computed(() => {
 </script>
 
 <template>
-  <div class="projects-media">
-    <ProjectCardImg
+  <div v-if="shuffled" class="projects-media">
+    <LazyProjectCardImg
       v-for="(item, i) in shuffled"
       :key="item._id"
       :input="item"

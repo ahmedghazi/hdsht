@@ -14,6 +14,20 @@ const { animeClass } = useDominoAnime(wrapper, index)
 
 const hover = ref<boolean>(false)
 const activeTimelines = ref<gsap.core.Timeline[]>([])
+const isVisible = ref(false)
+
+onMounted(() => {
+  const obs = new IntersectionObserver(
+    ([entry]) => {
+      if (entry?.isIntersecting) {
+        isVisible.value = true
+        obs.disconnect()
+      }
+    },
+    { rootMargin: '200px' },
+  )
+  if (wrapper.value) obs.observe(wrapper.value)
+})
 
 watch(
   () => hover.value,
@@ -39,9 +53,6 @@ watch(
         gsap.set(child, { visibility: 'hidden' })
       })
     }
-  },
-  {
-    immediate: true, // exécute aussi au montage avec la valeur initiale
   },
 )
 </script>
@@ -83,9 +94,9 @@ watch(
         </template>
         <template v-else-if="media._type === 'video'">
           <UiMuxVideo
-            v-if="media.video?.asset?.playbackId"
+            v-if="media.video?.asset?.playbackId && isVisible"
             :asset-id="media.video?.asset?.playbackId || ''"
-            :autoplay="true"
+            :autoplay="false"
             :aspect-ratio="media.video?.asset?.data?.aspect_ratio"
           />
         </template>

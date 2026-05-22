@@ -1,5 +1,7 @@
 <script setup lang="ts">
-import '@mux/mux-player'
+onMounted(async () => {
+  await import('@mux/mux-player')
+})
 
 const {
   assetId,
