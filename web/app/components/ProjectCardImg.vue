@@ -23,8 +23,8 @@ watch(
         wrapper.value.querySelectorAll('figure .overlay-blended'),
       )
       const step = 0.012
-      const on = 0.2
-      const masterTl = gsap.timeline({ repeat: -1, yoyo: true })
+      const on = 0.15
+      const masterTl = gsap.timeline({ repeat: 2, yoyo: true })
       children.forEach((child, i) => {
         masterTl
           .set(child, { visibility: 'visible' }, i * step)
