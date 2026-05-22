@@ -15,6 +15,16 @@ const {
 }>()
 const items = ref<HTMLElement | null>(null)
 const { animeClass } = useDominoAnime(items, index, stagger)
+const hover = ref<boolean>(false)
+const xy = ref<{ x: number; y: number }>({ x: 0, y: 0 })
+
+function onMouseMove(e: MouseEvent) {
+  const rect = (e.currentTarget as HTMLElement).getBoundingClientRect()
+  xy.value = {
+    x: e.clientX,
+    y: e.clientY - rect.top,
+  }
+}
 </script>
 
 <template>
@@ -24,6 +34,9 @@ const { animeClass } = useDominoAnime(items, index, stagger)
       card: true,
       'card--project-teaser': true,
     }"
+    @mouseenter="hover = true"
+    @mouseleave="hover = false"
+    @mousemove="onMouseMove"
   >
     <NuxtLink :to="_linkResolver(input as any)">
       <div class="header">
@@ -60,7 +73,12 @@ const { animeClass } = useDominoAnime(items, index, stagger)
           </div>
         </div>
       </div>
-      <div class="thumbnail">
+      <div
+        class="thumbnail"
+        :style="{
+          transform: hover ? `translate(${xy.x}px, ${xy.y}px)` : 'none',
+        }"
+      >
         <figure v-if="input.imageCover" class="image-cover">
           <img
             v-if="input.imageCover?.asset"
@@ -107,7 +125,10 @@ const { animeClass } = useDominoAnime(items, index, stagger)
   .thumbnail {
     position: absolute;
     opacity: 0;
+    left: 0;
+    top: 0;
     pointer-events: none;
+    will-change: transform;
   }
 }
 </style>
