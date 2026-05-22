@@ -16,15 +16,6 @@ const {
 const items = ref<HTMLElement | null>(null)
 const { animeClass } = useDominoAnime(items, index, stagger)
 const hover = ref<boolean>(false)
-const xy = ref<{ x: number; y: number }>({ x: 0, y: 0 })
-
-function onMouseMove(e: MouseEvent) {
-  const rect = (e.currentTarget as HTMLElement).getBoundingClientRect()
-  xy.value = {
-    x: e.clientX,
-    y: e.clientY - rect.top,
-  }
-}
 </script>
 
 <template>
@@ -36,7 +27,6 @@ function onMouseMove(e: MouseEvent) {
     }"
     @mouseenter="hover = true"
     @mouseleave="hover = false"
-    @mousemove="onMouseMove"
   >
     <NuxtLink :to="_linkResolver(input as any)">
       <div class="header">
@@ -73,18 +63,13 @@ function onMouseMove(e: MouseEvent) {
           </div>
         </div>
       </div>
-      <div
-        class="thumbnail"
-        :style="{
-          transform: hover ? `translate(${xy.x}px, ${xy.y}px)` : 'none',
-        }"
-      >
+      <ThumbnailFollowMouse :wrapper="items" :hover="hover">
         <figure v-if="input.imageCover" class="image-cover">
           <img
             v-if="input.imageCover?.asset"
             :src="
               $urlFor(input.imageCover?.asset as any)
-                .width(200)
+                .width(400)
                 .url()
             "
             :alt="`${$localizeField(input?.title) || ''}`"
@@ -102,7 +87,7 @@ function onMouseMove(e: MouseEvent) {
             :aspect-ratio="input.videoCover.video?.asset?.data?.aspect_ratio"
           />
         </figure>
-      </div>
+      </ThumbnailFollowMouse>
     </NuxtLink>
   </article>
 </template>
@@ -114,21 +99,10 @@ function onMouseMove(e: MouseEvent) {
   position: relative;
   &:hover {
     z-index: 10;
-    .thumbnail {
-      opacity: 1;
-    }
   }
   .header--item {
     display: flex;
     align-items: flex-start;
-  }
-  .thumbnail {
-    position: absolute;
-    opacity: 0;
-    left: 0;
-    top: 0;
-    pointer-events: none;
-    will-change: transform;
   }
 }
 </style>

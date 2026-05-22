@@ -89,7 +89,7 @@ watch(
           </div>
         </div>
       </div>
-      <div class="thumbnail">
+      <ThumbnailFollowMouse :wrapper="items" :hover="hover">
         <figure v-if="hover && input.imageCover" class="image-cover">
           <img
             v-if="input.imageCover?.asset"
@@ -113,7 +113,7 @@ watch(
             :aspect-ratio="input.videoCover.video?.asset?.data?.aspect_ratio"
           />
         </figure>
-      </div>
+      </ThumbnailFollowMouse>
     </article>
   </NuxtLink>
 </template>
