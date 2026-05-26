@@ -119,6 +119,10 @@ watch(
 </template>
 
 <style scoped lang="scss">
+a:hover {
+  position: relative;
+  z-index: 999;
+}
 .card.card--project-txt {
   --background: #fff;
   --color: #000;
@@ -179,6 +183,7 @@ watch(
       height: 8rem;
       height: 50dvh;
       width: auto;
+      object-fit: contain;
     }
   }
 
