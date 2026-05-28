@@ -184,6 +184,7 @@ a:hover {
       height: 50dvh;
       width: auto;
       object-fit: contain;
+      object-position: top left;
     }
   }
 
