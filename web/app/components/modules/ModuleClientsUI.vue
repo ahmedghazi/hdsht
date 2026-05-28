@@ -61,7 +61,7 @@ onMounted(async () => {
             }"
           >
             <img
-              :src="$urlFor(item.asset).height(30).format('webp').url()"
+              :src="$urlFor(item.asset).height(100).format('webp').url()"
               alt=""
               srcset=""
               :style="{
@@ -78,24 +78,20 @@ onMounted(async () => {
 
 <style lang="scss" scoped>
 .module {
-  h2 {
-  }
-  .list {
-    background-color: var(--color-white);
-  }
-  ul {
-  }
   .client--item {
     flex-shrink: 0;
     margin: 0.6rem var(--spacing-sm);
     height: 100%;
     width: 100%;
-    --width: calc(var(--ar) * 1.7rem);
-    height: 1.7rem;
+    --size: 3.7rem;
+    --width: calc(var(--ar) * var(--size));
+    height: var(--size);
     width: var(--width, auto);
+    img {
+      width: 100%;
+    }
   }
   span {
-    color: red;
   }
   img {
   }
