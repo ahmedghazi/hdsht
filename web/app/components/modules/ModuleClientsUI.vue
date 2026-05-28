@@ -84,6 +84,7 @@ onMounted(async () => {
     height: 100%;
     width: 100%;
     --size: 3.7rem;
+    --size: 5rem;
     --width: calc(var(--ar) * var(--size));
     height: var(--size);
     width: var(--width, auto);

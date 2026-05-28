@@ -17,7 +17,7 @@ defineProps<{ input: VideoUI }>()
 
 <style lang="scss" scoped>
 .module {
-  height: 100dvh;
+  // height: 100dvh;
   background-color: black;
   mux-player {
     height: 100%;
@@ -29,7 +29,7 @@ defineProps<{ input: VideoUI }>()
   @media (max-width: 800px) {
     mux-player {
       max-width: 100dvw;
-      max-height: 100dvh;
+      // max-height: 100dvh;
     }
   }
 }

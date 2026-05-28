@@ -50,6 +50,10 @@ body:has(.content--home) {
   footer {
     display: none;
   }
+  mux-player {
+    max-height: 100dvh;
+    --media-object-fit: cover;
+  }
 }
 .content {
 }

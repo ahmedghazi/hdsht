@@ -77,6 +77,7 @@ export default {
       title: 'Video mux',
       name: 'video',
       type: 'mux.video',
+      validation: (Rule) => Rule.required(),
     }),
 
     defineField({
