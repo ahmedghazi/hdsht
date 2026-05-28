@@ -16,7 +16,7 @@ const navSecondary = settings?.navSecondary
       // { 'is-bottom': scrollEnd },
     ]"
   >
-    <ul class="flex flex-wrap gap-md">
+    <ul class="flex items-center flex-wrap gap-md">
       <template v-if="logos">
         <li v-for="(logo, index) in logos" :key="index" class="logo">
           <img
@@ -42,7 +42,7 @@ footer {
     flex-shrink: 0;
     img {
       height: 7.9rem;
-      height: 10rem;
+      // height: 10rem;
       width: auto;
     }
   }
