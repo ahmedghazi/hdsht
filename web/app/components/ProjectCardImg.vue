@@ -92,7 +92,9 @@ watch(
             :alt="$localizeField(media.caption) || ''"
           />
         </template>
-        <template v-else-if="media._type === 'video'">
+        <template
+          v-else-if="media._type === 'video' && media.video?.asset?.playbackId"
+        >
           <UiMuxVideo
             v-if="media.video?.asset?.playbackId && isVisible"
             :asset-id="media.video?.asset?.playbackId || ''"
