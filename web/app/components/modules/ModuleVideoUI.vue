@@ -25,7 +25,7 @@ defineProps<{ input: VideoUI }>()
 <style lang="scss" scoped>
 .module {
   // height: 100dvh;
-  background-color: black;
+  // background-color: black;
   mux-player {
     height: 100%;
     width: 100%;
