@@ -38,6 +38,8 @@ const navSecondary = settings?.navSecondary
 <style lang="scss" scoped>
 footer {
   padding: var(--spacing-md);
+  position: relative;
+  z-index: 0;
   li {
     flex-shrink: 0;
     img {
