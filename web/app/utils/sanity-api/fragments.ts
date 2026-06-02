@@ -63,6 +63,7 @@ export const video = `
       duration
     }
   },
+
   placeholder{
     asset->
   }
@@ -196,6 +197,7 @@ export const servicesUI = `
 export const videoUI = `
   _type == 'videoUI' => {
     ...,
+
     video{
       video{
         ${video}

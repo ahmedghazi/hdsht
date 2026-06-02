@@ -12,6 +12,13 @@
             "value": "videoUI"
           }
         },
+        "colSize": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "number"
+          },
+          "optional": true
+        },
         "video": {
           "type": "objectAttribute",
           "value": {

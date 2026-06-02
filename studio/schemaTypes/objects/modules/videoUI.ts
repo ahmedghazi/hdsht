@@ -15,7 +15,11 @@ export default defineField({
     //   name: 'title',
     //   type: 'localeString',
     // }),
-
+    defineField({
+      name: 'colSize',
+      type: 'number',
+      description: 'Number of columns (1-2) on a 2 columns grid',
+    }),
     defineField({
       name: 'video',
       type: 'video',

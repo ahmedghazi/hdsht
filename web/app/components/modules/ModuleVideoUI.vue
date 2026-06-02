@@ -5,7 +5,14 @@ defineProps<{ input: VideoUI }>()
 </script>
 
 <template>
-  <section :class="['module', 'module-video-ui', `md:col-span-2`]">
+  <section
+    :class="[
+      'module',
+      'module-video-ui',
+      // `md:col-span-2`,
+      `md:col-span-${input?.colSize || 2}`,
+    ]"
+  >
     <UiMuxVideo
       :asset-id="input.video?.video?.asset?.playbackId"
       :caption="$localizeField(input.video?.caption)"
