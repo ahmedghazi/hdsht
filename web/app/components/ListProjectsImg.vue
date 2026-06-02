@@ -3,22 +3,22 @@ import type { ProjectExpanded } from '~/utils/sanity-api/sanity-expanded.types'
 
 const props = defineProps<{ input: ProjectExpanded[] }>()
 
-// const shuffled = computed(() => {
-//   const arr = [...(props.input || [])]
-//   for (let i = arr.length - 1; i > 0; i--) {
-//     const j = Math.floor(Math.random() * (i + 1))
-//     const tmp = arr[i]!
-//     arr[i] = arr[j]!
-//     arr[j] = tmp
-//   }
-//   return arr
-// })
+const shuffled = computed(() => {
+  const arr = [...(props.input || [])]
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1))
+    const tmp = arr[i]!
+    arr[i] = arr[j]!
+    arr[j] = tmp
+  }
+  return arr
+})
 </script>
 
 <template>
-  <div v-if="input" class="projects-media">
+  <div v-if="shuffled" class="projects-media">
     <LazyProjectCardImg
-      v-for="(item, i) in input"
+      v-for="(item, i) in shuffled"
       :key="item._id"
       :input="item"
       :index="i"
