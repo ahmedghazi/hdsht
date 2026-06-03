@@ -41,7 +41,10 @@ const { animeClass, trigger } = useDominoAnime(pageContentRef, 0)
 
 watch(active, (val) => {
   if (val) nextTick(() => trigger(metadataRef, 0))
-  else nextTick(() => trigger(metadataRef, 1))
+  else {
+    nextTick(() => trigger(metadataRef, 1))
+    window.scrollTo(0, 0)
+  }
 })
 
 const clientColors = computed(() => ({

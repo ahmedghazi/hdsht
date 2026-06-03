@@ -1,6 +1,10 @@
 @use 'variables';
 @use 'mixins';
 
+html,
+body {
+  scroll-behavior: smooth;
+}
 html {
   -webkit-tap-highlight-color: transparent;
   scrollbar-gutter: stable;

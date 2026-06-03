@@ -64,7 +64,7 @@ const {
     min-width: 0; // ← crucial pour l’ellipsis
 
     .bubble {
-      display: inline-flex; // ← bulle à la largeur du texte
+      // display: inline-flex; // ← bulle à la largeur du texte
       max-width: 100%; // ← mais ne dépasse pas la place dispo
       min-width: 0;
     }
