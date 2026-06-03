@@ -135,9 +135,12 @@ export const textUI = `
 export const listProjectsUI = `
 	_type == 'listProjectsUI' => {
 		...,
-		items[]->{
-			${projectCard}
-		},
+		"items": select(
+			layout == 'img' => items[0...12]->{${projectCard}},
+			items[]->{${projectCard}}
+		),
+		"itemRefs": items[]._ref,
+		"total": count(items)
 	}
 `
 export const clientsUI = `

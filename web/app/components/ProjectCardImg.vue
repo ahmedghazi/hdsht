@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import type { ProjectExpanded } from '~/utils/sanity-api/sanity-expanded.types'
-import { on, emit } from '~/utils/pubsub'
+// import { on, emit } from '~/utils/pubsub'
 import Thumbnail from './Thumbnail.vue'
 import { gsap } from 'gsap'
 
@@ -55,6 +55,7 @@ watch(
     }
   },
 )
+console.log(input.media)
 </script>
 
 <template>
@@ -93,7 +94,12 @@ watch(
           />
         </template>
         <template
-          v-else-if="media._type === 'video' && media.video?.asset?.playbackId"
+          v-else-if="
+            media._type === 'video' &&
+            media.video?.asset?.playbackId &&
+            media.video?.asset?.data?.duration &&
+            media.video?.asset?.data?.duration < 5
+          "
         >
           <UiMuxVideo
             v-if="media.video?.asset?.playbackId && isVisible"

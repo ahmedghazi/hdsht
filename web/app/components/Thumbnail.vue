@@ -29,6 +29,8 @@ const src = computed(() => {
 const srcset = ''
 
 const dims = computed(() => getSanityImageDimensionsFromRef(asset?._ref))
+const height = size
+const width = size ? size * (dims?.aspectRatio || 1) : 'auto'
 </script>
 
 <template>
@@ -41,6 +43,8 @@ const dims = computed(() => getSanityImageDimensionsFromRef(asset?._ref))
     :alt="alt || ''"
     loading="lazy"
     decoding="async"
+    :height="height"
+    :width="width"
     :style="{ aspectRatio: dims?.aspectRatio, height: '100%' }"
   />
 </template>

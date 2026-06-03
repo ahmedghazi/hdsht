@@ -5,6 +5,8 @@ import type { Filters } from '~/utils/sanity-api/sanity-extend.types'
 
 type ListProjectsUIExpanded = Omit<ListProjectsUI, 'items'> & {
   items?: ProjectExpanded[] | null
+  itemRefs?: string[] | null
+  total?: number | null
 }
 
 const { input } = defineProps<{ input: ListProjectsUIExpanded }>()
@@ -72,7 +74,11 @@ function onActiveFilters(filters: Filters[]) {
       <ListProjectsTxt :input="filteredItems" />
     </template>
     <template v-if="input.layout === 'img' && input.items?.length">
-      <ListProjectsImg :input="input.items" />
+      <ListProjectsImg
+        :input="input.items"
+        :item-refs="input.itemRefs ?? undefined"
+        :total="input.total ?? undefined"
+      />
     </template>
 
     <!-- <div v-else-if="!filteredItems.length" class="no-results">
