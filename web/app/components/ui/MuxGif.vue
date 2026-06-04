@@ -6,6 +6,8 @@ const props = defineProps<{
   aspect?: string // ex: '16/9', '4/3', '1/1' — default '16/9'
 }>()
 
+const { enqueue, done } = useMuxQueue()
+
 const videoRef = useTemplateRef<HTMLVideoElement>('video')
 const isLoaded = ref(false)
 
@@ -14,7 +16,7 @@ const posterUrl = computed(
 )
 
 const streamUrl = computed(
-  () => `https://stream.mux.com/${props.playbackId}.m3u8?start=0&end=8`,
+  () => `https://stream.mux.com/${props.playbackId}.m3u8?start=0&end=5`,
 )
 
 onMounted(() => {
@@ -25,35 +27,59 @@ onMounted(() => {
     (entries) => {
       entries.forEach((entry) => {
         if (entry.isIntersecting && !isLoaded.value) {
-          initHls(video)
+          initHls(video) // passe par la queue
           isLoaded.value = true
           observer.unobserve(video)
         }
       })
     },
-    { rootMargin: '200px' },
+    {
+      rootMargin: '50px', // ← réduit de 200px à 50px
+      threshold: 0.1, // ← attend que 10% soit visible
+    },
   )
 
-  observer.observe(video)
+  // Petit délai pour que la queue soit prête avant le premier batch
+  setTimeout(() => observer.observe(video), 100)
 })
 
 function initHls(video: HTMLVideoElement) {
-  if (Hls.isSupported()) {
-    const hls = new Hls({
-      maxBufferLength: 8, // charge max 8s devant la position actuelle
-      maxMaxBufferLength: 15, // plafond absolu même si le réseau est rapide
-      startLevel: 0,
-    })
-    hls.loadSource(streamUrl.value)
-    hls.attachMedia(video)
-    hls.on(Hls.Events.MANIFEST_PARSED, () => {
+  enqueue(() => {
+    if (Hls.isSupported()) {
+      const hls = new Hls({
+        maxBufferLength: 5,
+        maxMaxBufferLength: 5,
+        startLevel: 0,
+      })
+      hls.loadSource(streamUrl.value)
+      hls.attachMedia(video)
+
+      hls.on(Hls.Events.MANIFEST_PARSED, (_, data) => {
+        // Force qualité la plus basse après parsing
+        hls.currentLevel = 0
+        hls.loadLevel = 0
+        video.play().catch(() => {})
+        done()
+      })
+
+      // Stop le chargement après 5s de vidéo bufferisée
+      hls.on(Hls.Events.BUFFER_APPENDED, () => {
+        if (video.buffered.length > 0) {
+          const bufferedEnd = video.buffered.end(video.buffered.length - 1)
+          if (bufferedEnd >= 5) {
+            hls.stopLoad()
+          }
+        }
+      })
+
+      hls.on(Hls.Events.ERROR, () => done())
+    } else {
+      // Safari — HLS natif
+      video.src = streamUrl.value
       video.play().catch(() => {})
-    })
-  } else {
-    // Safari — HLS natif
-    video.src = streamUrl.value
-    video.play().catch(() => {})
-  }
+      done()
+    }
+  })
 }
 </script>
 
@@ -80,6 +106,7 @@ function initHls(video: HTMLVideoElement) {
   width: 100%;
   height: var(--line-height-2xl);
   overflow: hidden;
+  border: 1px solid red;
 }
 
 .mux-gif video {
