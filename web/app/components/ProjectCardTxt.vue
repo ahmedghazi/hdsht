@@ -112,6 +112,10 @@ watch(
             :loop="true"
             :aspect-ratio="input.videoCover.video?.asset?.data?.aspect_ratio"
           />
+          <!-- <UiMuxGif
+            :playback-id="input.videoCover.video?.asset?.playbackId || ''"
+            :aspect="input.videoCover.video?.asset?.data?.aspect_ratio"
+          /> -->
         </figure>
       </ThumbnailFollowMouse>
     </article>

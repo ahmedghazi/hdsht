@@ -56,7 +56,6 @@ watch(
     }
   },
 )
-console.log(input.media)
 </script>
 
 <template>
@@ -85,41 +84,38 @@ console.log(input.media)
       <div :class="{ 'bubble bubble-dot': true, [animeClass]: true }">
         <div>{{ input?.ID }}</div>
       </div>
+      <template v-for="(media, i) in input.media" :key="i">
+        <figure :class="[animeClass, `media--${media._type}`]">
+          <template v-if="media._type === 'image' && media.asset?._id">
+            <Thumbnail
+              :asset="media.asset"
+              :size="360"
+              :alt="$localizeField(media.caption) || ''"
+            />
+          </template>
+          <template
+            v-else-if="
+              media._type === 'video' && media.video?.asset?.playbackId
+            "
+          >
+            <UiMuxGif
+              :playback-id="media.video?.asset?.playbackId || ''"
+              :aspect="media.video?.asset?.data?.aspect_ratio"
+            />
+            aspect_ratio :{{ media.video?.asset?.data?.aspect_ratio }}
+          </template>
 
-      <figure v-for="(media, i) in input.media" :key="i" :class="animeClass">
-        <template v-if="media._type === 'image' && media.asset?._id">
-          <Thumbnail
-            :asset="media.asset"
-            :size="360"
-            :alt="$localizeField(media.caption) || ''"
-          />
-        </template>
-        <template
-          v-else-if="
-            media._type === 'video' &&
-            media.video?.asset?.playbackId &&
-            media.video?.asset?.data?.duration &&
-            media.video?.asset?.data?.duration < 5
-          "
-        >
-          <UiMuxVideo
-            v-if="media.video?.asset?.playbackId && isVisible"
-            :asset-id="media.video?.asset?.playbackId || ''"
-            :autoplay="false"
-            :aspect-ratio="media.video?.asset?.data?.aspect_ratio"
-          />
-        </template>
-
-        <div
-          class="overlay-blended"
-          :style="{
-            '--background':
-              i % 2 === 0
-                ? input?.client?.backgroundColor?.hex
-                : input?.client?.foregroundColor?.hex,
-          }"
-        ></div>
-      </figure>
+          <div
+            class="overlay-blended"
+            :style="{
+              '--background':
+                i % 2 === 0
+                  ? input?.client?.backgroundColor?.hex
+                  : input?.client?.foregroundColor?.hex,
+            }"
+          ></div>
+        </figure>
+      </template>
     </NuxtLink>
   </div>
 </template>
@@ -170,7 +166,8 @@ console.log(input.media)
     }
   }
   img,
-  mux-player {
+  mux-player,
+  video {
     height: var(--line-height-2xl);
     width: auto;
   }
@@ -184,7 +181,8 @@ console.log(input.media)
       width: var(--line-height-xl);
     }
     img,
-    mux-player {
+    mux-player,
+    video {
       height: var(--line-height-xl);
       width: auto;
     }
