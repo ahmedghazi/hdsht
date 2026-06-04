@@ -106,7 +106,7 @@ function initHls(video: HTMLVideoElement) {
   width: 100%;
   height: var(--line-height-2xl);
   overflow: hidden;
-  border: 1px solid red;
+  /* border: 1px solid red; */
 }
 
 .mux-gif video {
