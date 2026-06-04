@@ -10,6 +10,9 @@ export default defineNuxtConfig({
   app: {
     head: {
       link: [{ rel: 'icon', type: 'image/png', href: '/favicon.png' }],
+      bodyAttrs: {
+        class: 'is-loading',
+      },
     },
   },
   css: ['~/assets/css/main.css', '~/assets/css/index.scss'],

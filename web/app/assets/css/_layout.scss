@@ -21,6 +21,10 @@ html {
 }
 body {
   background-color: var(--color-bg);
+  transition: opacity 0.3s ease-in-out;
+  &.is-loading {
+    opacity: 0;
+  }
   // @include mixins.debugFiletX(50dvw);
   // @include mixins.debugFiletY(var(--spacing-xl));
   // @include mixins.debugSquare(2rem);

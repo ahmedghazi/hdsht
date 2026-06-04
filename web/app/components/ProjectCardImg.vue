@@ -158,8 +158,7 @@ console.log(input.media)
     height: var(--line-height-2xl);
     width: var(--line-height-2xl);
   }
-  figure {
-  }
+
   figure {
     position: relative;
     .overlay-blended {

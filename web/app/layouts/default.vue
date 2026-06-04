@@ -2,8 +2,8 @@
 import { onMounted, onUnmounted } from 'vue'
 import type { SETTINGS_QUERY_RESULT } from '~/utils/sanity-api/sanity.types'
 import { SETTINGS_QUERY } from '~/utils/sanity-api/queries'
-import PhiberMouse from '~/components/PhiberMouse.vue'
-import Canvasfavicon from '~/components/ui/Canvasfavicon.vue'
+// import PhiberMouse from '~/components/PhiberMouse.vue'
+// import Canvasfavicon from '~/components/ui/Canvasfavicon.vue'
 
 const { data } = await useSanityData<SETTINGS_QUERY_RESULT>(SETTINGS_QUERY)
 
@@ -43,6 +43,7 @@ function _format() {
       footerBounding.height + 'px',
     )
   }
+  document.body.classList.remove('is-loading')
 }
 </script>
 
