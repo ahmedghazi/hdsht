@@ -10,7 +10,8 @@ const { input, index = 0 } = defineProps<{
 }>()
 
 const wrapper = ref<HTMLElement | null>(null)
-const { animeClass } = useDominoAnime(wrapper, index)
+// const { animeClass } = useDominoAnime(wrapper, index)
+const animeClass = ''
 
 const hover = ref<boolean>(false)
 const activeTimelines = ref<gsap.core.Timeline[]>([])
