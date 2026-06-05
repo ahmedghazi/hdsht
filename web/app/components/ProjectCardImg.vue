@@ -85,7 +85,10 @@ watch(
         <div>{{ input?.ID }}</div>
       </div>
       <template v-for="(media, i) in input.media" :key="i">
-        <figure :class="[animeClass, `media--${media._type}`]">
+        <figure
+          :class="[animeClass, `media--${media._type}`]"
+          :title="input.title?.en"
+        >
           <template v-if="media._type === 'image' && media.asset?._id">
             <Thumbnail
               :asset="media.asset"
@@ -102,7 +105,6 @@ watch(
               :playback-id="media.video?.asset?.playbackId || ''"
               :aspect="media.video?.asset?.data?.aspect_ratio"
             />
-            aspect_ratio :{{ media.video?.asset?.data?.aspect_ratio }}
           </template>
 
           <div
@@ -126,6 +128,7 @@ watch(
   line-height: 0;
   display: inline;
   vertical-align: top;
+  margin-right: var(--line-height-md);
   padding-top: calc(var(--line-height-md) * 1);
   position: relative;
   backface-visibility: hidden;
@@ -139,6 +142,7 @@ watch(
   .client-wrapper,
   .client,
   figure {
+    display: inline-block;
     display: inline-block;
     vertical-align: top;
     margin-bottom: var(--line-height-md);

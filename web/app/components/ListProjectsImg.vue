@@ -18,7 +18,7 @@ function shuffleBatch(arr: ProjectExpanded[]): ProjectExpanded[] {
   return a
 }
 
-const items = ref<ProjectExpanded[]>(shuffleBatch(props.input))
+const items = ref<ProjectExpanded[]>([...props.input])
 const loadedCount = ref(props.input.length)
 const isLoading = ref(false)
 const sentinel = ref<HTMLElement | null>(null)
@@ -46,6 +46,8 @@ async function loadMore() {
 let obs: IntersectionObserver | null = null
 
 onMounted(() => {
+  items.value = shuffleBatch(items.value)
+
   if (!sentinel.value) return
   obs = new IntersectionObserver(
     ([entry]) => { if (entry?.isIntersecting) loadMore() },

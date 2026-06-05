@@ -10,6 +10,7 @@ const { enqueue, done } = useMuxQueue()
 
 const videoRef = useTemplateRef<HTMLVideoElement>('video')
 const isLoaded = ref(false)
+const isPlaying = ref(false)
 
 const posterUrl = computed(
   () => `https://image.mux.com/${props.playbackId}/thumbnail.jpg?time=0`,
@@ -88,14 +89,15 @@ function initHls(video: HTMLVideoElement) {
     class="mux-gif"
     :style="{ aspectRatio: aspect?.replace(':', '/') ?? '16/9' }"
   >
+    <img v-if="!isPlaying" :src="posterUrl" aria-hidden="true" />
     <video
       ref="video"
-      :poster="posterUrl"
       autoplay
       muted
       loop
       playsinline
       preload="none"
+      @playing="isPlaying = true"
     />
   </div>
 </template>
@@ -109,7 +111,8 @@ function initHls(video: HTMLVideoElement) {
   /* border: 1px solid red; */
 }
 
-.mux-gif video {
+.mux-gif video,
+.mux-gif img {
   position: absolute;
   inset: 0;
   width: 100%;
