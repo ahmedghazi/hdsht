@@ -55,7 +55,7 @@ export default defineNuxtConfig({
         style: 'italic',
       },
       {
-        name: 'Display Dots',
+        name: 'Display-Dots-v2',
         provider: 'local',
         weights: [400],
         style: 'normal',
