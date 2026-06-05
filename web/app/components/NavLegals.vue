@@ -8,15 +8,30 @@ defineProps<{
 
 <template>
   <nav class="nav-secondary">
-    <div class="pills">
+    <ul>
+      <li v-for="item in navSecondary" :key="item._key">
+        <NuxtLink
+          v-if="item.link"
+          class="pill- pill--stretch- bubble"
+          :to="
+            item._type === 'linkInternal'
+              ? _linkResolver(item.link as any)
+              : item.link
+          "
+        >
+          <span>
+            {{
+              item._type === 'linkInternal' && item.label
+                ? $localizeField(item.label)
+                : (item as { label?: string }).label
+            }}
+          </span></NuxtLink
+        >
+      </li>
+    </ul>
+    <!-- <div class="pills">
       <PillEye />
       <PillEye />
-      <!-- <div class="pill--icon">
-        <div><UiIcon value="dot" /></div>
-      </div>
-      <div class="pill--icon">
-        <div><UiIcon value="dot" /></div>
-      </div> -->
     </div>
     <ul>
       <li v-for="item in navSecondary" :key="item._key">
@@ -35,7 +50,7 @@ defineProps<{
           }}</NuxtLink
         >
       </li>
-    </ul>
+    </ul> -->
   </nav>
 </template>
 
@@ -67,28 +82,28 @@ nav.nav-secondary {
   }
   ul {
     display: flex;
-
+    justify-content: flex-end;
     li {
-      flex: 1;
+      // flex: 1;
     }
-    li:first-child .pill {
-      border-radius: 1rem 1rem 1rem 6rem;
-    }
-    li:last-child .pill {
-      border-radius: 1rem 6rem 1rem 1rem;
-    }
+    // li:first-child .pill {
+    //   border-radius: 1rem 1rem 1rem 6rem;
+    // }
+    // li:last-child .pill {
+    //   border-radius: 1rem 6rem 1rem 1rem;
+    // }
   }
   @media (max-width: 800px) {
     width: 100%;
     ul {
-      flex-direction: column;
+      // flex-direction: column;
 
-      li:first-child .pill {
-        border-radius: 1rem 6rem 1rem 6rem;
-      }
-      li:last-child .pill {
-        border-radius: 6rem 1rem 6rem 1rem;
-      }
+      // li:first-child .pill {
+      //   border-radius: 1rem 6rem 1rem 6rem;
+      // }
+      // li:last-child .pill {
+      //   border-radius: 6rem 1rem 6rem 1rem;
+      // }
     }
   }
 }

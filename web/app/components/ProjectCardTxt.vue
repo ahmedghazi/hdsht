@@ -51,8 +51,12 @@ watch(
         'is-else-hovered': elseHovered,
       }"
       :style="{
-        '--background': input.client?.backgroundColor?.hex,
-        '--color': input.client?.foregroundColor?.hex,
+        '--background': input.rip
+          ? 'var(--color-gray)'
+          : input.client?.backgroundColor?.hex,
+        '--color': input.rip
+          ? 'var(--color-white)'
+          : input.client?.foregroundColor?.hex,
       }"
       @mouseenter="hover = true"
       @mouseleave="hover = false"
@@ -66,7 +70,12 @@ watch(
             </div>
           </div>
           <div :class="animeClass">
-            <Client v-if="input.client" :input="input.client" :hover="hover" />
+            <Client
+              v-if="input.client"
+              :input="input.client"
+              :hover="hover"
+              :rip="input.rip"
+            />
           </div>
         </div>
         <div class="flex">

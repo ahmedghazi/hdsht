@@ -30,7 +30,9 @@ const navSecondary = settings?.navSecondary
           />
         </li>
       </template>
-      <NavLegals :nav-secondary="navSecondary" />
+      <li class="flex-2">
+        <NavLegals :nav-secondary="navSecondary" />
+      </li>
     </ul>
   </footer>
 </template>
@@ -44,6 +46,7 @@ footer {
     flex-shrink: 0;
     img {
       height: 7.9rem;
+      height: var(--line-height-lg);
       // height: 10rem;
       width: auto;
     }

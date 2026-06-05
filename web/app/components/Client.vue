@@ -6,11 +6,13 @@ const {
   discOnly = false,
   size = 'md',
   hover = false,
+  rip = false,
 } = defineProps<{
   input: Client
   discOnly?: boolean
   size?: 'md' | 'lg' | 'xl'
   hover?: boolean
+  rip?: boolean
 }>()
 </script>
 
@@ -18,8 +20,10 @@ const {
   <div
     :class="['client', `client--${size}`]"
     :style="{
-      '--background': hover ? 'var(--color-gray)' : input?.backgroundColor?.hex,
-      '--color': hover ? 'var(--color-white)' : input?.foregroundColor?.hex,
+      '--background':
+        hover || rip ? 'var(--color-gray)' : input?.backgroundColor?.hex,
+      '--color':
+        hover || rip ? 'var(--color-white)' : input?.foregroundColor?.hex,
     }"
   >
     <div v-if="input.backgroundColor" class="client__disc"></div>
