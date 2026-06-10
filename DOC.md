@@ -53,7 +53,7 @@ https://hdsht-preprod.vercel.app/prjct/nike-720
 
 - ellipsis … animate
 - description info closed: 1 line + shortened ellipsis
-- description client color
+- # description client color
 - video dot oben
 - NEXT: no hover / first preview thumb in height > media
 

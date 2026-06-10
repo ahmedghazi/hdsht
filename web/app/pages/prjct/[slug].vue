@@ -65,7 +65,7 @@ const _mediaCaption = () => {
   <div class="content content--page-project">
     <div ref="pageContentRef">
       <section class="header mb-md">
-        <div class="header--item">
+        <div class="header--item" :class="{ 'is-active': active }">
           <div class="bubble key" :class="animeClass">
             <div>ID</div>
           </div>
@@ -97,7 +97,10 @@ const _mediaCaption = () => {
             <h1>{{ $localizeField(data?.title) }}</h1>
           </div>
         </div>
-        <div v-if="data?.description" class="header--item">
+        <div
+          v-if="data?.description"
+          class="header--item header--item__description"
+        >
           <div class="bubble key" :class="animeClass">
             <div>{{ $localizeText('description') }}</div>
           </div>
@@ -109,7 +112,14 @@ const _mediaCaption = () => {
               '--background': clientColors.backGround,
             }"
           >
-            <h1>{{ $localizeField(data?.description) }}</h1>
+            <div>
+              <span v-if="!active" class="ellipsis">{{
+                $localizeField(data?.description)
+              }}</span>
+              <span v-else>
+                {{ $localizeField(data?.description) }}
+              </span>
+            </div>
           </div>
         </div>
         <div v-if="active" ref="metadataRef" class="metadata">
@@ -118,7 +128,7 @@ const _mediaCaption = () => {
               <div>{{ $localizeText('year') }}</div>
             </div>
             <div class="bubble bubble--lg" :class="animeClass">
-              <h1>{{ data?.year }}</h1>
+              <div>{{ data?.year }}</div>
             </div>
           </div>
           <div
@@ -130,7 +140,7 @@ const _mediaCaption = () => {
               <div>{{ $localizeText('location') }}</div>
             </div>
             <div class="bubble bubble--lg" :class="animeClass">
-              <h1>{{ item?.name }}</h1>
+              <div>{{ item?.name }}</div>
             </div>
           </div>
           <div
@@ -204,9 +214,16 @@ const _mediaCaption = () => {
   .header--item {
     display: flex;
     align-items: flex-start;
+    &.is-active {
+      .description {
+      }
+    }
     .key {
       position: sticky;
       top: var(--header-h);
+    }
+    &__description .bubble--lg {
+      // background-color: orange;
     }
   }
   .metadata .bubble--lg {
