@@ -44,6 +44,10 @@ footer {
   z-index: 0;
   li {
     flex-shrink: 0;
+    &.flex-2 {
+      display: flex;
+      justify-content: flex-end;
+    }
     img {
       height: 7.9rem;
       height: var(--line-height-lg);

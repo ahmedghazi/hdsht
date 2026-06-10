@@ -20,6 +20,7 @@ defineProps<{ input: ContactsUI }>()
           <div>{{ $localizeField(input.title) }}</div>
         </h2>
       </div>
+      <!-- <pre>{{ JSON.stringify(input.text, null, 2) }}</pre> -->
       <div v-if="input.text && input.text.en" class="text">
         <PortableText
           :value="$localizeField(input.text)"
@@ -49,7 +50,7 @@ defineProps<{ input: ContactsUI }>()
 .module {
 }
 .header {
-  margin-bottom: var(--spacing-xs);
+  // margin-bottom: var(--spacing-xs);
 }
 .text {
   margin-bottom: var(--spacing-md);

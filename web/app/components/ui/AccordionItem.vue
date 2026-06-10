@@ -77,8 +77,14 @@ watch(active, (isActive) => {
 <style scoped lang="scss">
 .accordion__item {
   &--active {
-    .summary h3 {
-      background-color: var(--background);
+    .summary {
+      h3 {
+        background-color: var(--background);
+      }
+      .icon,
+      h3 {
+        border-radius: 0;
+      }
     }
   }
 }

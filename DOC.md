@@ -52,7 +52,7 @@ PROJECT
 https://hdsht-preprod.vercel.app/prjct/nike-720
 
 - ellipsis … animate
-- description info closed: 1 line + shortened ellipsis
+- # description info closed: 1 line + shortened ellipsis
 - # description client color
 - video dot oben
 - NEXT: no hover / first preview thumb in height > media
@@ -74,9 +74,9 @@ https://hdsht-preprod.vercel.app/legal-notice
 INFO
 https://hdsht-preprod.vercel.app/information
 
-- tabs: border radius 0 bottem left+right
+- # tabs: border radius 0 bottem left+right
 - coins X
-- CONTACT: no space between label and buttons
+- # CONTACT: no space between label and buttons
 - legal buttons: system button size
 
 # feedback
