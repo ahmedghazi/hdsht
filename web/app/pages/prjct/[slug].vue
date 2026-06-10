@@ -101,7 +101,14 @@ const _mediaCaption = () => {
           <div class="bubble key" :class="animeClass">
             <div>{{ $localizeText('description') }}</div>
           </div>
-          <div class="bubble bubble--lg" :class="animeClass">
+          <div
+            class="bubble bubble--lg"
+            :class="animeClass"
+            :style="{
+              '--color': clientColors.foreGround,
+              '--background': clientColors.backGround,
+            }"
+          >
             <h1>{{ $localizeField(data?.description) }}</h1>
           </div>
         </div>
