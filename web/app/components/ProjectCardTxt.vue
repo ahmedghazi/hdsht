@@ -14,7 +14,7 @@ const {
 const items = ref<HTMLElement | null>(null)
 const { animeClass } = useDominoAnime(items, index, stagger)
 const hover = ref<boolean>(false)
-const elseHovered = ref<boolean>(false)
+// const elseHovered = ref<boolean>(false)
 onMounted(() => {
   // const unsub = on('PROJECT-HOVER', (e, payload) => {
   //   elseHovered.value = payload === input._id
@@ -40,7 +40,12 @@ watch(
 </script>
 
 <template>
-  <NuxtLink :to="_linkResolver(input as any)">
+  <NuxtLink
+    :to="_linkResolver(input as any)"
+    :class="{
+      'pointer-events-none cursor-none ': input.rip,
+    }"
+  >
     <article
       ref="items"
       :class="{
@@ -48,7 +53,7 @@ watch(
         'card--project-txt': true,
         'card--rip': input.rip,
         'is-active': hover,
-        'is-else-hovered': elseHovered,
+        // 'is-else-hovered': elseHovered,
       }"
       :style="{
         '--background': input.rip
@@ -128,9 +133,13 @@ watch(
 </template>
 
 <style scoped lang="scss">
-a:hover {
-  position: relative;
-  z-index: 999;
+a {
+  transition: opacity 0.15s ease;
+  &:hover {
+    position: relative;
+    z-index: 999;
+    opacity: 1 !important;
+  }
 }
 .card.card--project-txt {
   --background: #fff;

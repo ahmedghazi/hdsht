@@ -87,7 +87,11 @@ const _format = () => {
 .list-projects-txt {
   --opacity: 0;
   opacity: var(--opacity);
-
+  &:has(.is-active) {
+    a:not(:has(.is-active)) {
+      opacity: 0.4;
+    }
+  }
   .header {
     position: sticky;
     top: var(--header-h);

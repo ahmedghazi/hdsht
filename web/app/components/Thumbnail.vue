@@ -51,7 +51,11 @@ const width = size ? size * (dims?.aspectRatio || 1) : 'auto'
 
 <style lang="scss">
 img.visual-thumbnail {
-  min-height: var(--line-height-2xl);
-  max-height: var(--line-height-2xl);
+  min-height: var(--line-height-xl);
+  max-height: var(--line-height-xl);
+  @media (min-width: 800px) {
+    min-height: var(--line-height-2xl);
+    max-height: var(--line-height-2xl);
+  }
 }
 </style>

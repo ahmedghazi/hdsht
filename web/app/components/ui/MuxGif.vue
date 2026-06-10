@@ -111,6 +111,12 @@ function initHls(video: HTMLVideoElement) {
   /* border: 1px solid red; */
 }
 
+.mux-gif {
+  height: var(--line-height-xl);
+  @media (min-width: 800px) {
+    height: var(--line-height-2xl);
+  }
+}
 .mux-gif video,
 .mux-gif img {
   position: absolute;

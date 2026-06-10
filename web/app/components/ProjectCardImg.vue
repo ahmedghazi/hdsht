@@ -132,6 +132,7 @@ watch(
   padding-top: calc(var(--line-height-md) * 1);
   position: relative;
   backface-visibility: hidden;
+  transition: opacity 0.15s ease;
   a {
     font-size: 0;
     line-height: 0;
@@ -188,6 +189,8 @@ watch(
     mux-player,
     video {
       height: var(--line-height-xl);
+      // height: var(--spacing-xl) !important;
+      // min-height: var(--line-height-xl) !important;
       width: auto;
     }
   }

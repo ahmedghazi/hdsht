@@ -24,6 +24,59 @@ after the call with Albert here are the points we discussed
 - implement the new font[TO DO][DONE]
 - Media page: optim images[TO DO]
 
-# feedback
+HOME
+https://hdsht-preprod.vercel.app/
 
-- media mixed.
+- video size: cover (see portrait mode)
+
+INDEX
+https://hdsht-preprod.vercel.app/projects
+
+- # display dots fixed
+- # hover project: list item 100% all other 40%
+- hover project: preview image ??
+- # dead items = dead color + no hover
+- mobile view: 2-line item list (id+client – project title) > label fontsize
+- mobile view: no hover preview
+- filter+sort hide or kill
+
+MEDIA
+https://hdsht-preprod.vercel.app/media
+
+- lazyloaded thumbs later? (also for video) = effect like index?
+- first image always connected to client dot and project id
+- # project hover: 100%, everything else 40%
+- # tablet mobile thumb size smaller (see specs)
+
+PROJECT
+https://hdsht-preprod.vercel.app/prjct/nike-720
+
+- ellipsis … animate
+- description info closed: 1 line + shortened ellipsis
+- description client color
+- video dot oben
+- NEXT: no hover / first preview thumb in height > media
+
+MENU
+
+- chinese language: kanji sign
+
+MENU mobile
+
+- stretch buttons (see specs)
+- system blur overlay
+
+LEGAL/PRIVACY
+https://hdsht-preprod.vercel.app/legal-notice
+
+- privacy missing (link dead)
+
+INFO
+https://hdsht-preprod.vercel.app/information
+
+- tabs: border radius 0 bottem left+right
+- coins X
+- CONTACT: no space between label and buttons
+- legal buttons: system button size
+
+# feedback

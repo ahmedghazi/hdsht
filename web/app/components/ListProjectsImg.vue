@@ -30,15 +30,17 @@ const hasMore = computed(
 async function loadMore() {
   if (isLoading.value || !hasMore.value || !props.itemRefs) return
   isLoading.value = true
-  const nextIds = props.itemRefs.slice(loadedCount.value, loadedCount.value + PAGE_SIZE)
+  const nextIds = props.itemRefs.slice(
+    loadedCount.value,
+    loadedCount.value + PAGE_SIZE,
+  )
   try {
     const data = await $fetch<ProjectExpanded[]>('/api/projects', {
       query: { ids: nextIds },
     })
     items.value.push(...shuffleBatch(data))
     loadedCount.value += nextIds.length
-  }
-  finally {
+  } finally {
     isLoading.value = false
   }
 }
@@ -50,13 +52,17 @@ onMounted(() => {
 
   if (!sentinel.value) return
   obs = new IntersectionObserver(
-    ([entry]) => { if (entry?.isIntersecting) loadMore() },
+    ([entry]) => {
+      if (entry?.isIntersecting) loadMore()
+    },
     { rootMargin: '600px' },
   )
   obs.observe(sentinel.value)
 })
 
-onUnmounted(() => { obs?.disconnect() })
+onUnmounted(() => {
+  obs?.disconnect()
+})
 </script>
 
 <template>
@@ -74,6 +80,12 @@ onUnmounted(() => { obs?.disconnect() })
 <style scoped lang="scss">
 .projects-media {
   padding-top: calc(var(--line-height-md) * 1);
+
+  &:has(.is-active) {
+    .card:not(.is-active) {
+      opacity: 0.4;
+    }
+  }
 }
 
 .load-sentinel {
