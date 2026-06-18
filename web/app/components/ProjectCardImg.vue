@@ -193,6 +193,11 @@ watch(
       // min-height: var(--line-height-xl) !important;
       width: auto;
     }
+    .client-wrapper,
+    .client,
+    figure {
+      margin-bottom: var(--spacing-sm, 20px);
+    }
   }
 }
 </style>
