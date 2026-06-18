@@ -167,7 +167,7 @@ const _mediaCaption = () => {
         <BtnToggle @change="active = !active" />
       </section>
       <section class="media mb-md">
-        <div class="grid md:grid-cols-6 gap-x-md">
+        <div class="grid grid-cols-1 md:grid-cols-6 gap-x-md">
           <div
             v-for="(item, i) in data?.media"
             :key="i"
