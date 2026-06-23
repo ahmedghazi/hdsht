@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import type { ProjectExpanded } from '~/utils/sanity-api/sanity-expanded.types'
-// import { on, emit } from '~/utils/pubsub'
+import { emit } from '~/utils/pubsub'
 import Thumbnail from './Thumbnail.vue'
 import { gsap } from 'gsap'
 
@@ -68,7 +68,12 @@ watch(
       'is-active': hover,
       // 'is-else-hovered': elseHovered,
     }"
-    @mouseenter="hover = true"
+    @mouseenter="
+      () => {
+        hover = true
+        emit('sfx')
+      }
+    "
     @mouseleave="hover = false"
   >
     <NuxtLink :to="_linkResolver(input as any)">
@@ -196,7 +201,7 @@ watch(
     .client-wrapper,
     .client,
     figure {
-      margin-bottom: var(--spacing-sm, 20px);
+      // margin-bottom: var(--spacing-sm, 20px);
     }
   }
 }

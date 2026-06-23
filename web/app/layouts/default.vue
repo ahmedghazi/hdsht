@@ -54,5 +54,6 @@ function _format() {
     <Footer :settings="data" />
     <!-- <PhiberMouse /> -->
     <!-- <Canvasfavicon :letter="'H'" :background="'#ef73ed'" :foreground="'#000'" /> -->
+    <UiSfxPlayer />
   </div>
 </template>

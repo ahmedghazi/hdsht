@@ -63,7 +63,12 @@ watch(
           ? 'var(--color-white)'
           : input.client?.foregroundColor?.hex,
       }"
-      @mouseenter="hover = true"
+      @mouseenter="
+        () => {
+          hover = true
+          emit('sfx')
+        }
+      "
       @mouseleave="hover = false"
     >
       <div class="md:grid md:grid-cols-2">
