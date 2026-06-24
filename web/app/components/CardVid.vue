@@ -157,11 +157,16 @@ figure {
         22 15,
       auto;
   }
+
+  .relative {
+    max-width: 100%;
+  }
 }
 mux-player {
   --controls: none;
   vertical-align: top;
 }
+
 .progress {
   width: 0.5em;
   height: 0.5em;
