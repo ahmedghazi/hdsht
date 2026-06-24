@@ -126,7 +126,7 @@ watch(
     nav {
       width: 100%;
       &.nav-secondary {
-        // margin-top: 2.9rem;
+        margin-top: 2.9rem;
       }
     }
 

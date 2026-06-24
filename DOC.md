@@ -13,7 +13,7 @@ https://backoffice--hdsht.sanity.studio/
 HOME
 https://hdsht-preprod.vercel.app/
 
-•⁠ ⁠video size: cover (see portrait mode)
+•⁠ X ⁠video size: cover (see portrait mode)
 
 INDEX
 https://hdsht-preprod.vercel.app/projects
