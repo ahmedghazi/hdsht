@@ -83,7 +83,7 @@ watch(active, (isActive) => {
       }
       .icon,
       h3 {
-        border-radius: 0;
+        // border-radius: 0;
       }
     }
   }
@@ -104,6 +104,8 @@ watch(active, (isActive) => {
     line-height: var(--bubble-lh);
     padding-inline: calc(var(--bubble-lh) * var(--bubble-padding-ratio));
     border-radius: var(--border-radius);
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
     &.icon {
       --bubble-lh: calc(var(--line-height-md) * 0.9);
     }
