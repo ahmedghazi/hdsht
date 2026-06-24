@@ -104,26 +104,33 @@ function formatTime(seconds: number): string {
       </div> -->
     </div>
 
-    <UiMuxVideo
-      :asset-id="assetId"
-      :caption="caption"
-      :play="play"
-      :muted="isMuted"
-      :volume="vol.value"
-      :loop="true"
-      @time-update="
-        (t, d) => {
-          currentTime = t
-          duration = d
-          gsap.to(progress, { value: t / d, duration: 0.25, ease: 'none', overwrite: true })
-        }
-      "
-    />
-    <div
-      class="progress"
-      :style="{ left: `${progress.value * 100}%` }"
-      :title="currentTime"
-    ></div>
+    <div class="relative">
+      <UiMuxVideo
+        :asset-id="assetId"
+        :caption="caption"
+        :play="play"
+        :muted="isMuted"
+        :volume="vol.value"
+        :loop="true"
+        @time-update="
+          (t, d) => {
+            currentTime = t
+            duration = d
+            gsap.to(progress, {
+              value: t / d,
+              duration: 0.25,
+              ease: 'none',
+              overwrite: true,
+            })
+          }
+        "
+      />
+      <div
+        class="progress"
+        :style="{ left: `${progress.value * 100}%` }"
+        :title="currentTime"
+      ></div>
+    </div>
     <!-- <div class="progress">{{ duration }}</div>
     <div class="progress">{{ progress }}</div> -->
   </figure>
@@ -162,9 +169,9 @@ mux-player {
   background-color: var(--color-primary);
   mix-blend-mode: difference;
   position: absolute;
-  bottom: 0;
+  top: 0;
   left: 0;
-  transform: translate(-50%, 50%);
+  transform: translate(-50%, -50%);
   will-change: left;
   transition: none;
 }

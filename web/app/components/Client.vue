@@ -20,10 +20,8 @@ const {
   <div
     :class="['client', `client--${size}`]"
     :style="{
-      '--background':
-        hover || rip ? 'var(--color-gray)' : input?.backgroundColor?.hex,
-      '--color':
-        hover || rip ? 'var(--color-white)' : input?.foregroundColor?.hex,
+      '--background': rip ? 'var(--color-gray)' : input?.backgroundColor?.hex,
+      '--color': rip ? 'var(--color-white)' : input?.foregroundColor?.hex,
     }"
   >
     <div v-if="input.backgroundColor" class="client__disc"></div>
@@ -79,7 +77,7 @@ const {
       min-width: 0;
     }
   }
-  @media (max-width: 800px) {
+  @media (max-width: 1080px) {
     align-items: flex-start;
     flex: 1 1 0;
     &__disc,
@@ -95,82 +93,3 @@ const {
   }
 }
 </style>
-<!--
-<style lang="scss">
-.client {
-  display: flex;
-  align-items: center;
-  min-width: 0; // ← peut rétrécir dans sa cell
-  &--xl {
-    .client__disc {
-      width: var(--line-height-2xl);
-      height: var(--line-height-2xl);
-      border-radius: var(--line-height-2xl);
-    }
-  }
-  &__disc {
-    width: var(--line-height-lg);
-    height: var(--line-height-lg);
-    aspect-ratio: 1;
-    background: transparent
-      radial-gradient(
-        closest-side at 50% 50%,
-        var(--color) 0%,
-        var(--background) 100%
-      )
-      0% 0% no-repeat padding-box;
-
-    border-radius: var(--line-height-lg);
-  }
-
-  &__name {
-    color: var(--color);
-    flex: 1 1 auto; // ← prend l’espace restant à droite du disque
-    min-width: 0; // ← crucial pour l’ellipsis
-
-    .bubble {
-      // display: inline-flex; // ← bulle à la largeur du texte
-      max-width: 100%; // ← mais ne dépasse pas la place dispo
-      min-width: 0;
-    }
-
-    .bubble > div {
-      min-width: 0;
-    }
-  }
-  /*
-  @media (max-width: 800px) {
-    align-items: flex-start;
-    &__disc,
-    &__name {
-      vertical-align: top;
-    }
-    &__disc {
-      display: inline-block;
-    }
-    .bubble {
-      display: table-caption;
-    }
-    .ellipsis {
-      all: unset;
-    }
-  }*/
-  @media (max-width: 800px) {
-    flex: 1 1 0;
-    align-items: flex-start;
-    &__name {
-      white-space: nowrap; // ← add this
-    }
-    &__disc,
-    &__name {
-      vertical-align: top;
-    }
-    &__disc {
-      display: inline-block;
-    }
-    .ellipsis {
-      // all: unset;
-    }
-  }
-}
-</style> -->

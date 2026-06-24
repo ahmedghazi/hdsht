@@ -57,7 +57,7 @@ body:has(.content--home) {
 }
 .content {
 }
-@media (max-width: 800px) {
+@media (max-width: 1080px) {
   mux-player {
     height: 100dvh !important;
     --media-object-fit: cover;

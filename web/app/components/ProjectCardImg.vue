@@ -10,8 +10,8 @@ const { input, index = 0 } = defineProps<{
 }>()
 
 const wrapper = ref<HTMLElement | null>(null)
-// const { animeClass } = useDominoAnime(wrapper, index)
-const animeClass = ''
+const { animeClass } = useDominoAnime(wrapper, index)
+// const animeClass = ''
 
 const hover = ref<boolean>(false)
 const activeTimelines = ref<gsap.core.Timeline[]>([])
@@ -78,12 +78,28 @@ watch(
   >
     <NuxtLink :to="_linkResolver(input as any)">
       <div :class="{ 'client-wrapper': true, [animeClass]: true }">
-        <Client
-          v-if="input.client"
-          :input="input.client"
-          :disc-only="true"
-          :size="'md'"
-        />
+        <div class="flex">
+          <Client
+            v-if="input.client"
+            :input="input.client"
+            :disc-only="true"
+            :size="'md'"
+          />
+
+          <div v-if="input.imageCover" class="image-cover">
+            <Thumbnail
+              :asset="input.imageCover.asset"
+              :size="360"
+              :alt="input.title?.en || ''"
+            />
+          </div>
+          <div v-if="input.videoCover" class="video-cover">
+            <UiMuxGif
+              :playback-id="input.videoCover.video?.asset?.playbackId || ''"
+              :aspect="input.videoCover.video?.asset?.data?.aspect_ratio"
+            />
+          </div>
+        </div>
       </div>
 
       <div :class="{ 'bubble bubble-dot': true, [animeClass]: true }">
@@ -185,7 +201,7 @@ watch(
   @media (min-width: 575px) {
   }
 
-  @media (max-width: 800px) {
+  @media (max-width: 1080px) {
     .disc {
       height: var(--line-height-xl);
       width: var(--line-height-xl);

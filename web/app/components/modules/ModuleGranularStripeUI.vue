@@ -39,7 +39,7 @@ defineProps<{ input: GranularStripeUI }>()
     }
   }
 }
-@media (max-width: 800px) {
+@media (max-width: 1080px) {
   .module {
   }
 }

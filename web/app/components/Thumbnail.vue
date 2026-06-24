@@ -53,7 +53,7 @@ const width = size ? size * (dims?.aspectRatio || 1) : 'auto'
 img.visual-thumbnail {
   min-height: var(--line-height-xl);
   max-height: var(--line-height-xl);
-  @media (min-width: 800px) {
+  @media (min-width: 1080px) {
     min-height: var(--line-height-2xl);
     max-height: var(--line-height-2xl);
   }

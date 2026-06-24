@@ -45,6 +45,6 @@ useSeoMeta({
 <style scoped>
 .content {
 }
-@media (max-width: 800px) {
+@media (max-width: 1080px) {
 }
 </style>

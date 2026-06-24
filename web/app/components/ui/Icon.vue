@@ -51,6 +51,32 @@ defineProps<{
       width="5"
       height="30"
       viewBox="0 0 5 30"
+    >
+      <circle
+        cx="1.35"
+        cy="1.35"
+        r="1.35"
+        transform="translate(1.15 17)"
+        fill="currentColor"
+      >
+        <animate
+          attributeName="opacity"
+          values="0.25;1;0.25"
+          dur="0.8s"
+          repeatCount="indefinite"
+          :begin="`${(i - 1) * 0.15}s`"
+        />
+      </circle>
+    </svg>
+  </span>
+  <!-- <span v-else-if="value === 'dots'" class="flex gap-02!">
+    <svg
+      v-for="i in 3"
+      :key="i"
+      xmlns="http://www.w3.org/2000/svg"
+      width="5"
+      height="30"
+      viewBox="0 0 5 30"
       :opacity="1 / 4 + i * (1 / 4)"
     >
       {{ i }}
@@ -62,7 +88,7 @@ defineProps<{
         fill="currentColor"
       />
     </svg>
-  </span>
+  </span> -->
 
   <!-- Arrow North (up) — no rotation -->
 

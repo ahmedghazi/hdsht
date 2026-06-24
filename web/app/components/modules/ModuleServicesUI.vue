@@ -53,7 +53,7 @@ onMounted(() => {
     line-height: 1.6;
   }
 }
-@media (max-width: 800px) {
+@media (max-width: 1080px) {
   .module {
     h2 {
       margin-bottom: 0.75rem;

@@ -55,7 +55,7 @@ defineProps<{ input: ContactsUI }>()
 .text {
   margin-bottom: var(--spacing-md);
 }
-@media (max-width: 800px) {
+@media (max-width: 1080px) {
   .module {
     .contact-links {
     }

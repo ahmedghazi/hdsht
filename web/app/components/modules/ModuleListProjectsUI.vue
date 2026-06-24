@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { ListProjectsUI } from '~/utils/sanity-api/sanity.types'
 import type { ProjectExpanded } from '~/utils/sanity-api/sanity-expanded.types'
-import type { Filters } from '~/utils/sanity-api/sanity-extend.types'
+// import type { Filters } from '~/utils/sanity-api/sanity-extend.types'
 
 type ListProjectsUIExpanded = Omit<ListProjectsUI, 'items'> & {
   items?: ProjectExpanded[] | null
@@ -12,16 +12,16 @@ type ListProjectsUIExpanded = Omit<ListProjectsUI, 'items'> & {
 const { input } = defineProps<{ input: ListProjectsUIExpanded }>()
 
 // État local pour les projets filtrés reçus du composant ProjectFilters
-const filteredItems = ref<ProjectExpanded[]>([])
-const activeFilters = ref<Filters[]>([])
+// const filteredItems = ref<ProjectExpanded[]>([])
+// const activeFilters = ref<Filters[]>([])
 
-// Callback pour recevoir les projets filtrés
-function onFilteredItemsUpdate(items: ProjectExpanded[]) {
-  filteredItems.value = items
-}
-function onActiveFilters(filters: Filters[]) {
-  activeFilters.value = filters
-}
+// // Callback pour recevoir les projets filtrés
+// function onFilteredItemsUpdate(items: ProjectExpanded[]) {
+//   filteredItems.value = items
+// }
+// function onActiveFilters(filters: Filters[]) {
+//   activeFilters.value = filters
+// }
 </script>
 
 <template>
@@ -31,12 +31,12 @@ function onActiveFilters(filters: Filters[]) {
     :class="['module', 'module--list-projects-ui', 'md:col-span-2']"
   >
     <!-- <pre>{{ filteredItems }}</pre> -->
-    <ProjectsFilters
+    <!-- <ProjectsFilters
       v-if="input.layout === 'txt'"
       :projects="input.items || null"
       @update:filtered-items="onFilteredItemsUpdate"
       @active-filters="onActiveFilters"
-    />
+    /> -->
 
     <!-- <div v-if="activeFilters" class="project-filters__active">
       <ProjectsFiltersActivePill
@@ -70,8 +70,8 @@ function onActiveFilters(filters: Filters[]) {
       />
     </div> -->
 
-    <template v-if="input.layout === 'txt' && filteredItems.length">
-      <ListProjectsTxt :input="filteredItems" />
+    <template v-if="input.layout === 'txt' && input.items?.length">
+      <ListProjectsTxt :input="input.items" />
     </template>
     <template v-if="input.layout === 'img' && input.items?.length">
       <ListProjectsImg

@@ -97,7 +97,7 @@ onMounted(async () => {
   img {
   }
 }
-@media (max-width: 800px) {
+@media (max-width: 1080px) {
   .module {
     .list {
       max-width: calc(100dvw - var(--spacing-md));

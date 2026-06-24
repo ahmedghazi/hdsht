@@ -50,9 +50,11 @@ watch(
                 <span v-if="li.label">{{ $localizeField(li.label) }}</span>
               </NuxtLink>
             </li>
+            <LocaleSwitcher />
           </ul>
         </nav>
-        <LocaleSwitcher />
+        <!-- <nav class="nav-switcher">
+        </nav> -->
         <NavLegals
           v-if="navSecondary && isMobile"
           :nav-secondary="navSecondary"
@@ -69,7 +71,7 @@ watch(
   align-items: center;
 }
 
-@media (max-width: 800px) {
+@media (max-width: 1080px) {
   button {
     z-index: 10;
     position: relative;
@@ -86,7 +88,9 @@ watch(
     pointer-events: none;
     display: none;
     font-size: var(--text-lg);
-    background-color: var(--color-bg);
+    backdrop-filter: blur(var(--blur-size));
+    background-color: var(--background, var(--color-blur));
+    // background-color: var(--color-bg);
 
     line-height: 1.1;
     &.is-open {
@@ -95,12 +99,34 @@ watch(
     }
     .inner.flex {
       flex-direction: column;
-      align-items: start;
+      height: 100%;
+      // justify-content: space-between;
+      // align-items: start;
+      nav.nav-primary {
+        flex: 2;
+      }
+      ul,
+      a,
+      button,
+      button.pill--stretch {
+        height: 100% !important;
+        max-height: unset;
+      }
+      a,
+      button,
+      button.pill--stretch {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+      }
+      li button {
+        background-color: red;
+      }
     }
     nav {
       width: 100%;
       &.nav-secondary {
-        margin-top: 2.9rem;
+        // margin-top: 2.9rem;
       }
     }
 
@@ -109,8 +135,16 @@ watch(
       width: 100%;
       display: grid;
       grid-template-columns: repeat(2, 1fr);
+      // display: flex;
+      // flex-wrap: wrap;
+      li {
+        // width: 50%;
+        flex: 1 0 50%;
+      }
       .nav-item--Information {
         grid-column: 1 / -1;
+        // width: 100%;
+        flex: 1 0 100%;
       }
     }
   }

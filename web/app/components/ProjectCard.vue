@@ -8,10 +8,12 @@ const {
   input,
   index = 0,
   stagger = 0.01,
+  mouseFollowThumbnail,
 } = defineProps<{
   input: ProjectCardInput
   index?: number
   stagger?: number
+  mouseFollowThumbnail?: boolean
 }>()
 const items = ref<HTMLElement | null>(null)
 const { animeClass } = useDominoAnime(items, index, stagger)
@@ -63,7 +65,12 @@ const hover = ref<boolean>(false)
           </div>
         </div>
       </div>
-      <ThumbnailFollowMouse :wrapper="items" :hover="hover">
+
+      <!-- <ThumbnailFollowMouse
+        v-if="mouseFollowThumbnail"
+        :wrapper="items"
+        :hover="hover"
+      >
         <figure v-if="input.imageCover" class="image-cover">
           <img
             v-if="input.imageCover?.asset"
@@ -88,7 +95,29 @@ const hover = ref<boolean>(false)
             :aspect-ratio="input.videoCover.video?.asset?.data?.aspect_ratio"
           />
         </figure>
-      </ThumbnailFollowMouse>
+      </ThumbnailFollowMouse> -->
+
+      <figure v-if="input.imageCover" class="image-cover">
+        <img
+          v-if="input.imageCover?.asset"
+          :src="
+            $urlFor(input.imageCover?.asset as any)
+              .width(800)
+              .dpr(2)
+              .url()
+          "
+          :alt="`${$localizeField(input?.title) || ''}`"
+        />
+      </figure>
+      <figure v-if="!input.imageCover && input.videoCover" class="video-cover">
+        <UiMuxVideo
+          v-if="input.videoCover.video?.asset?.playbackId"
+          :asset-id="input.videoCover.video?.asset?.playbackId || ''"
+          :autoplay="true"
+          :loop="true"
+          :aspect-ratio="input.videoCover.video?.asset?.data?.aspect_ratio"
+        />
+      </figure>
     </NuxtLink>
   </article>
 </template>
@@ -100,10 +129,23 @@ const hover = ref<boolean>(false)
   position: relative;
   &:hover {
     z-index: 10;
+    .image-cover,
+    .video-cover {
+      visibility: visible;
+    }
   }
   .header--item {
     display: flex;
     align-items: flex-start;
+  }
+  .image-cover,
+  .video-cover {
+    position: absolute;
+    left: 0;
+    top: 100%;
+    max-width: 32rem;
+    visibility: hidden;
+    pointer-events: none;
   }
 }
 </style>

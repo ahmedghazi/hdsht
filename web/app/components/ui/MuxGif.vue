@@ -113,7 +113,7 @@ function initHls(video: HTMLVideoElement) {
 
 .mux-gif {
   height: var(--line-height-xl);
-  @media (min-width: 800px) {
+  @media (min-width: 1080px) {
     height: var(--line-height-2xl);
   }
 }

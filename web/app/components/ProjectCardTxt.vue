@@ -14,6 +14,7 @@ const {
 const items = ref<HTMLElement | null>(null)
 const { animeClass } = useDominoAnime(items, index, stagger)
 const hover = ref<boolean>(false)
+const isMobile = useIsMobile()
 // const elseHovered = ref<boolean>(false)
 onMounted(() => {
   // const unsub = on('PROJECT-HOVER', (e, payload) => {
@@ -29,8 +30,10 @@ watch(
   (val) => {
     if (val) {
       emit('PROJECT-HOVER', input._id)
+      if (!isMobile) emit('PROJECT-MEDIA', input)
     } else {
       emit('PROJECT-HOVER', null)
+      emit('PROJECT-MEDIA', null)
     }
   },
   {
@@ -108,31 +111,29 @@ watch(
           </div>
         </div>
       </div>
-      <ThumbnailFollowMouse :wrapper="items" :hover="hover">
-        <figure v-if="hover && input.imageCover" class="image-cover">
-          <img
-            v-if="input.imageCover?.asset"
-            :src="
-              $urlFor(input.imageCover?.asset as any)
-                .width(2000)
-                .url()
-            "
-            :alt="`${$localizeField(input.title) || ''}`"
-          />
-        </figure>
-        <figure
-          v-if="hover && !input.imageCover && input.videoCover"
-          class="video-cover"
-        >
-          <UiMuxVideo
-            v-if="input.videoCover.video?.asset?.playbackId"
-            :asset-id="input.videoCover.video?.asset?.playbackId || ''"
-            :autoplay="true"
-            :loop="true"
-            :aspect-ratio="input.videoCover.video?.asset?.data?.aspect_ratio"
-          />
-        </figure>
-      </ThumbnailFollowMouse>
+      <!-- <figure v-if="hover && input.imageCover" class="image-cover">
+        <img
+          v-if="input.imageCover?.asset"
+          :src="
+            $urlFor(input.imageCover?.asset as any)
+              .width(2000)
+              .url()
+          "
+          :alt="`${$localizeField(input.title) || ''}`"
+        />
+      </figure>
+      <figure
+        v-if="hover && !input.imageCover && input.videoCover"
+        class="video-cover"
+      >
+        <UiMuxVideo
+          v-if="input.videoCover.video?.asset?.playbackId"
+          :asset-id="input.videoCover.video?.asset?.playbackId || ''"
+          :autoplay="true"
+          :loop="true"
+          :aspect-ratio="input.videoCover.video?.asset?.data?.aspect_ratio"
+        />
+      </figure> -->
     </article>
   </NuxtLink>
 </template>
@@ -140,6 +141,8 @@ watch(
 <style scoped lang="scss">
 a {
   transition: opacity 0.15s ease;
+  // position: relative;
+  // z-index: 1;
   &:hover {
     position: relative;
     z-index: 999;
@@ -151,8 +154,12 @@ a {
   --color: #000;
 
   &:hover {
-    --background: var(--color-grey) !important;
-    --color: var(--color-white) !important;
+    // .image-cover,
+    // .video-cover {
+    //   opacity: 1;
+    // }
+    //--background: var(--color-grey) !important;
+    //--color: var(--color-white) !important;
   }
   &--rip {
     --background: var(--color-grey) !important;
@@ -195,6 +202,7 @@ a {
   &__year {
     flex-shrink: 0; // colonne année rigide
   }
+
   .thumbnail {
     position: fixed;
     bottom: 0;
@@ -211,7 +219,7 @@ a {
     }
   }
 
-  @media (max-width: 800px) {
+  @media (max-width: 1080px) {
     &__index {
       width: auto;
     }

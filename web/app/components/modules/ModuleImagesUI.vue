@@ -41,7 +41,7 @@ onMounted(() => {
 <style lang="scss" scoped>
 .module {
 }
-@media (max-width: 800px) {
+@media (max-width: 1080px) {
   .module {
     padding-top: 0;
   }

@@ -231,10 +231,23 @@ const _mediaCaption = () => {
     --background: var(--color-white);
   }
 }
-@media (max-width: 800px) {
+@media (max-width: 1080px) {
   .header--item {
     .ellipsis {
-      all: unset;
+      display: block;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    &__description {
+      min-width: 0;
+      .bubble--lg {
+        min-width: 0;
+        flex: 1;
+      }
+      .bubble__content {
+        min-width: 0;
+      }
     }
     li {
       font-size: 0;

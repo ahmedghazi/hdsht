@@ -39,14 +39,6 @@ header {
   left: 0;
   width: 100%;
   z-index: 51;
-  // transition: transform 0.3s ease-in-out;
-  // transform: translateY(0%);
-  // &.is-down {
-  //   transform: translateY(calc(var(--header-h) * -1));
-  // }
-  // &.is-bottom {
-  //   transform: translateY(0%);
-  // }
 
   .site-name {
     z-index: 10;
@@ -55,7 +47,7 @@ header {
       text-decoration: none;
     }
   }
-  @media (max-width: 800px) {
+  @media (max-width: 1080px) {
     padding: var(--spacing-sm);
     padding-bottom: 0;
   }

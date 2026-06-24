@@ -37,11 +37,11 @@ defineProps<{ input: TextUI }>()
     padding: 0 var(--spacing-md);
   }
 }
-@media (min-width: 800px) {
+@media (min-width: 1080px) {
   .text {
   }
 }
-@media (max-width: 800px) {
+@media (max-width: 1080px) {
   .module {
   }
 }

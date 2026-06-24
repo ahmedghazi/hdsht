@@ -93,7 +93,7 @@ nav.nav-secondary {
     //   border-radius: 1rem 6rem 1rem 1rem;
     // }
   }
-  @media (max-width: 800px) {
+  @media (max-width: 1080px) {
     width: 100%;
     ul {
       // flex-direction: column;

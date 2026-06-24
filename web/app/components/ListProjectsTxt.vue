@@ -4,9 +4,26 @@ import type { ProjectExpanded } from '~/utils/sanity-api/sanity-expanded.types'
 defineProps<{ input: ProjectExpanded[] }>()
 
 const moduleRef = ref<HTMLElement | null>(null)
+const media = ref<ProjectExpanded | null>(null)
 onMounted(() => {
   _format()
   window.addEventListener('resize', _format)
+
+  const unsub = on('PROJECT-MEDIA', (e, payload) => {
+    media.value = payload
+  })
+  onUnmounted(() => {
+    unsub()
+  })
+})
+
+onMounted(() => {
+  // const unsub = on('PROJECT-HOVER', (e, payload) => {
+  //   elseHovered.value = payload === input._id
+  // })
+  // onUnmounted(() => {
+  //   unsub()
+  // })
 })
 
 onUnmounted(() => {
@@ -80,6 +97,28 @@ const _format = () => {
         :index="i"
       />
     </div>
+    <div v-if="media" class="project-thumbnail">
+      <figure v-if="media.imageCover" class="image-cover">
+        <img
+          v-if="media.imageCover?.asset"
+          :src="
+            $urlFor(media.imageCover?.asset as any)
+              .width(2000)
+              .url()
+          "
+          :alt="`${$localizeField(media.title) || ''}`"
+        />
+      </figure>
+      <figure v-if="!media.imageCover && media.videoCover" class="video-cover">
+        <UiMuxVideo
+          v-if="media.videoCover.video?.asset?.playbackId"
+          :asset-id="media.videoCover.video?.asset?.playbackId || ''"
+          :autoplay="true"
+          :loop="true"
+          :aspect-ratio="media.videoCover.video?.asset?.data?.aspect_ratio"
+        />
+      </figure>
+    </div>
   </div>
 </template>
 
@@ -104,7 +143,22 @@ const _format = () => {
   .header__project {
     width: var(--cardTitle-w);
   }
-  @media (max-width: 800px) {
+
+  .image-cover,
+  .video-cover {
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    // opacity: 0;
+    pointer-events: none;
+    img {
+      object-fit: cover;
+      width: 100%;
+      height: 100%;
+    }
+  }
+
+  @media (max-width: 1080px) {
     .header__ID,
     .header__project {
       width: auto;
