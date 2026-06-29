@@ -66,37 +66,6 @@ const hover = ref<boolean>(false)
         </div>
       </div>
 
-      <!-- <ThumbnailFollowMouse
-        v-if="mouseFollowThumbnail"
-        :wrapper="items"
-        :hover="hover"
-      >
-        <figure v-if="input.imageCover" class="image-cover">
-          <img
-            v-if="input.imageCover?.asset"
-            :src="
-              $urlFor(input.imageCover?.asset as any)
-                .width(800)
-                .dpr(2)
-                .url()
-            "
-            :alt="`${$localizeField(input?.title) || ''}`"
-          />
-        </figure>
-        <figure
-          v-if="!input.imageCover && input.videoCover"
-          class="video-cover"
-        >
-          <UiMuxVideo
-            v-if="input.videoCover.video?.asset?.playbackId"
-            :asset-id="input.videoCover.video?.asset?.playbackId || ''"
-            :autoplay="true"
-            :loop="true"
-            :aspect-ratio="input.videoCover.video?.asset?.data?.aspect_ratio"
-          />
-        </figure>
-      </ThumbnailFollowMouse> -->
-
       <figure v-if="input.imageCover" class="image-cover">
         <img
           v-if="input.imageCover?.asset"
@@ -127,11 +96,12 @@ const hover = ref<boolean>(false)
   // --background: inherit;
   // --color: inherit;
   position: relative;
+
   &:hover {
     z-index: 10;
     .image-cover,
     .video-cover {
-      visibility: visible;
+      opacity: 1;
     }
   }
   .header--item {
@@ -144,7 +114,8 @@ const hover = ref<boolean>(false)
     left: 0;
     top: 100%;
     max-width: 32rem;
-    visibility: hidden;
+    // visibility: hidden;
+    opacity: 0;
     pointer-events: none;
   }
 }

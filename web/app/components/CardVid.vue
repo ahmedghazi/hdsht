@@ -104,7 +104,7 @@ function formatTime(seconds: number): string {
       </div> -->
     </div>
 
-    <div class="relative">
+    <div class="relative w-full">
       <UiMuxVideo
         :asset-id="assetId"
         :caption="caption"

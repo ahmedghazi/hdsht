@@ -80,12 +80,21 @@ const {
   @media (max-width: 1080px) {
     align-items: flex-start;
     flex: 1 1 0;
+    .bubble--lg {
+      --bubble-lh: var(--line-height-md);
+      --bubble-padding-ratio: 0.25;
+      --bubble-offset-ratio: 0.09;
+      font-size: var(--text-md);
+    }
+
     &__disc,
     &__name {
       vertical-align: top;
     }
     &__disc {
       display: inline-block;
+      width: var(--line-height-md);
+      height: var(--line-height-md);
     }
     .ellipsis {
       all: unset;

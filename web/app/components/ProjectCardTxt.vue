@@ -220,8 +220,21 @@ a {
   }
 
   @media (max-width: 1080px) {
-    &__index {
-      width: auto;
+    .bubble-dot--lg {
+      --bubble-dot-lh: var(--line-height-md);
+      --bubble-dot-size-ratio: 0.7;
+      --bubble-dot-padding-ratio: 0.25;
+      --bubble-dot-offset-ratio: 0;
+    }
+    .bubble--lg {
+      --bubble-lh: var(--line-height-md);
+      --bubble-padding-ratio: 0.25;
+      --bubble-offset-ratio: 0.09;
+      font-size: var(--text-md);
+    }
+
+    .card__index {
+      width: 4.8em;
     }
     .ellipsis {
       all: unset;
