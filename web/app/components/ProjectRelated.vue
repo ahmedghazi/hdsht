@@ -29,9 +29,6 @@ const { animeClass } = useDominoAnime(containerRef, 0)
       </div>
     </div>
     <div>
-      <!-- <div v-for="(item, i) in projects" :key="i" class="mb-md">
-        <ProjectCard v-if="item" :input="item" :index="i + 1" />
-      </div> -->
       <template v-for="(item, i) in projects" :key="i">
         <ProjectCard v-if="item" :input="item" :index="i + 1" />
       </template>

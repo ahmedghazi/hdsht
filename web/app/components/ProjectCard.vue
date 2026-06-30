@@ -110,13 +110,32 @@ const hover = ref<boolean>(false)
   }
   .image-cover,
   .video-cover {
-    position: absolute;
-    left: 0;
-    top: 100%;
-    max-width: 32rem;
-    // visibility: hidden;
-    opacity: 0;
-    pointer-events: none;
+    display: block;
+    img {
+      height: var(--line-height-2xl);
+    }
+    // position: absolute;
+    // left: 0;
+    // top: 100%;
+    // max-width: 32rem;
+    // // visibility: hidden;
+    // opacity: 0;
+    // pointer-events: none;
+  }
+
+  @media (max-width: 1080px) {
+    .bubble-dot--lg {
+      --bubble-dot-lh: var(--line-height-md);
+      --bubble-dot-size-ratio: 0.7;
+      --bubble-dot-padding-ratio: 0.25;
+      --bubble-dot-offset-ratio: 0;
+    }
+    .bubble--lg {
+      --bubble-lh: var(--line-height-md);
+      --bubble-padding-ratio: 0.25;
+      --bubble-offset-ratio: 0.09;
+      font-size: var(--text-md);
+    }
   }
 }
 </style>

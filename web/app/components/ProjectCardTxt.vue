@@ -153,14 +153,6 @@ a {
   --background: #fff;
   --color: #000;
 
-  &:hover {
-    // .image-cover,
-    // .video-cover {
-    //   opacity: 1;
-    // }
-    //--background: var(--color-grey) !important;
-    //--color: var(--color-white) !important;
-  }
   &--rip {
     --background: var(--color-grey) !important;
     --color: var(--color-white-40) !important;
@@ -234,7 +226,8 @@ a {
     }
 
     .card__index {
-      width: 4.8em;
+      // width: 4.8em;
+      width: auto;
     }
     .ellipsis {
       all: unset;
