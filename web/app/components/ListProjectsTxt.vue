@@ -10,6 +10,7 @@ onMounted(() => {
   window.addEventListener('resize', _format)
 
   const unsub = on('PROJECT-MEDIA', (e, payload) => {
+    console.log('on PROJECT-MEDIA', e, payload)
     media.value = payload
   })
   onUnmounted(() => {

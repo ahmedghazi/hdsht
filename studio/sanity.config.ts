@@ -10,7 +10,7 @@ import {structure} from './src/deskStructure'
 import {media} from 'sanity-plugin-media'
 
 //HDSHT.pink
-const remoteURL = 'https://hdsht-preprod.vercel.app'
+const remoteURL = 'https://hdsht-rho.vercel.app'
 const localURL = 'http://localhost:3000'
 const previewURL = window.location.hostname === 'localhost' ? localURL : remoteURL
 const plugins = [

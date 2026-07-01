@@ -2,44 +2,37 @@
 import type { ProjectExpanded } from '~/utils/sanity-api/sanity-expanded.types'
 import Client from './Client.vue'
 
-const {
-  input,
-  index = 0,
-  stagger = 0.01,
-} = defineProps<{
+const props = defineProps<{
   input: ProjectExpanded
   index?: number
   stagger?: number
 }>()
+const { index = 0, stagger = 0.01 } = props
 const items = ref<HTMLElement | null>(null)
 const { animeClass } = useDominoAnime(items, index, stagger)
 const hover = ref<boolean>(false)
-const isMobile = useIsMobile()
+const isMobile = useIsMobile() // Ref<boolean>
+const onMouseEnter = () => {
+  hover.value = true
+  emit('sfx')
+  emit('PROJECT-MEDIA', {
+    payload: props.input,
+  })
+  if (!isMobile.value) emit('PROJECT-MEDIA', props.input)
+}
+const onMouseLeave = () => {
+  hover.value = false
+  emit('PROJECT-MEDIA', null)
+}
 // const elseHovered = ref<boolean>(false)
-onMounted(() => {
-  // const unsub = on('PROJECT-HOVER', (e, payload) => {
-  //   elseHovered.value = payload === input._id
-  // })
-  // onUnmounted(() => {
-  //   unsub()
-  // })
-})
-
-watch(
-  () => hover.value,
-  (val) => {
-    if (val) {
-      emit('PROJECT-HOVER', input._id)
-      if (!isMobile) emit('PROJECT-MEDIA', input)
-    } else {
-      emit('PROJECT-HOVER', null)
-      emit('PROJECT-MEDIA', null)
-    }
-  },
-  {
-    immediate: true, // exécute aussi au montage avec la valeur initiale
-  },
-)
+// onMounted(() => {
+// const unsub = on('PROJECT-HOVER', (e, payload) => {
+//   elseHovered.value = payload === props.input._id
+// })
+// onUnmounted(() => {
+//   unsub()
+// })
+// })
 </script>
 
 <template>
@@ -66,13 +59,8 @@ watch(
           ? 'var(--color-white)'
           : input.client?.foregroundColor?.hex,
       }"
-      @mouseenter="
-        () => {
-          hover = true
-          emit('sfx')
-        }
-      "
-      @mouseleave="hover = false"
+      @mouseenter="onMouseEnter"
+      @mouseleave="onMouseLeave"
     >
       <div class="md:grid md:grid-cols-2">
         <div class="flex">
@@ -140,11 +128,9 @@ watch(
 
 <style scoped lang="scss">
 a {
+  position: relative;
   transition: opacity 0.15s ease;
-  // position: relative;
-  // z-index: 1;
   &:hover {
-    position: relative;
     z-index: 999;
     opacity: 1 !important;
   }
