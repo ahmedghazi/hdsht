@@ -15,9 +15,7 @@ const isMobile = useIsMobile() // Ref<boolean>
 const onMouseEnter = () => {
   hover.value = true
   emit('sfx')
-  emit('PROJECT-MEDIA', {
-    payload: props.input,
-  })
+
   if (!isMobile.value) emit('PROJECT-MEDIA', props.input)
 }
 const onMouseLeave = () => {
