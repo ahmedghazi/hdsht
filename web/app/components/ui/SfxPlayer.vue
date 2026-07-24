@@ -7,7 +7,9 @@ const { audioUnlocked, unlock } = useAudioUnlock()
 function play() {
   if (!audioUnlocked.value) return
   const src = sounds[Math.floor(Math.random() * sounds.length)]
-  new Audio(src).play().catch(() => {})
+  const audio = new Audio(src)
+  audio.volume = 0.1
+  audio.play().catch(() => {})
 }
 
 let offSfx: (() => void) | undefined
