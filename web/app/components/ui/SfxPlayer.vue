@@ -8,7 +8,7 @@ function play() {
   if (!audioUnlocked.value) return
   const src = sounds[Math.floor(Math.random() * sounds.length)]
   const audio = new Audio(src)
-  audio.volume = 0.1
+  audio.volume = 0.02
   audio.play().catch(() => {})
 }
 
