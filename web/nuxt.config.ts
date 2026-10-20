@@ -23,8 +23,15 @@ export default defineNuxtConfig({
     },
   },
 
+  runtimeConfig: {
+    public: {
+      siteUrl: 'https://www.hdsht.pink', // overridden by NUXT_PUBLIC_SITE_URL
+    },
+  },
+
   routeRules: {
     '/': { prerender: true },
+    '/sitemap.xml': { prerender: true },
   },
 
   compatibilityDate: '2025-01-15',
