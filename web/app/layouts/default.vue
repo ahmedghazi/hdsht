@@ -1,11 +1,19 @@
 <script setup lang="ts">
-import { onMounted, onUnmounted } from 'vue'
+import { computed, onMounted, onUnmounted, ref } from 'vue'
 import type { SETTINGS_QUERY_RESULT } from '~/utils/sanity-api/sanity.types'
 import { SETTINGS_QUERY } from '~/utils/sanity-api/queries'
 // import PhiberMouse from '~/components/PhiberMouse.vue'
 // import Canvasfavicon from '~/components/ui/Canvasfavicon.vue'
 
 const { data } = await useSanityData<SETTINGS_QUERY_RESULT>(SETTINGS_QUERY)
+
+// body class is managed by unhead, removing it via classList gets overwritten on head re-render
+const isLoading = ref(true)
+useHead({
+  bodyAttrs: {
+    class: computed(() => (isLoading.value ? 'is-loading' : '')),
+  },
+})
 
 onMounted(() => {
   _format()
@@ -32,6 +40,7 @@ function _format() {
       headerBounding.height + 'px',
     )
   }
+  console.log('headerBounding', headerBounding)
 
   const footer = document.querySelector('footer#footer-site')
   let footerBounding = { height: 50 }
@@ -43,7 +52,10 @@ function _format() {
       footerBounding.height + 'px',
     )
   }
-  document.body.classList.remove('is-loading')
+  console.log('footerBounding', footerBounding)
+  // alert('_format here')
+
+  isLoading.value = false
 }
 </script>
 
